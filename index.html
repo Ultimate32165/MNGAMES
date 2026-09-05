@@ -2,18 +2,18 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>How Well Do You Know Me? — Couples Quiz</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <title>How Well Do You Know Me?</title>
 
   <!-- Tailwind CSS -->
   <script src="https://cdn.tailwindcss.com"></script>
 
-  <!-- Google Fonts -->
+  <!-- Plus Jakarta Sans Font -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Playfair+Display:ital,wght@0,600;1,500&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 
-  <!-- Confetti Canvas -->
+  <!-- Canvas Confetti -->
   <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
 
   <!-- Firebase Compat Libraries -->
@@ -23,271 +23,200 @@
   <style>
     body {
       font-family: 'Plus Jakarta Sans', sans-serif;
-      background: radial-gradient(circle at 20% 10%, #ffe4ec 0%, #fdf2f4 45%, #f4effa 100%);
+      background-color: #1e122b; /* Deep twilight plum */
+      color: #f7efff;
       min-height: 100vh;
+      -webkit-font-smoothing: antialiased;
     }
-    .font-serif-title {
-      font-family: 'Playfair Display', serif;
-    }
-    .glass-card {
-      background: rgba(255, 255, 255, 0.95);
-      backdrop-filter: blur(16px);
-      box-shadow: 0 16px 36px -8px rgba(244, 63, 94, 0.12), 0 4px 12px -2px rgba(0, 0, 0, 0.03);
-    }
-    .tap-highlight-none {
+    .tap-none {
       -webkit-tap-highlight-color: transparent;
+    }
+    /* Subtle focus outline for minimalist feel */
+    input:focus, textarea:focus {
+      outline: none;
+      box-shadow: 0 0 0 2px #f9738f;
     }
   </style>
 </head>
-<body class="flex flex-col items-center justify-center p-4 text-slate-800 tap-highlight-none selection:bg-rose-100 selection:text-rose-700">
+<body class="flex flex-col items-center justify-center p-4 sm:p-6 tap-none selection:bg-rose-500/30 selection:text-white">
 
-  <!-- Main Container -->
-  <div class="w-full max-w-md my-auto">
+  <!-- Centered App Viewport -->
+  <div class="w-full max-w-sm my-auto space-y-6">
 
-    <!-- Header -->
-    <header class="text-center mb-6">
-      <div class="inline-flex items-center gap-1.5 px-3 py-1 text-[11px] font-bold tracking-widest text-rose-600 uppercase bg-rose-50 border border-rose-200/80 rounded-full mb-2">
-        <span class="w-2 h-2 rounded-full bg-rose-500 animate-pulse"></span>
-        Couples Realtime Sync
+    <header class="text-center space-y-1.5">
+      <div class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-[11px] font-semibold tracking-wider uppercase text-rose-300 bg-rose-950/50 border border-rose-800/40">
+        <span class="w-1.5 h-1.5 rounded-full bg-rose-400 animate-pulse"></span>
+        Couples Quiz
       </div>
-      <h1 class="font-serif-title text-3xl sm:text-4xl text-rose-950 font-bold tracking-tight">How Well Do You Know Me?</h1>
-      <p class="text-xs sm:text-sm text-slate-500 mt-1">Answer secretly, sync together, reveal at the exact same moment 💕</p>
+      <h1 class="text-2xl font-bold tracking-tight text-white">How well do you know me?</h1>
+      <p class="text-xs text-purple-200/65 font-normal">Answer in secret, reveal together.</p>
     </header>
 
     <!-- Screen 1: Lobby Screen -->
-    <main id="lobby-screen" class="glass-card rounded-3xl border border-white/80 p-6 sm:p-7 space-y-5">
-      <div class="space-y-2">
-        <label for="player-name-input" class="block text-xs font-bold uppercase tracking-wider text-slate-500">Your Name / Nickname</label>
+    <main id="lobby-screen" class="bg-[#291b3b] border border-purple-900/50 rounded-2xl p-5 sm:p-6 shadow-xl space-y-4">
+      <div class="space-y-1.5">
+        <label for="player-name-input" class="block text-[11px] font-semibold uppercase tracking-wider text-purple-300/70">Your Name</label>
         <input 
           id="player-name-input" 
           type="text" 
-          placeholder="e.g. Angie or Alex" 
+          placeholder="e.g. Angie" 
           maxlength="20"
-          class="w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-2xl focus:bg-white focus:outline-none focus:ring-2 focus:ring-rose-400 text-sm font-semibold transition placeholder:font-normal placeholder:text-slate-400" 
+          class="w-full px-4 py-3 bg-[#1e122b] border border-purple-900/60 rounded-xl text-sm font-medium text-white placeholder:text-purple-300/35 transition" 
         />
       </div>
 
-      <!-- Action Choice Tabs/Cards -->
-      <div class="grid grid-cols-2 gap-3 pt-1">
+      <div class="space-y-2 pt-1">
         <button 
           type="button"
           onclick="createRoom()" 
-          class="flex flex-col items-center justify-center p-4 bg-gradient-to-tr from-rose-500 to-pink-500 text-white rounded-2xl shadow-md hover:shadow-lg active:scale-95 transition"
+          class="w-full py-3 bg-rose-500 hover:bg-rose-400 text-white rounded-xl text-xs font-bold tracking-wider uppercase transition active:scale-[0.99] shadow-md shadow-rose-950/40"
         >
-          <span class="text-2xl">✨</span>
-          <span class="text-sm font-bold mt-1">Create Room</span>
-          <span class="text-[10px] text-rose-100 mt-0.5 font-medium">Start as host</span>
+          Create New Room
         </button>
 
         <button 
+          id="toggle-join-btn"
           type="button"
           onclick="toggleJoinSection(true)" 
-          class="flex flex-col items-center justify-center p-4 bg-white border border-rose-200/90 text-rose-600 rounded-2xl hover:bg-rose-50/50 active:scale-95 transition shadow-sm"
+          class="w-full py-3 bg-[#382552] hover:bg-[#432d61] text-purple-100 rounded-xl text-xs font-semibold tracking-wider transition active:scale-[0.99]"
         >
-          <span class="text-2xl">🔗</span>
-          <span class="text-sm font-bold mt-1">Join Room</span>
-          <span class="text-[10px] text-slate-400 mt-0.5 font-medium">Use room code</span>
+          Join with Code
         </button>
       </div>
 
-      <!-- Join Form (revealed if user clicks join or arrives via ?room=CODE) -->
-      <div id="join-box" class="hidden pt-3 border-t border-slate-100 space-y-3">
-        <label for="join-code-input" class="block text-xs font-bold text-slate-500 uppercase tracking-wider">6-Digit Room Code</label>
-        <div class="flex gap-2">
-          <input 
-            id="join-code-input" 
-            type="text" 
-            placeholder="e.g. 482910" 
-            maxlength="6"
-            class="flex-1 uppercase font-mono px-4 py-3 bg-slate-50 border border-slate-200 rounded-2xl focus:bg-white focus:outline-none focus:ring-2 focus:ring-rose-400 text-sm font-bold tracking-widest text-center" 
-          />
-          <button 
-            type="button"
-            onclick="joinRoom()" 
-            class="px-5 py-3 bg-rose-500 text-white font-bold rounded-2xl hover:bg-rose-600 active:scale-95 transition text-sm shadow-sm"
-          >
-            Join
-          </button>
+      <!-- Join Form Section -->
+      <div id="join-box" class="hidden pt-3 border-t border-purple-900/40 space-y-3">
+        <div class="space-y-1.5">
+          <label for="join-code-input" class="block text-[11px] font-semibold uppercase tracking-wider text-purple-300/70">6-Digit Code</label>
+          <div class="flex gap-2">
+            <input 
+              id="join-code-input" 
+              type="text" 
+              placeholder="123456" 
+              maxlength="6"
+              class="flex-1 px-3 py-2.5 bg-[#1e122b] border border-purple-900/60 rounded-xl text-sm font-semibold tracking-widest text-center uppercase text-white placeholder:text-purple-300/35 transition" 
+            />
+            <button 
+              type="button"
+              onclick="joinRoom()" 
+              class="px-5 py-2.5 bg-rose-500 hover:bg-rose-400 text-white font-bold rounded-xl text-xs uppercase tracking-wider active:scale-[0.99] transition"
+            >
+              Join
+            </button>
+          </div>
         </div>
-        <p id="invite-note" class="text-[11px] text-rose-600 hidden font-medium text-center">
-          💌 You were invited! Enter your nickname above and tap Join.
+        <p id="invite-note" class="text-[11px] text-rose-300 hidden text-center font-medium bg-rose-950/40 py-1.5 rounded-lg border border-rose-900/50">
+          Room link applied! Enter your name and click Join.
         </p>
       </div>
     </main>
 
     <!-- Screen 2: Game Screen -->
-    <main id="game-screen" class="hidden glass-card rounded-3xl border border-white/80 p-6 sm:p-7 space-y-5">
+    <main id="game-screen" class="hidden space-y-3.5">
       
-      <!-- Top Status & Room Info Bar -->
-      <div class="flex items-center justify-between pb-3 border-b border-slate-100">
+      <!-- Top Minimal Status Bar -->
+      <div class="flex items-center justify-between px-1 text-xs">
         <div class="flex items-center gap-2">
-          <span class="text-[11px] text-slate-400 uppercase font-bold tracking-wider">Room</span>
-          <span id="active-room-code" class="font-mono font-bold text-rose-600 bg-rose-50 px-2 py-0.5 rounded-lg text-xs tracking-wider">------</span>
+          <span class="text-purple-300/60 font-medium">Room</span>
+          <span id="active-room-code" class="font-mono font-bold text-rose-400 bg-[#291b3b] px-2 py-0.5 rounded-lg border border-purple-900/50">------</span>
           <button 
             type="button"
             onclick="copyInviteLink()" 
-            class="text-[11px] bg-rose-100 hover:bg-rose-200 text-rose-700 font-bold px-2 py-0.5 rounded-lg transition active:scale-95"
-            title="Copy invite link to clipboard"
+            class="text-purple-200 hover:text-white bg-[#382552] border border-purple-800/60 px-2 py-0.5 rounded-lg text-[11px] font-medium transition active:scale-95"
           >
-            📋 Copy Link
+            Copy link
           </button>
         </div>
-        <div class="flex items-center gap-2">
-          <span id="player-role-badge" class="px-2 py-0.5 rounded-full text-[11px] font-semibold bg-slate-100 text-slate-600">Player 1</span>
-          <button 
-            type="button"
-            onclick="leaveRoom()" 
-            class="text-slate-400 hover:text-rose-500 text-xs px-1 py-0.5 rounded transition"
-            title="Leave room"
-          >
-            ✕
-          </button>
-        </div>
-      </div>
-
-      <!-- Question Card -->
-      <div class="bg-gradient-to-br from-rose-50 to-pink-50/60 border border-rose-100 p-5 rounded-2xl text-center space-y-1">
-        <div class="text-[10px] font-extrabold text-rose-400 uppercase tracking-widest">Question</div>
-        <h2 id="current-question-text" class="text-base sm:text-lg font-bold text-slate-800 leading-snug">Loading question...</h2>
-      </div>
-
-      <!-- Quick Action: Custom Question -->
-      <div class="flex items-center justify-between text-xs px-1">
         <button 
           type="button"
-          onclick="promptCustomQuestion()" 
-          class="text-slate-500 hover:text-rose-600 transition flex items-center gap-1 font-semibold text-[11px]"
+          onclick="leaveRoom()" 
+          class="text-purple-300/60 hover:text-rose-400 text-[11px] font-medium transition"
         >
-          ✏️ <span>Write custom question</span>
+          Exit
         </button>
-        <span class="text-[11px] text-emerald-600 font-medium inline-flex items-center gap-1">
-          <span class="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-ping"></span> Synced
-        </span>
+      </div>
+
+      <!-- Vibrant Minimal Question Card -->
+      <div class="bg-[#291b3b] border border-purple-900/50 rounded-2xl p-5 text-center space-y-1.5 shadow-lg">
+        <span class="text-[10px] font-bold uppercase tracking-widest text-rose-400">Current Question</span>
+        <h2 id="current-question-text" class="text-base font-semibold text-white leading-snug">Loading...</h2>
       </div>
 
       <!-- Secret Input Section -->
-      <div id="answer-form-box" class="space-y-3 pt-1">
-        <label for="my-answer-input" class="block text-xs font-bold text-slate-600">Your Secret Answer:</label>
+      <div id="answer-form-box" class="space-y-2.5">
         <textarea 
           id="my-answer-input" 
           rows="2" 
-          placeholder="Type your answer (kept secret until you both submit)..." 
-          class="w-full p-3.5 bg-slate-50 border border-slate-200 rounded-2xl focus:bg-white focus:outline-none focus:ring-2 focus:ring-rose-400 text-sm font-medium resize-none transition"
+          placeholder="Type your secret answer here..." 
+          class="w-full p-3.5 bg-[#291b3b] border border-purple-900/50 rounded-xl text-sm font-normal text-white placeholder:text-purple-300/40 resize-none transition"
         ></textarea>
         <button 
           id="lock-in-btn" 
           type="button"
           onclick="submitMyAnswer()" 
-          class="w-full py-3.5 bg-gradient-to-r from-rose-500 to-pink-500 text-white font-bold rounded-2xl shadow hover:shadow-md active:scale-98 transition text-sm flex items-center justify-center gap-2"
+          class="w-full py-3 bg-rose-500 hover:bg-rose-400 text-white font-bold rounded-xl text-xs uppercase tracking-wider transition active:scale-[0.99] shadow-md shadow-rose-950/40 flex items-center justify-center gap-1.5"
         >
-          <span>🔒</span> Lock In My Answer
+          Lock In Answer
         </button>
       </div>
 
-      <!-- Live Partner Status Cards -->
-      <div class="grid grid-cols-2 gap-2.5 pt-1">
-        <div id="p1-card" class="p-3 bg-white border border-slate-200 rounded-2xl text-center space-y-1 transition duration-200">
-          <div id="p1-name-display" class="text-xs font-bold text-slate-700 truncate">Player 1</div>
-          <div id="p1-status-pill" class="inline-flex items-center gap-1 text-[10px] font-semibold text-slate-400 bg-slate-100 px-2 py-0.5 rounded-full">
-            <span>Thinking...</span>
-          </div>
+      <!-- Live Player Presence Status -->
+      <div class="grid grid-cols-2 gap-2 text-xs">
+        <div class="bg-[#291b3b] border border-purple-900/40 rounded-xl p-3 text-center space-y-1">
+          <div id="p1-name-display" class="font-semibold text-purple-100 truncate">Player 1</div>
+          <div id="p1-status-pill" class="text-[10px] text-purple-300/60 font-medium">Thinking...</div>
         </div>
-        <div id="p2-card" class="p-3 bg-white border border-slate-200 rounded-2xl text-center space-y-1 transition duration-200">
-          <div id="p2-name-display" class="text-xs font-bold text-slate-700 truncate">Waiting for partner...</div>
-          <div id="p2-status-pill" class="inline-flex items-center gap-1 text-[10px] font-semibold text-slate-400 bg-slate-100 px-2 py-0.5 rounded-full">
-            <span>Not joined yet</span>
-          </div>
+        <div class="bg-[#291b3b] border border-purple-900/40 rounded-xl p-3 text-center space-y-1">
+          <div id="p2-name-display" class="font-semibold text-purple-100 truncate">Waiting...</div>
+          <div id="p2-status-pill" class="text-[10px] text-purple-300/60 font-medium">Not joined</div>
         </div>
       </div>
 
-      <!-- Simultaneous Reveal Area (Hidden until both submit) -->
-      <div id="reveal-container" class="hidden space-y-4 pt-3 border-t border-rose-100">
-        <div class="text-center">
-          <span class="inline-block px-3 py-1 bg-amber-100 text-amber-800 text-[11px] font-extrabold rounded-full uppercase tracking-wider mb-1">
-            🎉 Answers Revealed!
-          </span>
-          <p class="text-xs text-slate-500 font-medium">How well did your answers match up?</p>
-        </div>
-
-        <div class="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
-          <div class="p-3.5 bg-rose-50/80 border border-rose-200/70 rounded-2xl">
-            <div id="revealed-p1-label" class="text-xs font-bold text-rose-700 mb-1">Player 1:</div>
-            <p id="revealed-p1-text" class="text-sm font-semibold text-slate-800 break-words whitespace-pre-wrap">--</p>
+      <!-- Answers Reveal Area -->
+      <div id="reveal-container" class="hidden space-y-3 pt-1">
+        <div class="grid grid-cols-1 gap-2.5">
+          <div class="p-3.5 bg-[#201430] border border-rose-500/30 rounded-xl space-y-1">
+            <span id="revealed-p1-label" class="block text-[10px] font-bold uppercase tracking-wider text-rose-300">Player 1</span>
+            <p id="revealed-p1-text" class="text-sm font-medium text-white whitespace-pre-wrap leading-relaxed">--</p>
           </div>
-          <div class="p-3.5 bg-pink-50/80 border border-pink-200/70 rounded-2xl">
-            <div id="revealed-p2-label" class="text-xs font-bold text-pink-700 mb-1">Player 2:</div>
-            <p id="revealed-p2-text" class="text-sm font-semibold text-slate-800 break-words whitespace-pre-wrap">--</p>
+          <div class="p-3.5 bg-[#201430] border border-purple-500/30 rounded-xl space-y-1">
+            <span id="revealed-p2-label" class="block text-[10px] font-bold uppercase tracking-wider text-purple-300">Player 2</span>
+            <p id="revealed-p2-text" class="text-sm font-medium text-white whitespace-pre-wrap leading-relaxed">--</p>
           </div>
         </div>
 
         <button 
           type="button"
           onclick="nextQuestion()" 
-          class="w-full py-3 bg-slate-900 hover:bg-slate-800 text-white font-bold rounded-2xl active:scale-98 transition text-sm flex items-center justify-center gap-1.5 shadow"
+          class="w-full py-3 bg-[#382552] hover:bg-[#432d61] text-purple-100 font-bold rounded-xl text-xs uppercase tracking-wider transition active:scale-[0.99] border border-purple-800/50"
         >
-          <span>Next Question ➡️</span>
+          Next Question →
         </button>
       </div>
 
     </main>
 
-    <!-- Floating Toast Notification -->
+    <!-- Subtle Floating Toast Message -->
     <div 
       id="toast" 
-      class="fixed bottom-6 left-1/2 -translate-x-1/2 hidden bg-slate-900/90 text-white px-4 py-2.5 rounded-xl text-xs font-semibold backdrop-blur shadow-lg transition duration-200 z-50 text-center max-w-[90vw]"
+      class="fixed bottom-6 left-1/2 -translate-x-1/2 hidden bg-[#291b3b] text-white border border-purple-800/60 px-4 py-2.5 rounded-xl text-xs font-medium shadow-2xl z-50 transition"
     >
       Notification
-    </div>
-
-    <!-- Simple Custom Question Modal -->
-    <div id="modal-container" class="fixed inset-0 bg-slate-900/40 backdrop-blur-sm hidden flex items-center justify-center p-4 z-40">
-      <div class="bg-white rounded-3xl p-6 max-w-sm w-full space-y-4 shadow-xl">
-        <h3 class="text-base font-bold text-slate-800">Write a Custom Question</h3>
-        <textarea 
-          id="custom-q-input" 
-          rows="3" 
-          placeholder="e.g. What was the exact moment you fell in love with me?" 
-          class="w-full p-3 bg-slate-50 border border-slate-200 rounded-2xl focus:bg-white focus:outline-none focus:ring-2 focus:ring-rose-400 text-sm font-medium"
-        ></textarea>
-        <div class="flex gap-2">
-          <button 
-            type="button"
-            onclick="closeCustomQuestionModal()" 
-            class="flex-1 py-2.5 bg-slate-100 text-slate-600 font-semibold rounded-xl text-xs hover:bg-slate-200 transition"
-          >
-            Cancel
-          </button>
-          <button 
-            type="button"
-            onclick="submitCustomQuestion()" 
-            class="flex-1 py-2.5 bg-rose-500 text-white font-bold rounded-xl text-xs hover:bg-rose-600 transition"
-          >
-            Set Question
-          </button>
-        </div>
-      </div>
     </div>
 
   </div>
 
   <script>
-    /* =========================================================================
-       1. FIREBASE CONFIGURATION
-       Paste your Firebase credentials here from the Firebase Console:
-       Firebase Console -> Project Settings -> Your Apps -> Web app
-       ========================================================================= */
     const firebaseConfig = {
-    apiKey: "AIzaSyAaVc7IRNLksoKv6PDXE2Vs7D_K3QzHgCc",
-    authDomain: "couplequizzes-57680.firebaseapp.com",
-    databaseURL: "https://couplequizzes-57680-default-rtdb.firebaseio.com",
-    projectId: "couplequizzes-57680",
-    storageBucket: "couplequizzes-57680.firebasestorage.app",
-    messagingSenderId: "881639719010",
-    appId: "1:881639719010:web:3b63772e8221096a4ed13b"
-  };
+      apiKey: "AIzaSyAaVc7IRNLksoKv6PDXE2Vs7D_K3QzHgCc",
+      authDomain: "couplequizzes-57680.firebaseapp.com",
+      databaseURL: "https://couplequizzes-57680-default-rtdb.firebaseio.com",
+      projectId: "couplequizzes-57680",
+      storageBucket: "couplequizzes-57680.firebasestorage.app",
+      messagingSenderId: "881639719010",
+      appId: "1:881639719010:web:3b63772e8221096a4ed13b"
+    };
 
-
-    // 15 Fun, Romantic, and Playful Couple Questions
     const COUPLE_QUESTIONS = [
       "What is my absolute favorite comfort food?",
       "Where is my dream vacation destination with you?",
@@ -295,36 +224,33 @@
       "What song reminds you the most of us?",
       "What is something silly that instantly makes me laugh?",
       "Who takes longer to get ready before leaving the house?",
-      "What is my go-to drink order when getting coffee or boba?",
+      "What is my go-to coffee or drink order?",
       "What is one habit of mine that you secretly find adorable?",
       "If we could adopt any pet tomorrow, what would it be?",
       "What is your single favorite memory of us together?",
-      "What was the first movie or show we binged together?",
+      "What was the first movie or show we watched together?",
       "What is my biggest pet peeve?",
       "Who said 'I love you' first, and where were we?",
       "What is something you think I cannot live without?",
       "If you could describe our relationship in three words, what are they?"
     ];
 
-    // State
     let db = null;
     let roomRef = null;
     let currentRoomCode = null;
-    let myRole = null; // 'player1' or 'player2'
+    let myRole = null;
     let myName = "Player";
     let roomListener = null;
 
-    // Toast helper
     function showToast(msg) {
       const toast = document.getElementById("toast");
       toast.innerText = msg;
       toast.classList.remove("hidden");
       setTimeout(() => {
         toast.classList.add("hidden");
-      }, 3200);
+      }, 2800);
     }
 
-    // Initialize Firebase
     function setupFirebase() {
       try {
         if (!firebase.apps.length) {
@@ -332,11 +258,10 @@
         }
         db = firebase.database();
       } catch (err) {
-        console.warn("Firebase setup warning: please ensure your credentials are pasted in firebaseConfig.", err);
+        console.warn("Firebase initialization warning:", err);
       }
     }
 
-    // Check URL parameters for direct invite link (?room=123456)
     function checkUrlForRoomCode() {
       const params = new URLSearchParams(window.location.search);
       const roomParam = params.get("room");
@@ -350,25 +275,26 @@
 
     function toggleJoinSection(show) {
       const box = document.getElementById("join-box");
+      const toggleBtn = document.getElementById("toggle-join-btn");
       if (show) {
         box.classList.remove("hidden");
+        toggleBtn.classList.add("hidden");
         document.getElementById("join-code-input").focus();
       } else {
-        box.classList.toggle("hidden");
+        box.classList.add("hidden");
+        toggleBtn.classList.remove("hidden");
       }
     }
 
-    // Screen 1: Create a room (Host / Player 1)
     function createRoom() {
       const nameVal = document.getElementById("player-name-input").value.trim();
       myName = nameVal || "Player 1";
 
       if (!db) {
-        showToast("Firebase not connected. Check your firebaseConfig keys!");
+        showToast("Unable to reach database.");
         return;
       }
 
-      // Generate random 6-digit room code
       const roomCode = Math.floor(100000 + Math.random() * 900000).toString();
       currentRoomCode = roomCode;
       myRole = "player1";
@@ -386,21 +312,20 @@
         .then(() => {
           attachRoomListener();
           switchToGameUI();
-          showToast("Room created! Copy the invite link to send to your partner.");
+          showToast("Room created! Copy link to invite.");
         })
         .catch((err) => {
           console.error(err);
-          showToast("Error creating room. Check your Firebase database rules.");
+          showToast("Error creating room. Check database rules.");
         });
     }
 
-    // Screen 1: Join an existing room (Partner / Player 2)
     function joinRoom() {
       const nameVal = document.getElementById("player-name-input").value.trim();
       const codeVal = document.getElementById("join-code-input").value.trim().toUpperCase();
 
       if (!codeVal || codeVal.length < 5) {
-        showToast("Please enter a valid room code.");
+        showToast("Enter a 6-digit room code.");
         return;
       }
 
@@ -409,7 +334,7 @@
       myRole = "player2";
 
       if (!db) {
-        showToast("Firebase not connected. Check your firebaseConfig keys!");
+        showToast("Unable to reach database.");
         return;
       }
 
@@ -418,33 +343,31 @@
         .then((snapshot) => {
           const val = snapshot.val();
           if (!val) {
-            showToast("Room not found! Check code with your partner.");
+            showToast("Room not found.");
             return;
           }
 
-          // Register player 2 name
           roomRef.child("player2").update({
             name: myName
           });
 
           attachRoomListener();
           switchToGameUI();
-          showToast("Joined room " + codeVal + "!");
+          showToast("Joined room.");
         })
         .catch((err) => {
           console.error(err);
-          showToast("Could not connect to room. Check Firebase database rules.");
+          showToast("Could not join room.");
         });
     }
 
-    // Copy Invite Link directly to clipboard
     function copyInviteLink() {
       if (!currentRoomCode) return;
       const url = `${window.location.origin}${window.location.pathname}?room=${currentRoomCode}`;
       
       if (navigator.clipboard && window.isSecureContext) {
         navigator.clipboard.writeText(url)
-          .then(() => showToast("Invite link copied to clipboard! 📋"))
+          .then(() => showToast("Link copied to clipboard!"))
           .catch(() => fallbackCopy(url));
       } else {
         fallbackCopy(url);
@@ -458,14 +381,13 @@
       tempInput.select();
       try {
         document.execCommand('copy');
-        showToast("Invite link copied! 📋");
+        showToast("Link copied!");
       } catch (e) {
         showToast("Room code: " + currentRoomCode);
       }
       document.body.removeChild(tempInput);
     }
 
-    // Listen for realtime room changes from Firebase
     function attachRoomListener() {
       if (!roomRef) return;
       if (roomListener) roomRef.off("value", roomListener);
@@ -477,53 +399,45 @@
       });
     }
 
-    // Update the UI on any Firebase snapshot
     function renderGameState(data) {
       const p1 = data.player1 || { name: "Player 1", submitted: false, answer: "" };
       const p2 = data.player2 || { name: "", submitted: false, answer: "" };
 
-      // Update question text
       document.getElementById("current-question-text").innerText = data.questionText || COUPLE_QUESTIONS[0];
-
-      // Update player display names
       document.getElementById("p1-name-display").innerText = p1.name || "Player 1";
-      document.getElementById("p2-name-display").innerText = p2.name ? p2.name : "Waiting for partner...";
+      document.getElementById("p2-name-display").innerText = p2.name ? p2.name : "Waiting...";
 
-      // Update player status pills
       updatePill("p1-status-pill", p1.name, p1.submitted);
       updatePill("p2-status-pill", p2.name, p2.submitted);
 
-      // Manage local player input box & lock-in button
       const me = myRole === "player1" ? p1 : p2;
       const lockInBtn = document.getElementById("lock-in-btn");
       const answerInput = document.getElementById("my-answer-input");
 
       if (me && me.submitted) {
         lockInBtn.disabled = true;
-        lockInBtn.classList.add("opacity-50", "cursor-not-allowed");
-        lockInBtn.innerHTML = `<span>✓</span> Locked In! Waiting for partner...`;
+        lockInBtn.classList.add("opacity-40", "cursor-not-allowed");
+        lockInBtn.innerText = "Locked in. Waiting for partner...";
         answerInput.disabled = true;
       } else {
         lockInBtn.disabled = false;
-        lockInBtn.classList.remove("opacity-50", "cursor-not-allowed");
-        lockInBtn.innerHTML = `<span>🔒</span> Lock In My Answer`;
+        lockInBtn.classList.remove("opacity-40", "cursor-not-allowed");
+        lockInBtn.innerText = "Lock In Answer";
         answerInput.disabled = false;
       }
 
-      // Check Simultaneous Reveal
       const revealContainer = document.getElementById("reveal-container");
       const bothSubmitted = p1.submitted && p2.submitted;
 
       if (bothSubmitted) {
         revealContainer.classList.remove("hidden");
-        document.getElementById("revealed-p1-label").innerText = `${p1.name || "Player 1"} wrote:`;
-        document.getElementById("revealed-p2-label").innerText = `${p2.name || "Player 2"} wrote:`;
+        document.getElementById("revealed-p1-label").innerText = p1.name || "Player 1";
+        document.getElementById("revealed-p2-label").innerText = p2.name || "Player 2";
         document.getElementById("revealed-p1-text").innerText = p1.answer || "(No answer)";
         document.getElementById("revealed-p2-text").innerText = p2.answer || "(No answer)";
 
         if (!data.revealed) {
           triggerConfetti();
-          // Let host mark as revealed
           if (myRole === "player1") {
             roomRef.update({ revealed: true });
           }
@@ -536,27 +450,26 @@
     function updatePill(pillId, playerName, isSubmitted) {
       const el = document.getElementById(pillId);
       if (!playerName) {
-        el.className = "inline-flex items-center gap-1 text-[10px] font-semibold text-slate-400 bg-slate-100 px-2 py-0.5 rounded-full";
-        el.innerText = "Not joined yet";
+        el.className = "text-[10px] text-purple-300/40 font-medium";
+        el.innerText = "Not joined";
         return;
       }
 
       if (isSubmitted) {
-        el.className = "inline-flex items-center gap-1 text-[10px] font-bold text-emerald-700 bg-emerald-100 px-2 py-0.5 rounded-full";
-        el.innerHTML = `<span>✓</span> Locked In`;
+        el.className = "text-[10px] font-bold text-rose-400";
+        el.innerText = "Locked in ✓";
       } else {
-        el.className = "inline-flex items-center gap-1 text-[10px] font-semibold text-amber-700 bg-amber-100 px-2 py-0.5 rounded-full";
-        el.innerHTML = `<span>Thinking...</span>`;
+        el.className = "text-[10px] text-purple-300/60 font-medium";
+        el.innerText = "Thinking...";
       }
     }
 
-    // Submit user's answer
     function submitMyAnswer() {
       const input = document.getElementById("my-answer-input");
       const answer = input.value.trim();
 
       if (!answer) {
-        showToast("Please write something before locking in! 😊");
+        showToast("Write your answer first!");
         return;
       }
 
@@ -568,7 +481,6 @@
       }
     }
 
-    // Next Question (resets submitted states & answers for both players)
     function nextQuestion() {
       if (!roomRef) return;
 
@@ -592,52 +504,12 @@
       });
     }
 
-    // Custom question modal controls
-    function promptCustomQuestion() {
-      document.getElementById("custom-q-input").value = "";
-      document.getElementById("modal-container").classList.remove("hidden");
-    }
-
-    function closeCustomQuestionModal() {
-      document.getElementById("modal-container").classList.add("hidden");
-    }
-
-    function submitCustomQuestion() {
-      const text = document.getElementById("custom-q-input").value.trim();
-      if (!text) {
-        showToast("Please enter a question.");
-        return;
-      }
-
-      if (roomRef) {
-        roomRef.once("value").then((snap) => {
-          const data = snap.val() || {};
-          const p1Name = data.player1?.name || "Player 1";
-          const p2Name = data.player2?.name || "Player 2";
-
-          roomRef.update({
-            questionText: text,
-            revealed: false,
-            player1: { name: p1Name, answer: "", submitted: false },
-            player2: { name: p2Name, answer: "", submitted: false }
-          });
-
-          document.getElementById("my-answer-input").value = "";
-          closeCustomQuestionModal();
-          showToast("Custom question updated for both! ✨");
-        });
-      }
-    }
-
-    // Switch view from Lobby to Game UI
     function switchToGameUI() {
       document.getElementById("lobby-screen").classList.add("hidden");
       document.getElementById("game-screen").classList.remove("hidden");
       document.getElementById("active-room-code").innerText = currentRoomCode;
-      document.getElementById("player-role-badge").innerText = myRole === "player1" ? "Host (P1)" : "Partner (P2)";
     }
 
-    // Leave room
     function leaveRoom() {
       if (roomRef && roomListener) {
         roomRef.off("value", roomListener);
@@ -645,19 +517,17 @@
       window.location.href = window.location.pathname;
     }
 
-    // Celebrate simultaneous reveal with confetti
     function triggerConfetti() {
       if (typeof confetti === "function") {
         confetti({
-          particleCount: 80,
-          spread: 70,
+          particleCount: 50,
+          spread: 60,
           origin: { y: 0.65 },
-          colors: ['#f43f5e', '#ec4899', '#f472b6', '#ffd1dc']
+          colors: ['#f43f5e', '#fb7185', '#d946ef', '#c084fc']
         });
       }
     }
 
-    // Boot on window load
     window.addEventListener("DOMContentLoaded", () => {
       setupFirebase();
       checkUrlForRoomCode();
