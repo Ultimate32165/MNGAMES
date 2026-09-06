@@ -1,0 +1,809 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <title>Know Me — Couples Quiz</title>
+
+  <!-- Tailwind CSS -->
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Playfair+Display:ital,wght@0,600;1,600&display=swap" rel="stylesheet">
+
+  <!-- Confetti Canvas -->
+  <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+
+  <!-- Shared CSS from root -->
+  <link rel="stylesheet" href="../style.css" />
+
+  <!-- Firebase Compat Libraries -->
+  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-database-compat.js"></script>
+
+  <!-- Shared Firebase & Theme Engine from root -->
+  <script src="../firebase-init.js"></script>
+
+  <!-- Questions Library (in /knowme/ folder) -->
+  <script src="questions.js"></script>
+</head>
+<body class="flex flex-col items-center justify-between p-4 selection:bg-rose-100 selection:text-rose-800">
+
+  <!-- TOP BAR -->
+  <header class="w-full max-w-lg flex items-center justify-between py-2">
+    <div class="flex items-center gap-2">
+      <a href="../index.html" class="text-xs font-extrabold uppercase tracking-widest text-[var(--subtext)] hover:text-[var(--accent)] transition">← Hub</a>
+      <span class="text-xs font-extrabold uppercase tracking-widest text-[var(--subtext)]">/ KnowMe</span>
+      <span id="header-room-pill" class="hidden text-xs font-mono font-bold px-2 py-0.5 rounded-md card-style border"></span>
+    </div>
+
+    <!-- Controls: Leave Button & Theme Switcher -->
+    <div class="flex items-center gap-2">
+      <button 
+        id="header-leave-btn"
+        type="button"
+        onclick="leaveGame()"
+        class="hidden text-xs font-bold px-2.5 py-1.5 rounded-xl border border-[var(--border)] secondary-btn hover:text-[var(--accent)] transition"
+        title="Leave Room"
+      >
+        ✕ Leave
+      </button>
+
+      <div class="relative">
+        <button 
+          type="button"
+          onclick="toggleThemeDropdown()" 
+          class="text-xs font-semibold px-2.5 py-1.5 rounded-xl border border-[var(--border)] secondary-btn transition flex items-center gap-1.5"
+        >
+          <span>🎨</span>
+          <span id="current-theme-name" class="capitalize">Clean</span>
+        </button>
+        <div id="theme-menu" class="hidden absolute right-0 mt-1.5 w-32 card-style border rounded-2xl shadow-lg p-1.5 z-50 space-y-1 text-xs font-medium">
+          <button onclick="setSharedTheme('clean')" class="w-full text-left px-3 py-1.5 rounded-xl hover:bg-[var(--border)] transition">Clean (Light)</button>
+          <button onclick="setSharedTheme('midnight')" class="w-full text-left px-3 py-1.5 rounded-xl hover:bg-[var(--border)] transition">Midnight</button>
+          <button onclick="setSharedTheme('matcha')" class="w-full text-left px-3 py-1.5 rounded-xl hover:bg-[var(--border)] transition">Matcha</button>
+          <button onclick="setSharedTheme('dusk')" class="w-full text-left px-3 py-1.5 rounded-xl hover:bg-[var(--border)] transition">Dusk</button>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- MAIN CONTAINER -->
+  <main class="w-full max-w-lg my-auto py-2">
+
+    <!-- 1. LANDING SCREEN -->
+    <section id="screen-landing" class="card-style border rounded-3xl p-6 sm:p-8 space-y-5 text-center shadow-sm">
+      <div>
+        <h1 class="font-serif-title text-3xl sm:text-4xl font-bold tracking-tight">How Well Do You Know Me?</h1>
+        <p class="text-xs sm:text-sm text-[var(--subtext)] mt-1.5">A synchronized game of honest truths and wild guesses.</p>
+      </div>
+
+      <div class="space-y-1.5 text-left">
+        <label for="player-name-input" class="text-xs font-bold uppercase tracking-wider text-[var(--subtext)] pl-1">Your Name</label>
+        <input 
+          id="player-name-input" 
+          type="text" 
+          placeholder="e.g. Angie or Alex" 
+          maxlength="18"
+          class="w-full px-4 py-3 card-style border rounded-2xl focus:outline-none focus:ring-2 focus:ring-[var(--accent)] text-sm font-semibold transition" 
+        />
+      </div>
+
+      <div class="grid grid-cols-2 gap-3 pt-1">
+        <button 
+          type="button" 
+          onclick="openSetupModal()"
+          class="accent-btn p-4 rounded-2xl font-bold text-sm shadow active:scale-95 transition flex flex-col items-center justify-center gap-1"
+        >
+          <span class="text-xl">✨</span>
+          <span>Create Room</span>
+        </button>
+
+        <button 
+          type="button" 
+          onclick="toggleJoinField(true)"
+          class="card-style border secondary-btn text-[var(--text)] p-4 rounded-2xl font-bold text-sm active:scale-95 transition flex flex-col items-center justify-center gap-1"
+        >
+          <span class="text-xl">🔗</span>
+          <span>Join Room</span>
+        </button>
+      </div>
+
+      <!-- Join field -->
+      <div id="join-box" class="hidden pt-3 border-t border-[var(--border)] space-y-2.5">
+        <div class="flex gap-2">
+          <input 
+            id="join-code-input" 
+            type="text" 
+            placeholder="6-DIGIT CODE" 
+            maxlength="6"
+            class="flex-1 uppercase font-mono tracking-widest text-center px-4 py-3 card-style border rounded-2xl focus:outline-none focus:ring-2 focus:ring-[var(--accent)] text-sm font-bold" 
+          />
+          <button 
+            type="button" 
+            onclick="joinRoom()"
+            class="px-5 py-3 accent-btn rounded-2xl font-bold text-sm active:scale-95 transition shadow"
+          >
+            Enter
+          </button>
+        </div>
+      </div>
+    </section>
+
+    <!-- 2. ROOM SETUP MODAL (Host only) -->
+    <div id="setup-modal" class="fixed inset-0 bg-black/50 backdrop-blur-xs hidden flex items-center justify-center p-4 z-50">
+      <div class="card-style border rounded-3xl p-6 max-w-sm w-full space-y-5 shadow-xl">
+        <div class="text-center">
+          <h2 class="text-lg font-bold">Room Settings</h2>
+          <p class="text-xs text-[var(--subtext)]">Configure your quiz topics and length</p>
+        </div>
+
+        <!-- Question Count Stepper -->
+        <div class="flex items-center justify-between card-style border p-3 rounded-2xl">
+          <span class="text-xs font-bold uppercase tracking-wider text-[var(--subtext)]">Question Count</span>
+          <div class="flex items-center gap-3">
+            <button onclick="changeQCount(-2)" class="w-8 h-8 rounded-xl card-style border font-bold text-sm hover:bg-[var(--border)]">-</button>
+            <span id="setup-q-count" class="font-bold text-sm w-5 text-center">6</span>
+            <button onclick="changeQCount(2)" class="w-8 h-8 rounded-xl card-style border font-bold text-sm hover:bg-[var(--border)]">+</button>
+          </div>
+        </div>
+
+        <!-- Topic Selection -->
+        <div class="space-y-2">
+          <div class="flex items-center justify-between">
+            <span class="text-xs font-bold uppercase tracking-wider text-[var(--subtext)]">Pick Topics</span>
+            <button onclick="toggleAllTopics()" id="all-topics-btn" class="text-[11px] font-bold text-[var(--accent)] underline">Random / All</button>
+          </div>
+          <div id="topics-container" class="grid grid-cols-2 gap-2 text-xs font-semibold"></div>
+        </div>
+
+        <div class="flex gap-2.5 pt-2">
+          <button onclick="closeSetupModal()" class="flex-1 py-3 card-style border rounded-2xl font-bold text-xs secondary-btn transition">Cancel</button>
+          <button onclick="confirmCreateRoom()" class="flex-1 py-3 accent-btn rounded-2xl font-bold text-xs active:scale-95 transition shadow">Launch Room</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- 3. LOBBY & READY CHECK SCREEN -->
+    <section id="screen-lobby" class="hidden card-style border rounded-3xl p-6 sm:p-8 space-y-6 text-center shadow-sm">
+      <div>
+        <span class="text-[10px] font-extrabold uppercase tracking-widest text-[var(--subtext)]">Invite Your Partner</span>
+        <div class="flex items-center justify-center gap-2 mt-1">
+          <span id="lobby-code-display" class="font-mono text-2xl sm:text-3xl font-extrabold text-[var(--accent)] tracking-widest">------</span>
+          <button onclick="copyInviteLink()" class="text-xs font-bold px-2.5 py-1.5 card-style border rounded-xl secondary-btn active:scale-95 transition">📋 Copy</button>
+        </div>
+      </div>
+
+      <!-- Player Slots -->
+      <div class="grid grid-cols-2 gap-3">
+        <div id="lobby-p1-card" class="p-4 rounded-2xl card-style border text-center space-y-1">
+          <div id="lobby-p1-name" class="font-bold text-sm truncate">Player 1</div>
+          <div id="lobby-p1-status" class="text-[10px] font-bold px-2 py-0.5 rounded-full inline-block bg-amber-100 text-amber-800">Waiting...</div>
+        </div>
+        <div id="lobby-p2-card" class="p-4 rounded-2xl card-style border text-center space-y-1">
+          <div id="lobby-p2-name" class="font-bold text-sm truncate">Waiting for partner...</div>
+          <div id="lobby-p2-status" class="text-[10px] font-bold px-2 py-0.5 rounded-full inline-block bg-zinc-100 text-zinc-500">Not joined</div>
+        </div>
+      </div>
+
+      <button 
+        id="lobby-ready-btn"
+        type="button" 
+        onclick="toggleMyReadyState()"
+        class="w-full py-4 accent-btn rounded-2xl font-bold text-sm active:scale-98 transition shadow"
+      >
+        I'm Ready!
+      </button>
+      <p class="text-[11px] text-[var(--subtext)]">Game will start automatically once both of you tap Ready.</p>
+    </section>
+
+    <!-- 4. ACTIVE GAME SCREEN -->
+    <section id="screen-game" class="hidden space-y-5">
+      
+      <!-- Progress Dots & Timer -->
+      <div class="flex flex-col items-center gap-2">
+        <div id="progress-dots" class="flex gap-1.5"></div>
+        <div class="flex items-center gap-3 text-xs font-bold text-[var(--subtext)]">
+          <span id="round-indicator-label">ROUND 1 OF 6</span>
+          <span>•</span>
+          <span id="timer-label" class="font-mono text-[var(--accent)]">60s</span>
+        </div>
+      </div>
+
+      <!-- Main Question Card -->
+      <div class="card-style border rounded-3xl p-6 sm:p-8 text-center space-y-4 shadow-sm">
+        <div id="question-target-tag" class="inline-block px-3 py-1 rounded-full text-xs font-bold tracking-wide" style="background-color: var(--tag-bg); color: var(--tag-text);">
+          about you — answer honestly
+        </div>
+        <h2 id="question-text" class="text-xl sm:text-2xl font-bold leading-snug">Loading question...</h2>
+
+        <!-- Input Type A: Text Answer -->
+        <div id="text-input-section" class="space-y-3 pt-2">
+          <textarea 
+            id="text-answer-field" 
+            rows="2" 
+            placeholder="Type your answer here..."
+            class="w-full p-4 card-style border rounded-2xl focus:outline-none focus:ring-2 focus:ring-[var(--accent)] text-sm font-semibold resize-none transition"
+          ></textarea>
+        </div>
+
+        <!-- Input Type B: MCQ Options -->
+        <div id="mcq-options-section" class="hidden grid grid-cols-1 sm:grid-cols-2 gap-2 pt-2 text-left"></div>
+
+        <!-- Lock In Action -->
+        <button 
+          id="lock-btn"
+          type="button"
+          onclick="submitCurrentAnswer()"
+          class="accent-btn w-full py-3.5 rounded-2xl font-bold text-sm active:scale-98 transition shadow"
+        >
+          lock in ▷
+        </button>
+
+        <div id="waiting-notice" class="hidden text-xs font-semibold text-[var(--subtext)] animate-pulse">
+          Answer locked in! Waiting for partner to finish...
+        </div>
+      </div>
+
+      <!-- REVEAL SECTION -->
+      <div id="reveal-card" class="hidden card-style border rounded-3xl p-6 space-y-4 shadow-sm">
+        <div class="text-center">
+          <span class="text-xs font-extrabold uppercase tracking-wider text-[var(--accent)]">✨ Answers Revealed</span>
+        </div>
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+          <div class="p-4 rounded-2xl border border-[var(--border)] secondary-btn space-y-1">
+            <div id="reveal-p1-name" class="text-xs font-bold text-[var(--subtext)]">Player 1:</div>
+            <div id="reveal-p1-answer" class="text-sm font-bold break-words">--</div>
+          </div>
+          <div class="p-4 rounded-2xl border border-[var(--border)] secondary-btn space-y-1">
+            <div id="reveal-p2-name" class="text-xs font-bold text-[var(--subtext)]">Player 2:</div>
+            <div id="reveal-p2-answer" class="text-sm font-bold break-words">--</div>
+          </div>
+        </div>
+
+        <button 
+          type="button" 
+          onclick="proceedToNextRound()"
+          class="w-full py-3.5 accent-btn rounded-2xl font-bold text-sm active:scale-98 transition shadow"
+        >
+          Next Round ➡️
+        </button>
+      </div>
+
+    </section>
+
+    <!-- 5. PLAYER LEFT OVERLAY SCREEN -->
+    <section id="screen-left" class="hidden card-style border rounded-3xl p-8 space-y-4 text-center shadow-lg">
+      <span class="text-3xl">👋</span>
+      <h2 id="left-message-title" class="text-xl font-bold">Player Left</h2>
+      <p id="left-message-sub" class="text-xs sm:text-sm text-[var(--subtext)]">Your partner has left the game.</p>
+      <button 
+        type="button"
+        onclick="reloadToHome()"
+        class="w-full py-3.5 accent-btn rounded-2xl font-bold text-sm active:scale-98 transition shadow"
+      >
+        Back to Hub
+      </button>
+    </section>
+
+  </main>
+
+  <!-- 6. REALTIME EMOJI BAR -->
+  <footer id="emoji-bar" class="w-full max-w-xs flex items-center justify-around py-2.5 px-3 card-style border rounded-full shadow-md z-40">
+    <button onclick="sendEmoji('😂')" class="text-xl active:scale-125 transition">😂</button>
+    <button onclick="sendEmoji('😍')" class="text-xl active:scale-125 transition">😍</button>
+    <button onclick="sendEmoji('😱')" class="text-xl active:scale-125 transition">😱</button>
+    <button onclick="sendEmoji('😡')" class="text-xl active:scale-125 transition">😡</button>
+    <button onclick="sendEmoji('😭')" class="text-xl active:scale-125 transition">😭</button>
+    <button onclick="sendEmoji('🔥')" class="text-xl active:scale-125 transition">🔥</button>
+  </footer>
+
+  <script>
+    // Fallback questions if questions.js is absent
+    const DEFAULT_QUESTIONS = typeof QUESTION_BANK !== 'undefined' ? QUESTION_BANK : [
+      { topic: "food", type: "text", prompt: "What is {NAME}'s comfort food?" },
+      { topic: "love", type: "mcq", prompt: "What is {NAME}'s love language?", options: ["Words of affirmation", "Quality time", "Touch", "Surprises"] }
+    ];
+
+    const AVAILABLE_TOPICS = [
+      { id: "travelling", label: "Travelling ✈️" },
+      { id: "food", label: "Food 🍕" },
+      { id: "cute", label: "Cute 🧸" },
+      { id: "love", label: "Love 💕" },
+      { id: "anger", label: "Pet Peeves 😤" },
+      { id: "silly", label: "Silly 🤪" }
+    ];
+
+    // State
+    let roomRef = null;
+    let roomCode = null;
+    let myRole = null;
+    let myName = "Player";
+    let selectedTopics = ["travelling", "food", "cute", "love", "anger", "silly"];
+    let setupQCount = 6;
+    let selectedMcqChoice = null;
+    let timerInterval = null;
+    let lastRenderedRound = -1;
+    let autoAdvanceTimer = null;
+
+    function initSetupTopics() {
+      const container = document.getElementById("topics-container");
+      container.innerHTML = "";
+      AVAILABLE_TOPICS.forEach(topic => {
+        const isSelected = selectedTopics.includes(topic.id);
+        const btn = document.createElement("button");
+        btn.type = "button";
+        btn.id = `topic-btn-${topic.id}`;
+        btn.className = `p-2.5 rounded-xl border text-center transition ${
+          isSelected ? 'border-[var(--accent)] bg-[var(--tag-bg)] text-[var(--tag-text)]' : 'card-style opacity-70'
+        }`;
+        btn.innerText = topic.label;
+        btn.onclick = () => toggleTopic(topic.id);
+        container.appendChild(btn);
+      });
+    }
+
+    function toggleTopic(id) {
+      if (selectedTopics.includes(id)) {
+        if (selectedTopics.length > 1) {
+          selectedTopics = selectedTopics.filter(t => t !== id);
+        } else {
+          showToast("Keep at least one topic!");
+          return;
+        }
+      } else {
+        selectedTopics.push(id);
+      }
+      initSetupTopics();
+    }
+
+    function toggleAllTopics() {
+      selectedTopics = AVAILABLE_TOPICS.map(t => t.id);
+      initSetupTopics();
+      showToast("Selected all topics! 🎲");
+    }
+
+    function changeQCount(delta) {
+      setupQCount = Math.min(16, Math.max(4, setupQCount + delta));
+      document.getElementById("setup-q-count").innerText = setupQCount;
+    }
+
+    function openSetupModal() {
+      const name = document.getElementById("player-name-input").value.trim();
+      myName = name || "Player 1";
+      document.getElementById("setup-modal").classList.remove("hidden");
+      initSetupTopics();
+    }
+
+    function closeSetupModal() {
+      document.getElementById("setup-modal").classList.add("hidden");
+    }
+
+    function toggleJoinField(show) {
+      document.getElementById("join-box").classList.toggle("hidden", !show);
+      if (show) document.getElementById("join-code-input").focus();
+    }
+
+    function shuffleArray(arr) {
+      const a = [...arr];
+      for (let i = a.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [a[i], a[j]] = [a[j], a[i]];
+      }
+      return a;
+    }
+
+    function confirmCreateRoom() {
+      closeSetupModal();
+      roomCode = Math.floor(100000 + Math.random() * 900000).toString();
+      myRole = "player1";
+
+      let pool = DEFAULT_QUESTIONS.filter(q => selectedTopics.includes(q.topic));
+      if (!pool.length) pool = [...DEFAULT_QUESTIONS];
+      pool = shuffleArray(pool);
+
+      const rounds = [];
+      for (let i = 0; i < setupQCount; i++) {
+        const qTemplate = pool[i % pool.length];
+        const target = (i % 2 === 0) ? "p1" : "p2";
+        rounds.push({
+          target: target,
+          type: qTemplate.type,
+          rawPrompt: qTemplate.prompt,
+          options: qTemplate.options || null
+        });
+      }
+
+      const initialData = {
+        status: "lobby",
+        roomCode: roomCode,
+        totalRounds: setupQCount,
+        currentRound: 0,
+        rounds: rounds,
+        timerEnd: 0,
+        revealed: false,
+        player1: { name: myName, ready: false, answer: "", submitted: false },
+        player2: { name: "", ready: false, answer: "", submitted: false }
+      };
+
+      roomRef = db.ref("knowme_quiz_rooms/" + roomCode);
+      roomRef.set(initialData).then(() => {
+        listenToRoom();
+        showToast("Room created! Send code to your partner 💌");
+      });
+    }
+
+    function joinRoom() {
+      const name = document.getElementById("player-name-input").value.trim();
+      const code = document.getElementById("join-code-input").value.trim().toUpperCase();
+
+      if (!code || code.length < 6) {
+        showToast("Enter a valid 6-digit room code.");
+        return;
+      }
+
+      myName = name || "Player 2";
+      roomCode = code;
+      myRole = "player2";
+
+      roomRef = db.ref("knowme_quiz_rooms/" + code);
+      roomRef.once("value").then(snap => {
+        const data = snap.val();
+        if (!data) {
+          showToast("Room not found! Check code.");
+          return;
+        }
+        roomRef.child("player2").update({ name: myName });
+        listenToRoom();
+      });
+    }
+
+    function listenToRoom() {
+      document.getElementById("screen-landing").classList.add("hidden");
+      document.getElementById("header-room-pill").innerText = "#" + roomCode;
+      document.getElementById("header-room-pill").classList.remove("hidden");
+      document.getElementById("header-leave-btn").classList.remove("hidden");
+
+      roomRef.on("value", snap => {
+        const data = snap.val();
+        if (!data) return;
+
+        if (data.status === "abandoned") {
+          handlePartnerLeft(data.abandonedBy);
+          return;
+        }
+
+        if (data.status === "lobby") {
+          renderLobby(data);
+        } else if (data.status === "playing") {
+          renderGame(data);
+        }
+      });
+
+      db.ref("knowme_quiz_rooms/" + roomCode + "/emoji").on("value", snap => {
+        const val = snap.val();
+        if (val && val.char) displayFloatingEmoji(val.char);
+      });
+    }
+
+    function renderLobby(data) {
+      document.getElementById("screen-lobby").classList.remove("hidden");
+      document.getElementById("screen-game").classList.add("hidden");
+      document.getElementById("screen-left").classList.add("hidden");
+      document.getElementById("lobby-code-display").innerText = roomCode;
+
+      const p1 = data.player1 || {};
+      const p2 = data.player2 || {};
+
+      document.getElementById("lobby-p1-name").innerText = p1.name || "Player 1";
+      document.getElementById("lobby-p2-name").innerText = p2.name ? p2.name : "Waiting for partner...";
+
+      updateLobbyStatus("lobby-p1-status", p1.ready);
+      updateLobbyStatus("lobby-p2-status", p2.name ? p2.ready : false);
+
+      const me = myRole === "player1" ? p1 : p2;
+      const readyBtn = document.getElementById("lobby-ready-btn");
+      if (me.ready) {
+        readyBtn.innerText = "You're Ready ✓ (Waiting for partner)";
+        readyBtn.classList.add("opacity-60");
+      } else {
+        readyBtn.innerText = "I'm Ready!";
+        readyBtn.classList.remove("opacity-60");
+      }
+
+      if (myRole === "player1" && p1.ready && p2.ready) {
+        roomRef.update({
+          status: "playing",
+          currentRound: 0,
+          timerEnd: Date.now() + 60000
+        });
+      }
+    }
+
+    function updateLobbyStatus(elId, isReady) {
+      const el = document.getElementById(elId);
+      if (isReady) {
+        el.className = "text-[10px] font-bold px-2.5 py-0.5 rounded-full inline-block bg-emerald-100 text-emerald-800";
+        el.innerText = "Ready ✓";
+      } else {
+        el.className = "text-[10px] font-bold px-2.5 py-0.5 rounded-full inline-block bg-amber-100 text-amber-800";
+        el.innerText = "Waiting...";
+      }
+    }
+
+    function toggleMyReadyState() {
+      roomRef.child(myRole).update({ ready: true });
+    }
+
+    function renderGame(data) {
+      document.getElementById("screen-lobby").classList.add("hidden");
+      document.getElementById("screen-game").classList.remove("hidden");
+      document.getElementById("screen-left").classList.add("hidden");
+
+      const roundIdx = data.currentRound;
+      const roundObj = data.rounds[roundIdx];
+      const p1 = data.player1 || {};
+      const p2 = data.player2 || {};
+
+      if (lastRenderedRound !== roundIdx) {
+        lastRenderedRound = roundIdx;
+        selectedMcqChoice = null;
+        document.getElementById("text-answer-field").value = "";
+        if (autoAdvanceTimer) {
+          clearTimeout(autoAdvanceTimer);
+          autoAdvanceTimer = null;
+        }
+      }
+
+      const dotsContainer = document.getElementById("progress-dots");
+      dotsContainer.innerHTML = "";
+      for (let i = 0; i < data.totalRounds; i++) {
+        const dot = document.createElement("span");
+        dot.className = `w-2 h-2 rounded-full transition-all ${
+          i === roundIdx ? 'w-5 bg-[var(--accent)]' : (i < roundIdx ? 'bg-zinc-400' : 'bg-zinc-200')
+        }`;
+        dotsContainer.appendChild(dot);
+      }
+
+      document.getElementById("round-indicator-label").innerText = `ROUND ${roundIdx + 1} OF ${data.totalRounds}`;
+      
+      const targetName = roundObj.target === "p1" ? (p1.name || "Player 1") : (p2.name || "Player 2");
+      const isTargetMe = (myRole === "player1" && roundObj.target === "p1") || (myRole === "player2" && roundObj.target === "p2");
+
+      document.getElementById("question-target-tag").innerText = isTargetMe 
+        ? `☝️ about you — answer honestly` 
+        : `☝️ about ${targetName} — guess their answer`;
+
+      document.getElementById("question-text").innerText = roundObj.rawPrompt.replace("{NAME}", targetName);
+
+      const isMcq = (roundObj.type === "mcq" && Array.isArray(roundObj.options));
+      const textSection = document.getElementById("text-input-section");
+      const mcqSection = document.getElementById("mcq-options-section");
+
+      if (isMcq) {
+        textSection.classList.add("hidden");
+        mcqSection.classList.remove("hidden");
+        renderMcqOptions(roundObj.options);
+      } else {
+        mcqSection.classList.add("hidden");
+        textSection.classList.remove("hidden");
+      }
+
+      const me = myRole === "player1" ? p1 : p2;
+      const lockBtn = document.getElementById("lock-btn");
+      const waitNotice = document.getElementById("waiting-notice");
+
+      if (me.submitted) {
+        lockBtn.classList.add("hidden");
+        waitNotice.classList.remove("hidden");
+        document.getElementById("text-answer-field").disabled = true;
+      } else {
+        lockBtn.classList.remove("hidden");
+        waitNotice.classList.add("hidden");
+        document.getElementById("text-answer-field").disabled = false;
+      }
+
+      syncTimer(data.timerEnd);
+
+      const bothDone = p1.submitted && p2.submitted;
+      const revealCard = document.getElementById("reveal-card");
+
+      if (bothDone) {
+        revealCard.classList.remove("hidden");
+        document.getElementById("reveal-p1-name").innerText = `${p1.name || "Player 1"} wrote:`;
+        document.getElementById("reveal-p2-name").innerText = `${p2.name || "Player 2"} wrote:`;
+        document.getElementById("reveal-p1-answer").innerText = p1.answer || "(No answer)";
+        document.getElementById("reveal-p2-answer").innerText = p2.answer || "(No answer)";
+
+        if (!data.revealed) {
+          triggerConfetti();
+          if (myRole === "player1") roomRef.update({ revealed: true });
+        }
+      } else {
+        revealCard.classList.add("hidden");
+      }
+    }
+
+    function renderMcqOptions(options) {
+      const container = document.getElementById("mcq-options-section");
+      container.innerHTML = "";
+      options.forEach(opt => {
+        const btn = document.createElement("button");
+        btn.type = "button";
+        const isSelected = (selectedMcqChoice === opt);
+        btn.className = `p-3.5 rounded-2xl border text-sm font-semibold transition text-left ${
+          isSelected 
+            ? 'border-[var(--accent)] bg-[var(--tag-bg)] text-[var(--tag-text)] shadow-xs' 
+            : 'card-style hover:bg-[var(--border)]'
+        }`;
+        btn.innerText = opt;
+        btn.onclick = () => {
+          selectedMcqChoice = opt;
+          renderMcqOptions(options);
+        };
+        container.appendChild(btn);
+      });
+    }
+
+    function submitCurrentAnswer() {
+      let finalAns = "";
+      const textSection = document.getElementById("text-input-section");
+
+      if (!textSection.classList.contains("hidden")) {
+        finalAns = document.getElementById("text-answer-field").value.trim();
+      } else {
+        finalAns = selectedMcqChoice || "";
+      }
+
+      if (!finalAns) {
+        showToast("Please enter or pick an answer first! 😊");
+        return;
+      }
+
+      roomRef.child(myRole).update({
+        answer: finalAns,
+        submitted: true
+      });
+    }
+
+    function syncTimer(targetTime) {
+      if (timerInterval) clearInterval(timerInterval);
+      const timerLabel = document.getElementById("timer-label");
+
+      function update() {
+        const remaining = Math.max(0, Math.ceil((targetTime - Date.now()) / 1000));
+        timerLabel.innerText = remaining + "s";
+
+        if (remaining <= 0) {
+          clearInterval(timerInterval);
+
+          roomRef.child(myRole).once("value").then(snap => {
+            if (!snap.val()?.submitted) {
+              roomRef.child(myRole).update({
+                answer: "(Ran out of time ⏰)",
+                submitted: true
+              });
+            }
+          });
+
+          if (myRole === "player1" && !autoAdvanceTimer) {
+            autoAdvanceTimer = setTimeout(() => {
+              proceedToNextRound();
+            }, 4000);
+          }
+        }
+      }
+      update();
+      timerInterval = setInterval(update, 1000);
+    }
+
+    function proceedToNextRound() {
+      if (autoAdvanceTimer) {
+        clearTimeout(autoAdvanceTimer);
+        autoAdvanceTimer = null;
+      }
+
+      roomRef.once("value").then(snap => {
+        const data = snap.val();
+        if (!data) return;
+        const nextRound = data.currentRound + 1;
+
+        if (nextRound >= data.totalRounds) {
+          showToast("Quiz finished! Thanks for playing 💕");
+          return;
+        }
+
+        roomRef.update({
+          currentRound: nextRound,
+          revealed: false,
+          timerEnd: Date.now() + 60000,
+          "player1/answer": "",
+          "player1/submitted": false,
+          "player2/answer": "",
+          "player2/submitted": false
+        });
+      });
+    }
+
+    function leaveGame() {
+      if (!confirm("Are you sure you want to leave the game?")) return;
+
+      if (roomRef) {
+        roomRef.update({
+          status: "abandoned",
+          abandonedBy: myName
+        }).then(() => {
+          reloadToHome();
+        });
+      } else {
+        reloadToHome();
+      }
+    }
+
+    function handlePartnerLeft(leaverName) {
+      if (timerInterval) clearInterval(timerInterval);
+      if (autoAdvanceTimer) clearTimeout(autoAdvanceTimer);
+
+      document.getElementById("screen-lobby").classList.add("hidden");
+      document.getElementById("screen-game").classList.add("hidden");
+      document.getElementById("header-room-pill").classList.add("hidden");
+      document.getElementById("header-leave-btn").classList.add("hidden");
+
+      document.getElementById("screen-left").classList.remove("hidden");
+      document.getElementById("left-message-title").innerText = `${leaverName || "Partner"} Left`;
+      document.getElementById("left-message-sub").innerText = "The game session was ended.";
+    }
+
+    // Directs back to the root Hub
+    function reloadToHome() {
+      window.location.href = "../index.html";
+    }
+
+    function sendEmoji(char) {
+      if (roomRef) {
+        roomRef.child("emoji").set({ char: char, time: Date.now() });
+      }
+    }
+
+    function displayFloatingEmoji(char) {
+      const el = document.createElement("div");
+      el.className = "floating-emoji";
+      el.innerText = char;
+      el.style.left = `${30 + Math.random() * 40}%`;
+      document.body.appendChild(el);
+      setTimeout(() => el.remove(), 2000);
+    }
+
+    function copyInviteLink() {
+      const url = `${window.location.origin}${window.location.pathname}?room=${roomCode}`;
+      navigator.clipboard.writeText(url).then(() => showToast("Invite link copied! 📋"));
+    }
+
+    function checkUrlForInvite() {
+      const params = new URLSearchParams(window.location.search);
+      const room = params.get("room");
+      if (room) {
+        document.getElementById("join-code-input").value = room.toUpperCase();
+        toggleJoinField(true);
+      }
+    }
+
+    function triggerConfetti() {
+      if (typeof confetti === "function") {
+        confetti({
+          particleCount: 75,
+          spread: 70,
+          origin: { y: 0.65 }
+        });
+      }
+    }
+
+    window.addEventListener("DOMContentLoaded", () => {
+      checkUrlForInvite();
+    });
+  </script>
+</body>
+</html>

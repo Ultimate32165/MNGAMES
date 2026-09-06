@@ -1,0 +1,106 @@
+:root {
+  --bg: #fafafa;
+  --card: #ffffff;
+  --border: #e4e4e7;
+  --text: #18181b;
+  --subtext: #71717a;
+  --accent: #f43f5e;
+  --accent-hover: #e11d48;
+  --tag-bg: #ffe4e6;
+  --tag-text: #e11d48;
+  --btn-secondary: #f4f4f5;
+  --btn-secondary-hover: #e4e4e7;
+}
+
+[data-theme="midnight"] {
+  --bg: #09090b;
+  --card: #18181b;
+  --border: #27272a;
+  --text: #fafafa;
+  --subtext: #a1a1aa;
+  --accent: #fb7185;
+  --accent-hover: #f43f5e;
+  --tag-bg: #27272a;
+  --tag-text: #fda4af;
+  --btn-secondary: #27272a;
+  --btn-secondary-hover: #3f3f46;
+}
+
+[data-theme="matcha"] {
+  --bg: #f4f7f4;
+  --card: #ffffff;
+  --border: #dce5dc;
+  --text: #1e2920;
+  --subtext: #5e6d60;
+  --accent: #15803d;
+  --accent-hover: #166534;
+  --tag-bg: #dcfce7;
+  --tag-text: #15803d;
+  --btn-secondary: #e8efe8;
+  --btn-secondary-hover: #dbe4db;
+}
+
+[data-theme="dusk"] {
+  --bg: #1c1917;
+  --card: #292524;
+  --border: #44403c;
+  --text: #fafaf9;
+  --subtext: #a8a29e;
+  --accent: #f97316;
+  --accent-hover: #ea580c;
+  --tag-bg: #44403c;
+  --tag-text: #fdba74;
+  --btn-secondary: #44403c;
+  --btn-secondary-hover: #57534e;
+}
+
+body {
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  background-color: var(--bg);
+  color: var(--text);
+  min-height: 100vh;
+  min-height: 100dvh;
+  transition: background-color 0.2s ease, color 0.2s ease;
+}
+
+.font-serif-title {
+  font-family: 'Playfair Display', serif;
+}
+
+.card-style {
+  background-color: var(--card);
+  border-color: var(--border);
+}
+
+.accent-btn {
+  background-color: var(--accent);
+  color: #ffffff;
+}
+
+.accent-btn:hover {
+  background-color: var(--accent-hover);
+}
+
+.secondary-btn {
+  background-color: var(--btn-secondary);
+  color: var(--text);
+}
+
+.secondary-btn:hover {
+  background-color: var(--btn-secondary-hover);
+}
+
+.floating-emoji {
+  position: fixed;
+  bottom: 80px;
+  font-size: 2.2rem;
+  pointer-events: none;
+  z-index: 50;
+  animation: floatUp 2s cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
+}
+
+@keyframes floatUp {
+  0% { opacity: 1; transform: translateY(0) scale(0.6); }
+  40% { transform: translateY(-70px) scale(1.2); }
+  100% { opacity: 0; transform: translateY(-220px) scale(1); }
+}

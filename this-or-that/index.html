@@ -1,0 +1,759 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <title>This or That — Couples Quiz</title>
+
+  <!-- Tailwind CSS -->
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Playfair+Display:ital,wght@0,600;1,600&display=swap" rel="stylesheet">
+
+  <!-- Confetti Canvas -->
+  <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+
+  <!-- Shared CSS from root -->
+  <link rel="stylesheet" href="../style.css" />
+
+  <!-- Firebase Compat Libraries -->
+  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-database-compat.js"></script>
+
+  <!-- Shared Firebase & Theme Engine from root -->
+  <script src="../firebase-init.js"></script>
+
+  <!-- Prompts Data -->
+  <script src="prompts.js"></script>
+
+  <style>
+    .choice-card {
+      transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+    .choice-card:active {
+      transform: scale(0.97);
+    }
+    .choice-card.selected {
+      border-color: var(--accent);
+      background-color: var(--tag-bg);
+      color: var(--tag-text);
+      box-shadow: 0 4px 14px -2px rgba(244, 63, 94, 0.25);
+    }
+  </style>
+</head>
+<body class="flex flex-col items-center justify-between p-4 selection:bg-rose-100 selection:text-rose-800">
+
+  <!-- TOP BAR -->
+  <header class="w-full max-w-lg flex items-center justify-between py-2">
+    <div class="flex items-center gap-2">
+      <a href="../index.html" class="text-xs font-extrabold uppercase tracking-widest text-[var(--subtext)] hover:text-[var(--accent)] transition">← Hub</a>
+      <span class="text-xs font-extrabold uppercase tracking-widest text-[var(--subtext)]">/ This or That</span>
+      <span id="header-room-pill" class="hidden text-xs font-mono font-bold px-2 py-0.5 rounded-md card-style border"></span>
+    </div>
+
+    <!-- Controls: Leave Button & Theme Switcher -->
+    <div class="flex items-center gap-2">
+      <button 
+        id="header-leave-btn"
+        type="button"
+        onclick="leaveGame()"
+        class="hidden text-xs font-bold px-2.5 py-1.5 rounded-xl border border-[var(--border)] secondary-btn hover:text-[var(--accent)] transition"
+        title="Leave Room"
+      >
+        ✕ Leave
+      </button>
+
+      <div class="relative">
+        <button 
+          type="button"
+          onclick="toggleThemeDropdown()" 
+          class="text-xs font-semibold px-2.5 py-1.5 rounded-xl border border-[var(--border)] secondary-btn transition flex items-center gap-1.5"
+        >
+          <span>🎨</span>
+          <span id="current-theme-name" class="capitalize">Clean</span>
+        </button>
+        <div id="theme-menu" class="hidden absolute right-0 mt-1.5 w-32 card-style border rounded-2xl shadow-lg p-1.5 z-50 space-y-1 text-xs font-medium">
+          <button onclick="setSharedTheme('clean')" class="w-full text-left px-3 py-1.5 rounded-xl hover:bg-[var(--border)] transition">Clean (Light)</button>
+          <button onclick="setSharedTheme('midnight')" class="w-full text-left px-3 py-1.5 rounded-xl hover:bg-[var(--border)] transition">Midnight</button>
+          <button onclick="setSharedTheme('matcha')" class="w-full text-left px-3 py-1.5 rounded-xl hover:bg-[var(--border)] transition">Matcha</button>
+          <button onclick="setSharedTheme('dusk')" class="w-full text-left px-3 py-1.5 rounded-xl hover:bg-[var(--border)] transition">Dusk</button>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- MAIN CONTAINER -->
+  <main class="w-full max-w-lg my-auto py-2">
+
+    <!-- 1. LANDING SCREEN -->
+    <section id="screen-landing" class="card-style border rounded-3xl p-6 sm:p-8 space-y-5 text-center shadow-sm">
+      <div>
+        <h1 class="font-serif-title text-3xl sm:text-4xl font-bold tracking-tight">This or That</h1>
+        <p class="text-xs sm:text-sm text-[var(--subtext)] mt-1.5">Pick fast without overthinking. See where you match!</p>
+      </div>
+
+      <div class="space-y-1.5 text-left">
+        <label for="player-name-input" class="text-xs font-bold uppercase tracking-wider text-[var(--subtext)] pl-1">Your Name</label>
+        <input 
+          id="player-name-input" 
+          type="text" 
+          placeholder="e.g. Angie or Alex" 
+          maxlength="18"
+          class="w-full px-4 py-3 card-style border rounded-2xl focus:outline-none focus:ring-2 focus:ring-[var(--accent)] text-sm font-semibold transition" 
+        />
+      </div>
+
+      <div class="grid grid-cols-2 gap-3 pt-1">
+        <button 
+          type="button" 
+          onclick="openSetupModal()"
+          class="accent-btn p-4 rounded-2xl font-bold text-sm shadow active:scale-95 transition flex flex-col items-center justify-center gap-1"
+        >
+          <span class="text-xl">⚡</span>
+          <span>Create Room</span>
+        </button>
+
+        <button 
+          type="button" 
+          onclick="toggleJoinField(true)"
+          class="card-style border secondary-btn text-[var(--text)] p-4 rounded-2xl font-bold text-sm active:scale-95 transition flex flex-col items-center justify-center gap-1"
+        >
+          <span class="text-xl">🔗</span>
+          <span>Join Room</span>
+        </button>
+      </div>
+
+      <!-- Join field -->
+      <div id="join-box" class="hidden pt-3 border-t border-[var(--border)] space-y-2.5">
+        <div class="flex gap-2">
+          <input 
+            id="join-code-input" 
+            type="text" 
+            placeholder="6-DIGIT CODE" 
+            maxlength="6"
+            class="flex-1 uppercase font-mono tracking-widest text-center px-4 py-3 card-style border rounded-2xl focus:outline-none focus:ring-2 focus:ring-[var(--accent)] text-sm font-bold" 
+          />
+          <button 
+            type="button" 
+            onclick="joinRoom()"
+            class="px-5 py-3 accent-btn rounded-2xl font-bold text-sm active:scale-95 transition shadow"
+          >
+            Enter
+          </button>
+        </div>
+      </div>
+    </section>
+
+    <!-- 2. SETUP MODAL (Host only) -->
+    <div id="setup-modal" class="fixed inset-0 bg-black/50 backdrop-blur-xs hidden flex items-center justify-center p-4 z-50">
+      <div class="card-style border rounded-3xl p-6 max-w-sm w-full space-y-5 shadow-xl">
+        <div class="text-center">
+          <h2 class="text-lg font-bold">Rounds Setup</h2>
+          <p class="text-xs text-[var(--subtext)]">How many pairs do you want to compare?</p>
+        </div>
+
+        <div class="flex items-center justify-between card-style border p-3.5 rounded-2xl">
+          <span class="text-xs font-bold uppercase tracking-wider text-[var(--subtext)]">Rounds</span>
+          <div class="flex items-center gap-3">
+            <button onclick="changeRoundCount(-5)" class="w-8 h-8 rounded-xl card-style border font-bold text-sm hover:bg-[var(--border)]">-</button>
+            <span id="setup-round-count" class="font-bold text-sm w-6 text-center">15</span>
+            <button onclick="changeRoundCount(5)" class="w-8 h-8 rounded-xl card-style border font-bold text-sm hover:bg-[var(--border)]">+</button>
+          </div>
+        </div>
+
+        <div class="flex gap-2.5 pt-1">
+          <button onclick="closeSetupModal()" class="flex-1 py-3 card-style border rounded-2xl font-bold text-xs secondary-btn transition">Cancel</button>
+          <button onclick="confirmCreateRoom()" class="flex-1 py-3 accent-btn rounded-2xl font-bold text-xs active:scale-95 transition shadow">Launch Room</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- 3. LOBBY SCREEN -->
+    <section id="screen-lobby" class="hidden card-style border rounded-3xl p-6 sm:p-8 space-y-6 text-center shadow-sm">
+      <div>
+        <span class="text-[10px] font-extrabold uppercase tracking-widest text-[var(--subtext)]">Invite Your Partner</span>
+        <div class="flex items-center justify-center gap-2 mt-1">
+          <span id="lobby-code-display" class="font-mono text-2xl sm:text-3xl font-extrabold text-[var(--accent)] tracking-widest">------</span>
+          <button onclick="copyInviteLink()" class="text-xs font-bold px-2.5 py-1.5 card-style border rounded-xl secondary-btn active:scale-95 transition">📋 Copy</button>
+        </div>
+      </div>
+
+      <!-- Player Slots -->
+      <div class="grid grid-cols-2 gap-3">
+        <div id="lobby-p1-card" class="p-4 rounded-2xl card-style border text-center space-y-1">
+          <div id="lobby-p1-name" class="font-bold text-sm truncate">Player 1</div>
+          <div id="lobby-p1-status" class="text-[10px] font-bold px-2 py-0.5 rounded-full inline-block bg-amber-100 text-amber-800">Waiting...</div>
+        </div>
+        <div id="lobby-p2-card" class="p-4 rounded-2xl card-style border text-center space-y-1">
+          <div id="lobby-p2-name" class="font-bold text-sm truncate">Waiting for partner...</div>
+          <div id="lobby-p2-status" class="text-[10px] font-bold px-2 py-0.5 rounded-full inline-block bg-zinc-100 text-zinc-500">Not joined</div>
+        </div>
+      </div>
+
+      <button 
+        id="lobby-ready-btn"
+        type="button" 
+        onclick="toggleMyReadyState()"
+        class="w-full py-4 accent-btn rounded-2xl font-bold text-sm active:scale-98 transition shadow"
+      >
+        I'm Ready!
+      </button>
+      <p class="text-[11px] text-[var(--subtext)]">Game will start automatically once both of you tap Ready.</p>
+    </section>
+
+    <!-- 4. ACTIVE GAME SCREEN -->
+    <section id="screen-game" class="hidden space-y-5">
+      
+      <!-- Progress Bar & Timer -->
+      <div class="flex flex-col items-center gap-2">
+        <div class="w-full bg-[var(--border)] h-1.5 rounded-full overflow-hidden max-w-xs">
+          <div id="round-progress-bar" class="bg-[var(--accent)] h-full transition-all duration-300" style="width: 0%;"></div>
+        </div>
+        <div class="flex items-center gap-3 text-xs font-bold text-[var(--subtext)]">
+          <span id="round-indicator-label">ROUND 1 OF 15</span>
+          <span>•</span>
+          <span id="timer-label" class="font-mono text-[var(--accent)]">20s</span>
+        </div>
+      </div>
+
+      <!-- Active Comparison Card -->
+      <div class="card-style border rounded-3xl p-6 text-center space-y-4 shadow-sm">
+        <span class="text-[11px] font-extrabold uppercase tracking-widest text-[var(--subtext)]">Which do you prefer?</span>
+
+        <!-- Choice A -->
+        <button 
+          id="choice-btn-a"
+          type="button"
+          onclick="pickChoice('A')"
+          class="choice-card w-full p-5 rounded-2xl card-style border text-base font-bold text-center block"
+        >
+          Option A
+        </button>
+
+        <div class="text-xs font-bold text-[var(--subtext)] uppercase tracking-wider">or</div>
+
+        <!-- Choice B -->
+        <button 
+          id="choice-btn-b"
+          type="button"
+          onclick="pickChoice('B')"
+          class="choice-card w-full p-5 rounded-2xl card-style border text-base font-bold text-center block"
+        >
+          Option B
+        </button>
+
+        <div id="choice-status-msg" class="text-xs font-semibold text-[var(--subtext)] pt-1 min-h-[20px]">
+          Tap your favorite option!
+        </div>
+      </div>
+
+      <!-- REVEAL MODAL / BANNER (Shown for 2.5s between rounds) -->
+      <div id="round-result-card" class="hidden card-style border rounded-3xl p-5 text-center space-y-3 shadow-md">
+        <div id="result-match-badge" class="inline-block px-3 py-1 rounded-full text-xs font-extrabold uppercase tracking-wide"></div>
+        <div class="flex items-center justify-around text-xs font-bold pt-1">
+          <div class="space-y-0.5">
+            <div id="res-p1-name" class="text-[var(--subtext)]">Player 1</div>
+            <div id="res-p1-pick" class="font-extrabold text-sm">--</div>
+          </div>
+          <span class="text-base text-[var(--subtext)]">vs</span>
+          <div class="space-y-0.5">
+            <div id="res-p2-name" class="text-[var(--subtext)]">Player 2</div>
+            <div id="res-p2-pick" class="font-extrabold text-sm">--</div>
+          </div>
+        </div>
+      </div>
+
+    </section>
+
+    <!-- 5. FINAL RESULTS SCREEN -->
+    <section id="screen-results" class="hidden card-style border rounded-3xl p-6 sm:p-8 space-y-6 text-center shadow-md">
+      <div class="space-y-1">
+        <span class="text-3xl">🎉</span>
+        <h2 class="font-serif-title text-3xl font-bold">Compatibility Score</h2>
+        <p class="text-xs text-[var(--subtext)]">Here is how synchronized your instincts were!</p>
+      </div>
+
+      <!-- Big Percentage Circle -->
+      <div class="p-6 rounded-3xl border border-[var(--border)] secondary-btn inline-block mx-auto space-y-1">
+        <div id="final-percentage" class="text-5xl font-black text-[var(--accent)] tracking-tight">0%</div>
+        <div id="final-summary-quote" class="text-xs font-bold text-[var(--text)]">Calculating...</div>
+      </div>
+
+      <!-- Breakdown Stats -->
+      <div class="grid grid-cols-2 gap-3 text-xs">
+        <div class="card-style border p-3 rounded-2xl">
+          <div class="font-bold text-emerald-600 text-lg" id="matches-count">0</div>
+          <div class="text-[var(--subtext)] font-semibold">Matched Choices</div>
+        </div>
+        <div class="card-style border p-3 rounded-2xl">
+          <div class="font-bold text-amber-600 text-lg" id="differences-count">0</div>
+          <div class="text-[var(--subtext)] font-semibold">Opposites</div>
+        </div>
+      </div>
+
+      <!-- Actions -->
+      <div class="flex gap-2.5 pt-2">
+        <button 
+          onclick="reloadGame()" 
+          class="flex-1 py-3.5 card-style border rounded-2xl font-bold text-xs secondary-btn transition"
+        >
+          Play Again 🔄
+        </button>
+        <button 
+          onclick="reloadToHome()" 
+          class="flex-1 py-3.5 accent-btn rounded-2xl font-bold text-xs shadow active:scale-95 transition"
+        >
+          Back to Hub 🏠
+        </button>
+      </div>
+    </section>
+
+    <!-- 6. PLAYER LEFT SCREEN -->
+    <section id="screen-left" class="hidden card-style border rounded-3xl p-8 space-y-4 text-center shadow-lg">
+      <span class="text-3xl">👋</span>
+      <h2 id="left-message-title" class="text-xl font-bold">Partner Left</h2>
+      <p class="text-xs sm:text-sm text-[var(--subtext)]">The game session has ended.</p>
+      <button 
+        type="button"
+        onclick="reloadToHome()"
+        class="w-full py-3.5 accent-btn rounded-2xl font-bold text-sm active:scale-98 transition shadow"
+      >
+        Back to Hub
+      </button>
+    </section>
+
+  </main>
+
+  <!-- 7. REALTIME EMOJI BAR -->
+  <footer id="emoji-bar" class="w-full max-w-xs flex items-center justify-around py-2.5 px-3 card-style border rounded-full shadow-md z-40">
+    <button onclick="sendEmoji('😂')" class="text-xl active:scale-125 transition">😂</button>
+    <button onclick="sendEmoji('😍')" class="text-xl active:scale-125 transition">😍</button>
+    <button onclick="sendEmoji('😱')" class="text-xl active:scale-125 transition">😱</button>
+    <button onclick="sendEmoji('😡')" class="text-xl active:scale-125 transition">😡</button>
+    <button onclick="sendEmoji('😭')" class="text-xl active:scale-125 transition">😭</button>
+    <button onclick="sendEmoji('🔥')" class="text-xl active:scale-125 transition">🔥</button>
+  </footer>
+
+  <script>
+    const DEFAULT_PROMPTS = typeof THIS_OR_THAT_PROMPTS !== 'undefined' ? THIS_OR_THAT_PROMPTS : [
+      { optionA: "Cozy Night In 🛋️", optionB: "Exciting Night Out 🥂" },
+      { optionA: "Early Mornings 🌅", optionB: "Late Nights 🌙" }
+    ];
+
+    let roomRef = null;
+    let roomCode = null;
+    let myRole = null;
+    let myName = "Player";
+    let setupRoundsCount = 15;
+    let myPick = null;
+    let timerInterval = null;
+    let lastRenderedRound = -1;
+    let autoNextTimeout = null;
+
+    function openSetupModal() {
+      const name = document.getElementById("player-name-input").value.trim();
+      myName = name || "Player 1";
+      document.getElementById("setup-modal").classList.remove("hidden");
+    }
+
+    function closeSetupModal() {
+      document.getElementById("setup-modal").classList.add("hidden");
+    }
+
+    function changeRoundCount(delta) {
+      setupRoundsCount = Math.min(30, Math.max(5, setupRoundsCount + delta));
+      document.getElementById("setup-round-count").innerText = setupRoundsCount;
+    }
+
+    function toggleJoinField(show) {
+      document.getElementById("join-box").classList.toggle("hidden", !show);
+      if (show) document.getElementById("join-code-input").focus();
+    }
+
+    function shuffleArray(arr) {
+      const a = [...arr];
+      for (let i = a.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [a[i], a[j]] = [a[j], a[i]];
+      }
+      return a;
+    }
+
+    function confirmCreateRoom() {
+      closeSetupModal();
+      roomCode = Math.floor(100000 + Math.random() * 900000).toString();
+      myRole = "player1";
+
+      const shuffled = shuffleArray(DEFAULT_PROMPTS);
+      const rounds = shuffled.slice(0, setupRoundsCount);
+
+      const initialData = {
+        status: "lobby",
+        roomCode: roomCode,
+        totalRounds: setupRoundsCount,
+        currentRound: 0,
+        rounds: rounds,
+        timerEnd: 0,
+        revealed: false,
+        matchHistory: [],
+        player1: { name: myName, ready: false, choice: "", submitted: false },
+        player2: { name: "", ready: false, choice: "", submitted: false }
+      };
+
+      roomRef = db.ref("this_or_that_rooms/" + roomCode);
+      roomRef.set(initialData).then(() => {
+        listenToRoom();
+        showToast("Room created! Send code to your partner ⚡");
+      });
+    }
+
+    function joinRoom() {
+      const name = document.getElementById("player-name-input").value.trim();
+      const code = document.getElementById("join-code-input").value.trim().toUpperCase();
+
+      if (!code || code.length < 6) {
+        showToast("Enter a valid 6-digit room code.");
+        return;
+      }
+
+      myName = name || "Player 2";
+      roomCode = code;
+      myRole = "player2";
+
+      roomRef = db.ref("this_or_that_rooms/" + code);
+      roomRef.once("value").then(snap => {
+        const data = snap.val();
+        if (!data) {
+          showToast("Room not found! Check code.");
+          return;
+        }
+        roomRef.child("player2").update({ name: myName });
+        listenToRoom();
+      });
+    }
+
+    function listenToRoom() {
+      document.getElementById("screen-landing").classList.add("hidden");
+      document.getElementById("header-room-pill").innerText = "#" + roomCode;
+      document.getElementById("header-room-pill").classList.remove("hidden");
+      document.getElementById("header-leave-btn").classList.remove("hidden");
+
+      roomRef.on("value", snap => {
+        const data = snap.val();
+        if (!data) return;
+
+        if (data.status === "abandoned") {
+          handlePartnerLeft(data.abandonedBy);
+          return;
+        }
+
+        if (data.status === "lobby") {
+          renderLobby(data);
+        } else if (data.status === "playing") {
+          renderGame(data);
+        } else if (data.status === "finished") {
+          renderResults(data);
+        }
+      });
+
+      db.ref("this_or_that_rooms/" + roomCode + "/emoji").on("value", snap => {
+        const val = snap.val();
+        if (val && val.char) displayFloatingEmoji(val.char);
+      });
+    }
+
+    function renderLobby(data) {
+      document.getElementById("screen-lobby").classList.remove("hidden");
+      document.getElementById("screen-game").classList.add("hidden");
+      document.getElementById("screen-results").classList.add("hidden");
+      document.getElementById("lobby-code-display").innerText = roomCode;
+
+      const p1 = data.player1 || {};
+      const p2 = data.player2 || {};
+
+      document.getElementById("lobby-p1-name").innerText = p1.name || "Player 1";
+      document.getElementById("lobby-p2-name").innerText = p2.name ? p2.name : "Waiting for partner...";
+
+      updatePill("lobby-p1-status", p1.ready);
+      updatePill("lobby-p2-status", p2.name ? p2.ready : false);
+
+      const me = myRole === "player1" ? p1 : p2;
+      const readyBtn = document.getElementById("lobby-ready-btn");
+      if (me.ready) {
+        readyBtn.innerText = "You're Ready ✓ (Waiting for partner)";
+        readyBtn.classList.add("opacity-60");
+      } else {
+        readyBtn.innerText = "I'm Ready!";
+        readyBtn.classList.remove("opacity-60");
+      }
+
+      if (myRole === "player1" && p1.ready && p2.ready) {
+        roomRef.update({
+          status: "playing",
+          currentRound: 0,
+          timerEnd: Date.now() + 20000
+        });
+      }
+    }
+
+    function updatePill(id, isReady) {
+      const el = document.getElementById(id);
+      if (isReady) {
+        el.className = "text-[10px] font-bold px-2.5 py-0.5 rounded-full inline-block bg-emerald-100 text-emerald-800";
+        el.innerText = "Ready ✓";
+      } else {
+        el.className = "text-[10px] font-bold px-2.5 py-0.5 rounded-full inline-block bg-amber-100 text-amber-800";
+        el.innerText = "Waiting...";
+      }
+    }
+
+    function toggleMyReadyState() {
+      roomRef.child(myRole).update({ ready: true });
+    }
+
+    function renderGame(data) {
+      document.getElementById("screen-lobby").classList.add("hidden");
+      document.getElementById("screen-game").classList.remove("hidden");
+
+      const roundIdx = data.currentRound;
+      const roundObj = data.rounds[roundIdx];
+      const p1 = data.player1 || {};
+      const p2 = data.player2 || {};
+
+      // Reset on round step
+      if (lastRenderedRound !== roundIdx) {
+        lastRenderedRound = roundIdx;
+        myPick = null;
+        document.getElementById("choice-btn-a").classList.remove("selected");
+        document.getElementById("choice-btn-b").classList.remove("selected");
+        document.getElementById("round-result-card").classList.add("hidden");
+        document.getElementById("choice-status-msg").innerText = "Tap your favorite option!";
+        if (autoNextTimeout) clearTimeout(autoNextTimeout);
+      }
+
+      // Progress bar & labels
+      const pct = Math.round((roundIdx / data.totalRounds) * 100);
+      document.getElementById("round-progress-bar").style.width = pct + "%";
+      document.getElementById("round-indicator-label").innerText = `ROUND ${roundIdx + 1} OF ${data.totalRounds}`;
+
+      const btnA = document.getElementById("choice-btn-a");
+      const btnB = document.getElementById("choice-btn-b");
+      btnA.innerText = roundObj.optionA;
+      btnB.innerText = roundObj.optionB;
+
+      const me = myRole === "player1" ? p1 : p2;
+      const statusMsg = document.getElementById("choice-status-msg");
+
+      if (me.submitted) {
+        btnA.disabled = true;
+        btnB.disabled = true;
+        statusMsg.innerText = "Locked in! Waiting for partner... ⏳";
+      } else {
+        btnA.disabled = false;
+        btnB.disabled = false;
+      }
+
+      syncTimer(data.timerEnd);
+
+      // Both submitted -> Reveal & Advance
+      const bothSubmitted = p1.submitted && p2.submitted;
+      const resCard = document.getElementById("round-result-card");
+
+      if (bothSubmitted) {
+        resCard.classList.remove("hidden");
+
+        const p1ChoiceText = p1.choice === "A" ? roundObj.optionA : roundObj.optionB;
+        const p2ChoiceText = p2.choice === "A" ? roundObj.optionA : roundObj.optionB;
+
+        document.getElementById("res-p1-name").innerText = p1.name || "Player 1";
+        document.getElementById("res-p1-pick").innerText = p1ChoiceText;
+        document.getElementById("res-p2-name").innerText = p2.name || "Player 2";
+        document.getElementById("res-p2-pick").innerText = p2ChoiceText;
+
+        const isMatch = (p1.choice === p2.choice && p1.choice !== "");
+        const badge = document.getElementById("result-match-badge");
+
+        if (isMatch) {
+          badge.className = "inline-block px-3 py-1 rounded-full text-xs font-extrabold uppercase tracking-wide bg-emerald-100 text-emerald-800";
+          badge.innerText = "✨ Perfect Match!";
+        } else {
+          badge.className = "inline-block px-3 py-1 rounded-full text-xs font-extrabold uppercase tracking-wide bg-amber-100 text-amber-800";
+          badge.innerText = "⚡ Opposites Attract!";
+        }
+
+        if (!data.revealed) {
+          if (isMatch) triggerConfetti();
+
+          // Host handles recording match and scheduling next round
+          if (myRole === "player1") {
+            const history = data.matchHistory || [];
+            history.push({ round: roundIdx, isMatch: isMatch });
+
+            roomRef.update({
+              revealed: true,
+              matchHistory: history
+            });
+
+            autoNextTimeout = setTimeout(() => {
+              proceedNextRound(data);
+            }, 2500);
+          }
+        }
+      }
+    }
+
+    function pickChoice(choiceLetter) {
+      myPick = choiceLetter;
+      const btnA = document.getElementById("choice-btn-a");
+      const btnB = document.getElementById("choice-btn-b");
+
+      btnA.classList.toggle("selected", choiceLetter === "A");
+      btnB.classList.toggle("selected", choiceLetter === "B");
+
+      roomRef.child(myRole).update({
+        choice: choiceLetter,
+        submitted: true
+      });
+    }
+
+    function syncTimer(targetTime) {
+      if (timerInterval) clearInterval(timerInterval);
+      const timerLabel = document.getElementById("timer-label");
+
+      function update() {
+        const remaining = Math.max(0, Math.ceil((targetTime - Date.now()) / 1000));
+        timerLabel.innerText = remaining + "s";
+
+        if (remaining <= 0) {
+          clearInterval(timerInterval);
+          // Auto submit random choice if player timed out
+          roomRef.child(myRole).once("value").then(snap => {
+            if (!snap.val()?.submitted) {
+              const fallback = Math.random() > 0.5 ? "A" : "B";
+              roomRef.child(myRole).update({ choice: fallback, submitted: true });
+            }
+          });
+        }
+      }
+      update();
+      timerInterval = setInterval(update, 1000);
+    }
+
+    function proceedNextRound(data) {
+      const nextIdx = data.currentRound + 1;
+      if (nextIdx >= data.totalRounds) {
+        roomRef.update({ status: "finished" });
+      } else {
+        roomRef.update({
+          currentRound: nextIdx,
+          revealed: false,
+          timerEnd: Date.now() + 20000,
+          "player1/choice": "",
+          "player1/submitted": false,
+          "player2/choice": "",
+          "player2/submitted": false
+        });
+      }
+    }
+
+    function renderResults(data) {
+      document.getElementById("screen-game").classList.add("hidden");
+      document.getElementById("screen-results").classList.remove("hidden");
+
+      const history = data.matchHistory || [];
+      const total = history.length || 1;
+      const matches = history.filter(h => h.isMatch).length;
+      const diffs = total - matches;
+      const pct = Math.round((matches / total) * 100);
+
+      document.getElementById("final-percentage").innerText = pct + "%";
+      document.getElementById("matches-count").innerText = matches;
+      document.getElementById("differences-count").innerText = diffs;
+
+      let quote = "A fun balance of opposites!";
+      if (pct >= 80) quote = "Soulmate territory! You think as one ✨";
+      else if (pct >= 60) quote = "Great synchronization on the big things 💕";
+      else if (pct <= 40) quote = "Opposites attract! Life is never boring 🔥";
+
+      document.getElementById("final-summary-quote").innerText = quote;
+      triggerConfetti();
+    }
+
+    function reloadGame() {
+      if (myRole === "player1") {
+        confirmCreateRoom();
+      } else {
+        showToast("Waiting for Host to relaunch room...");
+      }
+    }
+
+    function leaveGame() {
+      if (!confirm("Leave this game?")) return;
+      if (roomRef) {
+        roomRef.update({ status: "abandoned", abandonedBy: myName }).then(reloadToHome);
+      } else {
+        reloadToHome();
+      }
+    }
+
+    function handlePartnerLeft(leaver) {
+      if (timerInterval) clearInterval(timerInterval);
+      if (autoNextTimeout) clearTimeout(autoNextTimeout);
+      document.getElementById("screen-lobby").classList.add("hidden");
+      document.getElementById("screen-game").classList.add("hidden");
+      document.getElementById("screen-results").classList.add("hidden");
+      document.getElementById("header-room-pill").classList.add("hidden");
+      document.getElementById("header-leave-btn").classList.add("hidden");
+
+      document.getElementById("screen-left").classList.remove("hidden");
+      document.getElementById("left-message-title").innerText = `${leaver || "Partner"} Left`;
+    }
+
+    function reloadToHome() {
+      window.location.href = "../index.html";
+    }
+
+    function sendEmoji(char) {
+      if (roomRef) {
+        roomRef.child("emoji").set({ char: char, time: Date.now() });
+      }
+    }
+
+    function displayFloatingEmoji(char) {
+      const el = document.createElement("div");
+      el.className = "floating-emoji";
+      el.innerText = char;
+      el.style.left = `${30 + Math.random() * 40}%`;
+      document.body.appendChild(el);
+      setTimeout(() => el.remove(), 2000);
+    }
+
+    function copyInviteLink() {
+      const url = `${window.location.origin}${window.location.pathname}?room=${roomCode}`;
+      navigator.clipboard.writeText(url).then(() => showToast("Invite link copied! 📋"));
+    }
+
+    function checkUrlForInvite() {
+      const params = new URLSearchParams(window.location.search);
+      const room = params.get("room");
+      if (room) {
+        document.getElementById("join-code-input").value = room.toUpperCase();
+        toggleJoinField(true);
+      }
+    }
+
+    function triggerConfetti() {
+      if (typeof confetti === "function") {
+        confetti({ particleCount: 75, spread: 70, origin: { y: 0.65 } });
+      }
+    }
+
+    window.addEventListener("DOMContentLoaded", () => {
+      checkUrlForInvite();
+    });
+  </script>
+</body>
+</html>
