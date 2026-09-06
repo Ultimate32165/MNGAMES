@@ -3,144 +3,419 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
-  <title>Couples Game Hub — Play in Sync</title>
+  <title>Couples Play — Realtime Synchronized Games</title>
 
-  <!-- Tailwind CSS -->
   <script src="https://cdn.tailwindcss.com"></script>
-
-  <!-- Google Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Playfair+Display:ital,wght@0,600;1,600&display=swap" rel="stylesheet">
 
-  <!-- Shared CSS -->
-  <link rel="stylesheet" href="style.css" />
+  <style>
+    :root {
+      --bg: #fafafa;
+      --card: #ffffff;
+      --border: #e4e4e7;
+      --text: #18181b;
+      --subtext: #71717a;
+      --accent: #f43f5e;
+      --accent-hover: #e11d48;
+      --tag-bg: #ffe4e6;
+      --tag-text: #e11d48;
+      --theme-btn-bg: #f4f4f5;
+      --card-hover-border: #fca5a5;
+    }
 
-  <!-- Firebase Compat Libraries -->
-  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-database-compat.js"></script>
+    [data-theme="midnight"] {
+      --bg: #09090b;
+      --card: #18181b;
+      --border: #27272a;
+      --text: #fafafa;
+      --subtext: #a1a1aa;
+      --accent: #fb7185;
+      --accent-hover: #f43f5e;
+      --tag-bg: #27272a;
+      --tag-text: #fda4af;
+      --theme-btn-bg: #27272a;
+      --card-hover-border: #f43f5e;
+    }
 
-  <!-- Shared Firebase Init & Theme Engine -->
-  <script src="firebase-init.js"></script>
+    [data-theme="matcha"] {
+      --bg: #f4f7f4;
+      --card: #ffffff;
+      --border: #dce5dc;
+      --text: #1e2920;
+      --subtext: #5e6d60;
+      --accent: #15803d;
+      --accent-hover: #166534;
+      --tag-bg: #dcfce7;
+      --tag-text: #15803d;
+      --theme-btn-bg: #e8efe8;
+      --card-hover-border: #86efac;
+    }
+
+    [data-theme="dusk"] {
+      --bg: #1c1917;
+      --card: #292524;
+      --border: #44403c;
+      --text: #fafaf9;
+      --subtext: #a8a29e;
+      --accent: #f97316;
+      --accent-hover: #ea580c;
+      --tag-bg: #44403c;
+      --tag-text: #fdba74;
+      --theme-btn-bg: #44403c;
+      --card-hover-border: #fdba74;
+    }
+
+    body {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      background-color: var(--bg);
+      color: var(--text);
+      min-height: 100vh;
+      min-height: 100dvh;
+      transition: background-color 0.25s ease, color 0.25s ease;
+    }
+
+    .font-serif-title {
+      font-family: 'Playfair Display', serif;
+    }
+
+    .card-style {
+      background-color: var(--card);
+      border-color: var(--border);
+    }
+
+    .accent-btn {
+      background-color: var(--accent);
+      color: #ffffff;
+    }
+    .accent-btn:hover {
+      background-color: var(--accent-hover);
+    }
+
+    .game-card {
+      transition: transform 0.18s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.18s ease, box-shadow 0.18s ease;
+    }
+    .game-card:hover {
+      border-color: var(--card-hover-border);
+      transform: translateY(-2px);
+    }
+    .game-card:active {
+      transform: scale(0.985);
+    }
+  </style>
 </head>
-<body class="flex flex-col items-center justify-between p-4 selection:bg-rose-100 selection:text-rose-800">
+<body class="flex flex-col items-center justify-between p-4 sm:p-6 selection:bg-rose-100 selection:text-rose-800">
 
-  <!-- TOP BAR -->
-  <header class="w-full max-w-md flex items-center justify-between py-2">
+  <header class="w-full max-w-xl flex items-center justify-between py-2 mb-4">
     <div class="flex items-center gap-2">
-      <span class="text-xs font-extrabold uppercase tracking-widest text-[var(--subtext)]">Couples Suite</span>
+      <span class="w-2.5 h-2.5 rounded-full bg-[var(--accent)] animate-pulse"></span>
+      <span class="text-xs font-black uppercase tracking-widest text-[var(--subtext)]">Couples Hub</span>
     </div>
 
-    <!-- Theme Switcher Dropdown -->
-    <div class="relative">
+    <!-- Right Controls: Quick Join & Theme Switcher -->
+    <div class="flex items-center gap-2">
       <button 
         type="button"
-        onclick="toggleThemeDropdown()" 
-        class="text-xs font-semibold px-2.5 py-1.5 rounded-xl border border-[var(--border)] secondary-btn transition flex items-center gap-1.5"
+        onclick="openQuickJoinModal()" 
+        class="text-xs font-bold px-3 py-1.5 rounded-xl border border-[var(--border)] bg-[var(--theme-btn-bg)] hover:border-[var(--accent)] transition flex items-center gap-1 active:scale-95"
       >
-        <span>🎨</span>
-        <span id="current-theme-name" class="capitalize">Clean</span>
+        <span>🔗</span>
+        <span>Join Code</span>
       </button>
-      <div id="theme-menu" class="hidden absolute right-0 mt-1.5 w-32 card-style border rounded-2xl shadow-lg p-1.5 z-50 space-y-1 text-xs font-medium">
-        <button onclick="setSharedTheme('clean')" class="w-full text-left px-3 py-1.5 rounded-xl hover:bg-[var(--border)] transition">Clean (Light)</button>
-        <button onclick="setSharedTheme('midnight')" class="w-full text-left px-3 py-1.5 rounded-xl hover:bg-[var(--border)] transition">Midnight</button>
-        <button onclick="setSharedTheme('matcha')" class="w-full text-left px-3 py-1.5 rounded-xl hover:bg-[var(--border)] transition">Matcha</button>
-        <button onclick="setSharedTheme('dusk')" class="w-full text-left px-3 py-1.5 rounded-xl hover:bg-[var(--border)] transition">Dusk</button>
+
+      <!-- Theme Switcher -->
+      <div class="relative">
+        <button 
+          type="button"
+          onclick="toggleThemeDropdown()" 
+          class="text-xs font-semibold px-2.5 py-1.5 rounded-xl border border-[var(--border)] bg-[var(--theme-btn-bg)] transition flex items-center gap-1.5"
+          id="theme-dropdown-btn"
+        >
+          <span>🎨</span>
+          <span id="current-theme-name" class="capitalize">Clean</span>
+        </button>
+        <div id="theme-menu" class="hidden absolute right-0 mt-1.5 w-32 card-style border rounded-2xl shadow-xl p-1.5 z-50 space-y-1 text-xs font-medium">
+          <button onclick="setTheme('clean')" class="w-full text-left px-3 py-1.5 rounded-xl hover:bg-[var(--theme-btn-bg)] transition">Clean (Light)</button>
+          <button onclick="setTheme('midnight')" class="w-full text-left px-3 py-1.5 rounded-xl hover:bg-[var(--theme-btn-bg)] transition">Midnight</button>
+          <button onclick="setTheme('matcha')" class="w-full text-left px-3 py-1.5 rounded-xl hover:bg-[var(--theme-btn-bg)] transition">Matcha</button>
+          <button onclick="setTheme('dusk')" class="w-full text-left px-3 py-1.5 rounded-xl hover:bg-[var(--theme-btn-bg)] transition">Dusk</button>
+        </div>
       </div>
     </div>
   </header>
 
-  <!-- MAIN HUB CONTENT -->
-  <main class="w-full max-w-md my-auto py-4 space-y-6">
+  <main class="w-full max-w-xl my-auto space-y-6">
 
-    <!-- Title Section -->
-    <div class="text-center space-y-1">
-      <h1 class="font-serif-title text-3xl sm:text-4xl font-bold tracking-tight">Couples Games</h1>
-      <p class="text-xs sm:text-sm text-[var(--subtext)]">Two screens, one real-time sync room. Pick a game below:</p>
-    </div>
+    <!-- Hero Title -->
+    <section class="text-center space-y-2 py-2">
+      <div class="inline-flex items-center gap-1.5 px-3 py-1 text-[11px] font-extrabold tracking-widest uppercase rounded-full" style="background-color: var(--tag-bg); color: var(--tag-text);">
+        <span>💞</span> Realtime 2-Player Suite
+      </div>
+      <h1 class="font-serif-title text-3xl sm:text-4xl font-bold tracking-tight">
+        Games For Two
+      </h1>
+      <p class="text-xs sm:text-sm text-[var(--subtext)] max-w-md mx-auto leading-relaxed">
+        Synchronized questions, predictions, and rapid choices. Answer secretly and reveal answers together in real time.
+      </p>
+    </section>
 
-    <!-- Games Grid -->
     <div class="grid grid-cols-1 gap-3.5">
 
-      <!-- Game 1: Know Me -->
-      <a href="./knowme/" class="group block card-style border rounded-3xl p-5 hover:border-[var(--accent)] transition-all shadow-xs active:scale-98">
-        <div class="flex items-center justify-between mb-2">
-          <div class="flex items-center gap-2.5">
-            <span class="text-2xl p-2.5 rounded-2xl bg-rose-50 text-rose-600">💬</span>
-            <div>
-              <h2 class="font-bold text-base leading-snug group-hover:text-[var(--accent)] transition-colors">How Well Do You Know Me?</h2>
-              <span class="text-[11px] text-[var(--subtext)]">Alternating questions & secret reveals</span>
+      <!-- Game 1: How Well Do You Know Me? (Active / Ready) -->
+      <a 
+        href="knowme/" 
+        class="game-card card-style border rounded-3xl p-5 block shadow-sm relative overflow-hidden group"
+      >
+        <div class="flex items-start justify-between gap-3">
+          <div class="space-y-1.5">
+            <div class="flex items-center gap-2">
+              <span class="text-xl">💭</span>
+              <h2 class="font-bold text-base sm:text-lg group-hover:text-[var(--accent)] transition-colors">
+                How Well Do You Know Me?
+              </h2>
+            </div>
+            <p class="text-xs text-[var(--subtext)] leading-relaxed">
+              Alternating rounds of open-ended truths and multiple-choice questions. Answer honestly while your partner guesses!
+            </p>
+            <div class="flex flex-wrap items-center gap-2 pt-1">
+              <span class="text-[10px] font-bold px-2 py-0.5 rounded-md bg-emerald-500/10 text-emerald-600">● Live & Ready</span>
+              <span class="text-[10px] font-semibold px-2 py-0.5 rounded-md card-style border text-[var(--subtext)]">60s Timer</span>
+              <span class="text-[10px] font-semibold px-2 py-0.5 rounded-md card-style border text-[var(--subtext)]">Topic Selectors</span>
             </div>
           </div>
-          <span class="text-xs font-bold text-[var(--accent)]">Play →</span>
-        </div>
-        <div class="flex items-center gap-1.5 pt-1 text-[10px] font-semibold text-[var(--subtext)]">
-          <span class="px-2 py-0.5 rounded-full border border-[var(--border)] secondary-btn">Mixed Text & MCQ</span>
-          <span class="px-2 py-0.5 rounded-full border border-[var(--border)] secondary-btn">Custom Topics</span>
+          <div class="shrink-0 w-8 h-8 rounded-full card-style border flex items-center justify-center text-sm font-bold text-[var(--subtext)] group-hover:bg-[var(--accent)] group-hover:text-white transition">
+            →
+          </div>
         </div>
       </a>
 
-      <!-- Game 2: This or That -->
-      <a href="./this-or-that/" class="group block card-style border rounded-3xl p-5 hover:border-[var(--accent)] transition-all shadow-xs active:scale-98">
-        <div class="flex items-center justify-between mb-2">
-          <div class="flex items-center gap-2.5">
-            <span class="text-2xl p-2.5 rounded-2xl bg-amber-50 text-amber-600">⚡</span>
-            <div>
-              <h2 class="font-bold text-base leading-snug group-hover:text-[var(--accent)] transition-colors">This or That</h2>
-              <span class="text-[11px] text-[var(--subtext)]">Rapid choices & compatibility % match</span>
+      <!-- Game 2: This or That (Rapid Choice) -->
+      <a 
+        href="this-or-that/" 
+        class="game-card card-style border rounded-3xl p-5 block shadow-sm relative overflow-hidden group"
+      >
+        <div class="flex items-start justify-between gap-3">
+          <div class="space-y-1.5">
+            <div class="flex items-center gap-2">
+              <span class="text-xl">⚡</span>
+              <h2 class="font-bold text-base sm:text-lg group-hover:text-[var(--accent)] transition-colors">
+                This or That
+              </h2>
+            </div>
+            <p class="text-xs text-[var(--subtext)] leading-relaxed">
+              Rapid-fire binary choices (e.g. Beach vs Mountain, Night In vs Night Out). Compare your match percentage!
+            </p>
+            <div class="flex flex-wrap items-center gap-2 pt-1">
+              <span class="text-[10px] font-bold px-2 py-0.5 rounded-md bg-[var(--tag-bg)] text-[var(--tag-text)]">Fast Paced</span>
+              <span class="text-[10px] font-semibold px-2 py-0.5 rounded-md card-style border text-[var(--subtext)]">Instant Reveal</span>
+              <span class="text-[10px] font-semibold px-2 py-0.5 rounded-md card-style border text-[var(--subtext)]">% Match Score</span>
             </div>
           </div>
-          <span class="text-xs font-bold text-[var(--accent)]">Play →</span>
-        </div>
-        <div class="flex items-center gap-1.5 pt-1 text-[10px] font-semibold text-[var(--subtext)]">
-          <span class="px-2 py-0.5 rounded-full border border-[var(--border)] secondary-btn">15 Rapid Rounds</span>
-          <span class="px-2 py-0.5 rounded-full border border-[var(--border)] secondary-btn">Match Score</span>
+          <div class="shrink-0 w-8 h-8 rounded-full card-style border flex items-center justify-center text-sm font-bold text-[var(--subtext)] group-hover:bg-[var(--accent)] group-hover:text-white transition">
+            →
+          </div>
         </div>
       </a>
 
-      <!-- Game 3: Love Match -->
-      <a href="./love-match/" class="group block card-style border rounded-3xl p-5 hover:border-[var(--accent)] transition-all shadow-xs active:scale-98">
-        <div class="flex items-center justify-between mb-2">
-          <div class="flex items-center gap-2.5">
-            <span class="text-2xl p-2.5 rounded-2xl bg-purple-50 text-purple-600">💕</span>
-            <div>
-              <h2 class="font-bold text-base leading-snug group-hover:text-[var(--accent)] transition-colors">Love Match</h2>
-              <span class="text-[11px] text-[var(--subtext)]">Relationship scenarios & deep questions</span>
+      <!-- Game 3: Love Match (Deep Scenarios) -->
+      <a 
+        href="love-match/" 
+        class="game-card card-style border rounded-3xl p-5 block shadow-sm relative overflow-hidden group"
+      >
+        <div class="flex items-start justify-between gap-3">
+          <div class="space-y-1.5">
+            <div class="flex items-center gap-2">
+              <span class="text-xl">💖</span>
+              <h2 class="font-bold text-base sm:text-lg group-hover:text-[var(--accent)] transition-colors">
+                Love Match
+              </h2>
+            </div>
+            <p class="text-xs text-[var(--subtext)] leading-relaxed">
+              Relationship dilemmas, love languages, and future scenarios. Explore how your hearts align.
+            </p>
+            <div class="flex flex-wrap items-center gap-2 pt-1">
+              <span class="text-[10px] font-semibold px-2 py-0.5 rounded-md card-style border text-[var(--subtext)]">Deep Talks</span>
+              <span class="text-[10px] font-semibold px-2 py-0.5 rounded-md card-style border text-[var(--subtext)]">Compatibility Card</span>
             </div>
           </div>
-          <span class="text-xs font-bold text-[var(--accent)]">Play →</span>
-        </div>
-        <div class="flex items-center gap-1.5 pt-1 text-[10px] font-semibold text-[var(--subtext)]">
-          <span class="px-2 py-0.5 rounded-full border border-[var(--border)] secondary-btn">Deep Scenarios</span>
-          <span class="px-2 py-0.5 rounded-full border border-[var(--border)] secondary-btn">Alignment Breakdown</span>
+          <div class="shrink-0 w-8 h-8 rounded-full card-style border flex items-center justify-center text-sm font-bold text-[var(--subtext)] group-hover:bg-[var(--accent)] group-hover:text-white transition">
+            →
+          </div>
         </div>
       </a>
 
-      <!-- Game 4: Most Likely To -->
-      <a href="./most-likely-to/" class="group block card-style border rounded-3xl p-5 hover:border-[var(--accent)] transition-all shadow-xs active:scale-98">
-        <div class="flex items-center justify-between mb-2">
-          <div class="flex items-center gap-2.5">
-            <span class="text-2xl p-2.5 rounded-2xl bg-emerald-50 text-emerald-600">👉</span>
-            <div>
-              <h2 class="font-bold text-base leading-snug group-hover:text-[var(--accent)] transition-colors">Who's Most Likely To?</h2>
-              <span class="text-[11px] text-[var(--subtext)]">Point fingers at each other simultaneously</span>
+      <!-- Game 4: Who's Most Likely To? -->
+      <a 
+        href="most-likely-to/" 
+        class="game-card card-style border rounded-3xl p-5 block shadow-sm relative overflow-hidden group"
+      >
+        <div class="flex items-start justify-between gap-3">
+          <div class="space-y-1.5">
+            <div class="flex items-center gap-2">
+              <span class="text-xl">👉</span>
+              <h2 class="font-bold text-base sm:text-lg group-hover:text-[var(--accent)] transition-colors">
+                Who's Most Likely To?
+              </h2>
+            </div>
+            <p class="text-xs text-[var(--subtext)] leading-relaxed">
+              Point fingers in sync! Both players vote for either You or Them. Find out if your thoughts match.
+            </p>
+            <div class="flex flex-wrap items-center gap-2 pt-1">
+              <span class="text-[10px] font-semibold px-2 py-0.5 rounded-md card-style border text-[var(--subtext)]">Playful</span>
+              <span class="text-[10px] font-semibold px-2 py-0.5 rounded-md card-style border text-[var(--subtext)]">Match Streaks</span>
             </div>
           </div>
-          <span class="text-xs font-bold text-[var(--accent)]">Play →</span>
+          <div class="shrink-0 w-8 h-8 rounded-full card-style border flex items-center justify-center text-sm font-bold text-[var(--subtext)] group-hover:bg-[var(--accent)] group-hover:text-white transition">
+            →
+          </div>
         </div>
-        <div class="flex items-center gap-1.5 pt-1 text-[10px] font-semibold text-[var(--subtext)]">
-          <span class="px-2 py-0.5 rounded-full border border-[var(--border)] secondary-btn">Playful & Silly</span>
-          <span class="px-2 py-0.5 rounded-full border border-[var(--border)] secondary-btn">Agreement Streak</span>
+      </a>
+
+      <!-- Game 5: Draw Together (Collaborative Canvas) -->
+      <a 
+        href="draw/" 
+        class="game-card card-style border rounded-3xl p-5 block shadow-sm relative overflow-hidden group"
+      >
+        <div class="flex items-start justify-between gap-3">
+          <div class="space-y-1.5">
+            <div class="flex items-center gap-2">
+              <span class="text-xl">🎨</span>
+              <h2 class="font-bold text-base sm:text-lg group-hover:text-[var(--accent)] transition-colors">
+                Draw Together
+              </h2>
+            </div>
+            <p class="text-xs text-[var(--subtext)] leading-relaxed">
+              Shared real-time canvas for doodles, cute prompts, and love notes. Save your masterpieces to photos!
+            </p>
+            <div class="flex flex-wrap items-center gap-2 pt-1">
+              <span class="text-[10px] font-bold px-2 py-0.5 rounded-md bg-rose-500/10 text-rose-600">Realtime Sync</span>
+              <span class="text-[10px] font-semibold px-2 py-0.5 rounded-md card-style border text-[var(--subtext)]">Pastel Palette</span>
+              <span class="text-[10px] font-semibold px-2 py-0.5 rounded-md card-style border text-[var(--subtext)]">Photo Download</span>
+            </div>
+          </div>
+          <div class="shrink-0 w-8 h-8 rounded-full card-style border flex items-center justify-center text-sm font-bold text-[var(--subtext)] group-hover:bg-[var(--accent)] group-hover:text-white transition">
+            →
+          </div>
         </div>
       </a>
 
     </div>
-
   </main>
 
-  <footer class="text-center py-2 text-[11px] text-[var(--subtext)]">
-    Sync powered by Firebase • Pick any game to create or join a room
+  <div id="quick-join-modal" class="fixed inset-0 bg-black/50 backdrop-blur-xs hidden flex items-center justify-center p-4 z-50">
+    <div class="card-style border rounded-3xl p-6 max-w-sm w-full space-y-4 shadow-2xl">
+      <div class="text-center space-y-1">
+        <h3 class="text-base font-bold">Have an Invite Code?</h3>
+        <p class="text-xs text-[var(--subtext)]">Select the game and enter your 6-digit room code.</p>
+      </div>
+
+      <div class="space-y-3">
+        <div>
+          <label for="modal-game-target" class="text-[11px] font-bold uppercase tracking-wider text-[var(--subtext)] block mb-1">Game</label>
+          <select id="modal-game-target" class="w-full px-3 py-2.5 text-xs font-semibold card-style border rounded-xl focus:outline-none focus:ring-2 focus:ring-[var(--accent)]">
+            <option value="knowme/">How Well Do You Know Me?</option>
+            <option value="this-or-that/">This or That</option>
+            <option value="love-match/">Love Match</option>
+            <option value="most-likely-to/">Who's Most Likely To?</option>
+            <option value="draw/">Draw Together</option>
+          </select>
+        </div>
+
+        <div>
+          <label for="modal-code-input" class="text-[11px] font-bold uppercase tracking-wider text-[var(--subtext)] block mb-1">6-Digit Room Code</label>
+          <input 
+            id="modal-code-input" 
+            type="text" 
+            placeholder="e.g. 482910"
+            maxlength="6"
+            class="w-full uppercase font-mono tracking-widest text-center px-4 py-3 card-style border rounded-xl focus:outline-none focus:ring-2 focus:ring-[var(--accent)] text-sm font-bold"
+          />
+        </div>
+      </div>
+
+      <div class="flex gap-2 pt-1">
+        <button 
+          type="button" 
+          onclick="closeQuickJoinModal()" 
+          class="flex-1 py-2.5 text-xs font-bold card-style border rounded-xl hover:bg-[var(--theme-btn-bg)] transition"
+        >
+          Cancel
+        </button>
+        <button 
+          type="button" 
+          onclick="submitQuickJoin()" 
+          class="flex-1 py-2.5 text-xs font-bold accent-btn rounded-xl shadow active:scale-95 transition"
+        >
+          Jump In 🚀
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <div id="toast" class="fixed bottom-6 left-1/2 -translate-x-1/2 hidden bg-zinc-900 text-white px-4 py-2 rounded-2xl text-xs font-bold shadow-xl z-50 pointer-events-none">
+    Notice
+  </div>
+
+  <footer class="w-full max-w-xl text-center py-4 text-[11px] text-[var(--subtext)] font-medium">
+    Made for couples • Secret answers with realtime synchronization 💕
   </footer>
 
+  <script>
+    function showToast(msg) {
+      const t = document.getElementById("toast");
+      t.innerText = msg;
+      t.classList.remove("hidden");
+      setTimeout(() => t.classList.add("hidden"), 3000);
+    }
+
+    function toggleThemeDropdown() {
+      document.getElementById("theme-menu").classList.toggle("hidden");
+    }
+
+    function setTheme(themeKey) {
+      document.documentElement.setAttribute("data-theme", themeKey === "clean" ? "" : themeKey);
+      document.getElementById("current-theme-name").innerText = themeKey;
+      localStorage.setItem("quiz_theme", themeKey);
+      document.getElementById("theme-menu").classList.add("hidden");
+    }
+
+    function openQuickJoinModal() {
+      document.getElementById("modal-code-input").value = "";
+      document.getElementById("quick-join-modal").classList.remove("hidden");
+      document.getElementById("modal-code-input").focus();
+    }
+
+    function closeQuickJoinModal() {
+      document.getElementById("quick-join-modal").classList.add("hidden");
+    }
+
+    function submitQuickJoin() {
+      const code = document.getElementById("modal-code-input").value.trim().toUpperCase();
+      const gameTarget = document.getElementById("modal-game-target").value;
+
+      if (!code || code.length < 5) {
+        showToast("Please enter a valid room code.");
+        return;
+      }
+
+      window.location.href = `${gameTarget}?room=${code}`;
+    }
+
+    // Close dropdowns on background click
+    document.addEventListener("click", (e) => {
+      const themeBtn = document.getElementById("theme-dropdown-btn");
+      const themeMenu = document.getElementById("theme-menu");
+      if (!themeBtn.contains(e.target) && !themeMenu.contains(e.target)) {
+        themeMenu.classList.add("hidden");
+      }
+    });
+
+    // Boot theme from localStorage
+    window.addEventListener("DOMContentLoaded", () => {
+      const savedTheme = localStorage.getItem("quiz_theme") || "clean";
+      setTheme(savedTheme);
+    });
+  </script>
 </body>
 </html>
