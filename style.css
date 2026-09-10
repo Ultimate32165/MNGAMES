@@ -54,6 +54,82 @@
   --btn-secondary-hover: #57534e;
 }
 
+/* 1. Cherry Blossom (Soft Romantic Pink) */
+[data-theme="cherry"] {
+  --bg: #fff1f2;
+  --card: #ffffff;
+  --border: #fecdd3;
+  --text: #881337;
+  --subtext: #be123c;
+  --accent: #f43f5e;
+  --accent-hover: #e11d48;
+  --tag-bg: #ffe4e6;
+  --tag-text: #e11d48;
+  --btn-secondary: #ffe4e6;
+  --btn-secondary-hover: #fecdd3;
+}
+
+/* 2. Lavender Dream (Pastel Purple & Violet) */
+[data-theme="lavender"] {
+  --bg: #faf5ff;
+  --card: #ffffff;
+  --border: #e9d5ff;
+  --text: #3b0764;
+  --subtext: #7e22ce;
+  --accent: #a855f7;
+  --accent-hover: #9333ea;
+  --tag-bg: #f3e8ff;
+  --tag-text: #9333ea;
+  --btn-secondary: #f3e8ff;
+  --btn-secondary-hover: #e9d5ff;
+}
+
+/* 3. Nordic Sky (Cool Minimalist Ocean Blue) */
+[data-theme="nordic"] {
+  --bg: #f0f9ff;
+  --card: #ffffff;
+  --border: #bae6fd;
+  --text: #082f49;
+  --subtext: #0369a1;
+  --accent: #0284c7;
+  --accent-hover: #0369a1;
+  --tag-bg: #e0f2fe;
+  --tag-text: #0284c7;
+  --btn-secondary: #e0f2fe;
+  --btn-secondary-hover: #bae6fd;
+}
+
+/* 4. Latte / Warm Coffee (Cozy Earth Tones) */
+[data-theme="latte"] {
+  --bg: #fbf7f4;
+  --card: #ffffff;
+  --border: #ede4dc;
+  --text: #2e1d13;
+  --subtext: #7c5e4c;
+  --accent: #9a5933;
+  --accent-hover: #7c4120;
+  --tag-bg: #f5ebe2;
+  --tag-text: #9a5933;
+  --btn-secondary: #f5ebe2;
+  --btn-secondary-hover: #ede4dc;
+}
+
+/* 5. Cyber Neon (High Contrast Dark Slate + Neon Violet) */
+[data-theme="cyber"] {
+  --bg: #0b0f19;
+  --card: #111827;
+  --border: #1f2937;
+  --text: #f9fafb;
+  --subtext: #9ca3af;
+  --accent: #8b5cf6;
+  --accent-hover: #7c3aed;
+  --tag-bg: #1e1b4b;
+  --tag-text: #c4b5fd;
+  --btn-secondary: #1f2937;
+  --btn-secondary-hover: #374151;
+}
+
+
 body {
   font-family: 'Plus Jakarta Sans', sans-serif;
   background-color: var(--bg);

@@ -125,23 +125,51 @@
       </button>
 
       <!-- Theme Switcher -->
-      <div class="relative">
-        <button 
-          type="button"
-          onclick="toggleThemeDropdown()" 
-          class="text-xs font-semibold px-2.5 py-1.5 rounded-xl border border-[var(--border)] bg-[var(--theme-btn-bg)] transition flex items-center gap-1.5"
-          id="theme-dropdown-btn"
-        >
-          <span>🎨</span>
-          <span id="current-theme-name" class="capitalize">Clean</span>
-        </button>
-        <div id="theme-menu" class="hidden absolute right-0 mt-1.5 w-32 card-style border rounded-2xl shadow-xl p-1.5 z-50 space-y-1 text-xs font-medium">
-          <button onclick="setTheme('clean')" class="w-full text-left px-3 py-1.5 rounded-xl hover:bg-[var(--theme-btn-bg)] transition">Clean (Light)</button>
-          <button onclick="setTheme('midnight')" class="w-full text-left px-3 py-1.5 rounded-xl hover:bg-[var(--theme-btn-bg)] transition">Midnight</button>
-          <button onclick="setTheme('matcha')" class="w-full text-left px-3 py-1.5 rounded-xl hover:bg-[var(--theme-btn-bg)] transition">Matcha</button>
-          <button onclick="setTheme('dusk')" class="w-full text-left px-3 py-1.5 rounded-xl hover:bg-[var(--theme-btn-bg)] transition">Dusk</button>
-        </div>
-      </div>
+     <div class="relative">
+  <button 
+    type="button"
+    onclick="toggleThemeDropdown()" 
+    class="text-xs font-semibold px-2.5 py-1.5 rounded-xl border border-[var(--border)] secondary-btn transition flex items-center gap-1.5"
+  >
+    <span>🎨</span>
+    <span id="current-theme-name" class="capitalize">Clean</span>
+  </button>
+  
+  <div id="theme-menu" class="hidden absolute right-0 mt-1.5 w-40 card-style border rounded-2xl shadow-xl p-1.5 z-50 space-y-1 text-xs font-semibold max-h-72 overflow-y-auto">
+    <!-- Light & Minimal -->
+    <button type="button" onclick="setSharedTheme('clean')" class="w-full text-left px-3 py-1.5 rounded-xl hover:bg-[var(--border)] transition flex items-center justify-between">
+      <span>Clean</span> <span class="text-[11px] opacity-60">⚪</span>
+    </button>
+    <button type="button" onclick="setSharedTheme('cherry')" class="w-full text-left px-3 py-1.5 rounded-xl hover:bg-[var(--border)] transition flex items-center justify-between">
+      <span>Cherry</span> <span class="text-[11px]">🌸</span>
+    </button>
+    <button type="button" onclick="setSharedTheme('lavender')" class="w-full text-left px-3 py-1.5 rounded-xl hover:bg-[var(--border)] transition flex items-center justify-between">
+      <span>Lavender</span> <span class="text-[11px]">💜</span>
+    </button>
+    <button type="button" onclick="setSharedTheme('nordic')" class="w-full text-left px-3 py-1.5 rounded-xl hover:bg-[var(--border)] transition flex items-center justify-between">
+      <span>Nordic Sky</span> <span class="text-[11px]">🌊</span>
+    </button>
+    <button type="button" onclick="setSharedTheme('matcha')" class="w-full text-left px-3 py-1.5 rounded-xl hover:bg-[var(--border)] transition flex items-center justify-between">
+      <span>Matcha</span> <span class="text-[11px]">🍵</span>
+    </button>
+    <button type="button" onclick="setSharedTheme('latte')" class="w-full text-left px-3 py-1.5 rounded-xl hover:bg-[var(--border)] transition flex items-center justify-between">
+      <span>Latte</span> <span class="text-[11px]">☕</span>
+    </button>
+
+    <div class="border-t border-[var(--border)] my-1"></div>
+
+    <!-- Dark Modes -->
+    <button type="button" onclick="setSharedTheme('midnight')" class="w-full text-left px-3 py-1.5 rounded-xl hover:bg-[var(--border)] transition flex items-center justify-between">
+      <span>Midnight</span> <span class="text-[11px]">🌙</span>
+    </button>
+    <button type="button" onclick="setSharedTheme('dusk')" class="w-full text-left px-3 py-1.5 rounded-xl hover:bg-[var(--border)] transition flex items-center justify-between">
+      <span>Dusk</span> <span class="text-[11px]">🌇</span>
+    </button>
+    <button type="button" onclick="setSharedTheme('cyber')" class="w-full text-left px-3 py-1.5 rounded-xl hover:bg-[var(--border)] transition flex items-center justify-between">
+      <span>Cyber Neon</span> <span class="text-[11px]">⚡</span>
+    </button>
+  </div>
+</div>
     </div>
   </header>
 

@@ -1,5 +1,5 @@
 // most-likely-to/prompts.js
-// 40+ playful, romantic, and silly couple prompts
+// Playful, romantic, and silly couple prompts
 
 const MOST_LIKELY_TO_PROMPTS = [
   // --- Silly & Funny ---
@@ -13,6 +13,16 @@ const MOST_LIKELY_TO_PROMPTS = [
   "Who is most likely to send 15 text messages in a row instead of one paragraph?",
   "Who is most likely to fall asleep 10 minutes into a movie they picked?",
   "Who is most likely to talk to an animal on the street using a baby voice?",
+  "Who is most likely to wave back at someone who was actually waving at the person behind them?",
+  "Who is most likely to push a door that clearly says 'PULL'?",
+  "Who is most likely to choke on their own saliva while doing absolutely nothing?",
+  "Who is most likely to look for their glasses while already wearing them?",
+  "Who is most likely to accidentally like a three-year-old Instagram photo while stalking?",
+  "Who is most likely to have a full, dramatic argument with an automated voice system?",
+  "Who is most likely to laugh so hard that no sound comes out at all?",
+  "Who is most likely to get startled by their own reflection in a dark window?",
+  "Who is most likely to drop their phone directly onto their own face in bed?",
+  "Who is most likely to randomly start dancing in the middle of a grocery store aisle?",
 
   // --- Habits & Daily Life ---
   "Who is most likely to take 3 times longer getting ready before leaving the house?",
@@ -25,6 +35,16 @@ const MOST_LIKELY_TO_PROMPTS = [
   "Who is most likely to forget where they parked the car?",
   "Who is most likely to cry during a cartoon or cute animal video?",
   "Who is most likely to get hangry and deny being hangry until they get fed?",
+  "Who is most likely to leave their phone battery sitting permanently on 2%?",
+  "Who is most likely to buy fresh vegetables with big dreams and let them rot in the fridge?",
+  "Who is most likely to let clean laundry sit in the basket for an entire week?",
+  "Who is most likely to ignore a phone call and immediately text 'what's up?'",
+  "Who is most likely to have 47 open browser tabs and refuse to close any of them?",
+  "Who is most likely to put off a 2-minute task for three whole weeks?",
+  "Who is most likely to obsessively check online tracking every 20 minutes for a package?",
+  "Who is most likely to turn the thermostat into an ongoing covert temperature war?",
+  "Who is most likely to spend an entire Sunday doing absolutely nothing without feeling guilty?",
+  "Who is most likely to make an elaborate to-do list and accomplish none of it?",
 
   // --- Romance & Relationship ---
   "Who is most likely to initiate cuddles first when relaxing on the couch?",
@@ -37,6 +57,16 @@ const MOST_LIKELY_TO_PROMPTS = [
   "Who is most likely to pout adorably to get their way?",
   "Who is most likely to steal food off the other person's plate after saying 'I'm not hungry'?",
   "Who is most likely to make silly faces across the room just to make the other laugh?",
+  "Who is most likely to randomly stare at the other person with pure heart-eyes?",
+  "Who is most likely to steal an oversized hoodie and never give it back?",
+  "Who is most likely to get dramatic over not receiving a goodnight text immediately?",
+  "Who is most likely to initiate a silly, out-of-nowhere slow dance in the kitchen?",
+  "Who is most likely to pretend to stay mad just to get extra hugs and attention?",
+  "Who is most likely to send 20 reels or memes a day with zero context just to say 'us'?",
+  "Who is most likely to remember the exact outfit the other wore on their first date?",
+  "Who is most likely to pick a movie just to use the other person's shoulder as a pillow?",
+  "Who is most likely to secretly brag about their partner to all their friends?",
+  "Who is most likely to say 'I love you' first during a phone call?",
 
   // --- Travel & Chaos ---
   "Who is most likely to pack three suitcases for a two-day trip?",
@@ -44,5 +74,15 @@ const MOST_LIKELY_TO_PROMPTS = [
   "Who is most likely to buy ridiculous souvenirs that end up in a drawer forever?",
   "Who is most likely to want to pet a wild animal on a vacation hike?",
   "Who is most likely to double-check the front door lock 4 times before leaving for the airport?",
-  "Who is most likely to strike up a 20-minute conversation with a complete stranger in an elevator?"
+  "Who is most likely to strike up a 20-minute conversation with a complete stranger in an elevator?",
+  "Who is most likely to insist on arriving at the airport 4 hours before the flight?",
+  "Who is most likely to try every bizarre street food without asking what it is first?",
+  "Who is most likely to forget to pack their toothbrush or phone charger?",
+  "Who is most likely to stop every 10 steps on a scenic walk to take 50 photos of the same thing?",
+  "Who is most likely to get motion sick on a gentle boat ride or winding road?",
+  "Who is most likely to create an hour-by-hour spreadsheet itinerary for a casual weekend trip?",
+  "Who is most likely to convince the other to take a 'shortcut' that adds an extra hour?",
+  "Who is most likely to lose their boarding pass between security and the gate?",
+  "Who is most likely to fall asleep in the passenger seat 5 minutes into a road trip?",
+  "Who is most likely to buy snacks at the gas station that could feed a small village?"
 ];

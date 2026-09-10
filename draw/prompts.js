@@ -6,6 +6,13 @@ const DRAW_PROMPTS = [
   { topic: "food", text: "An ice cream cone that is melting fast 🍦" },
   { topic: "food", text: "A slice of cheesy pizza being pulled 🍕" },
   { topic: "food", text: "A cup of boba with too many tapioca pearls 🧋" },
+  { topic: "food", text: "A plate of sushi rolls with chopsticks 🍣" },
+  { topic: "food", text: "A tall stack of fluffy pancakes with syrup 🥞" },
+  { topic: "food", text: "A spicy crunchy taco bursting open 🌮" },
+  { topic: "food", text: "A glazed donut with rainbow sprinkles 🍩" },
+  { topic: "food", text: "A bucket of crispy fried chicken 🍗" },
+  { topic: "food", text: "A toasted bagel with cream cheese 🥯" },
+  { topic: "food", text: "A giant box of hot french fries 🍟" },
 
   // --- ANIMALS ---
   { topic: "animals", text: "A grumpy cat wearing a silly party hat 🐱🎉" },
@@ -13,6 +20,13 @@ const DRAW_PROMPTS = [
   { topic: "animals", text: "A cute little penguin trying to fly 🐧" },
   { topic: "animals", text: "A panda happily munching on bamboo 🐼" },
   { topic: "animals", text: "An angry little hamster puffing its cheeks 🐹" },
+  { topic: "animals", text: "A sleepy sloth hanging on a branch 🦥" },
+  { topic: "animals", text: "A duck wearing tiny rainboots 🦆" },
+  { topic: "animals", text: "A round fluffy bunny eating a carrot 🐰" },
+  { topic: "animals", text: "A smiling capybara chilling with an orange 🍊" },
+  { topic: "animals", text: "A curious little red panda on a tree 🐾" },
+  { topic: "animals", text: "An owl wearing round spectacles 🦉" },
+  { topic: "animals", text: "A cute baby sea turtle swimming 🐢" },
 
   // --- CUTE & SILLY ---
   { topic: "cute", text: "Draw your partner making a funny face 🤪" },
@@ -20,11 +34,67 @@ const DRAW_PROMPTS = [
   { topic: "cute", text: "A dinosaur trying to hug someone with tiny arms 🦖" },
   { topic: "cute", text: "Our dream pet monster 👾" },
   { topic: "cute", text: "Two avocados cuddling each other 🥑💕" },
+  { topic: "cute", text: "A loaf of bread with a happy face 🍞" },
+  { topic: "cute", text: "A tiny mushroom wearing a backpack 🍄" },
+  { topic: "cute", text: "A happy cactus wanting a hug 🌵" },
+  { topic: "cute", text: "A sleepy cloud raining candy drops ☁️🍬" },
+  { topic: "cute", text: "A cute little astronaut floating in space 🧑‍🚀" },
+  { topic: "cute", text: "Two strawberries kissing on a plate 🍓" },
+  { topic: "cute", text: "Draw your partner as a cartoon potato 🥔" },
 
   // --- ITEMS & LIFE ---
   { topic: "items", text: "A cozy bedroom with a messy bed 🛏️" },
   { topic: "items", text: "Our future dream sports car 🚗" },
   { topic: "items", text: "A vintage polaroid camera snapping a picture 📷" },
   { topic: "items", text: "A giant pair of cozy socks 🧦" },
-  { topic: "items", text: "An alien spaceship visiting earth 🛸" }
+  { topic: "items", text: "An alien spaceship visiting earth 🛸" },
+  { topic: "items", text: "A steaming cup of morning coffee ☕" },
+  { topic: "items", text: "An oversized comfy hoodie 🧥" },
+  { topic: "items", text: "A pair of cool retro sneakers 👟" },
+  { topic: "items", text: "A handheld video game console 🎮" },
+  { topic: "items", text: "A tiny greenhouse full of plants 🪴" },
+  { topic: "items", text: "A glowing magic potion bottle 🧪" },
+  { topic: "items", text: "A vintage record player spinning vinyl 🎶" },
+
+  // --- ROMANCE & COUPLE ---
+  { topic: "romance", text: "Draw the two of you holding hands 🤝" },
+  { topic: "romance", text: "A couple sharing a bowl of spaghetti 🍝" },
+  { topic: "romance", text: "Two people kissing under an umbrella in rain 🌧️" },
+  { topic: "romance", text: "Draw your partner's pretty eyes 👀" },
+  { topic: "romance", text: "A romantic candlelit dinner table 🕯️" },
+  { topic: "romance", text: "A love letter sealed with a heart stamp 💌" },
+  { topic: "romance", text: "Two people stargazing on top of a car 🌙" },
+  { topic: "romance", text: "A big warm bear hug between lovers 🫂" },
+  { topic: "romance", text: "Our future dream wedding cake 🎂" },
+  { topic: "romance", text: "A locked heart with a golden key 🗝️" },
+
+  // --- NATURE & PLACES ---
+  { topic: "places", text: "A quiet beach with a colorful sunset 🌅" },
+  { topic: "places", text: "A tiny wooden cabin in snowy mountains 🏔️" },
+  { topic: "places", text: "A bustling neon night street in Tokyo 🏮" },
+  { topic: "places", text: "A cozy campsite with a crackling bonfire 🔥" },
+  { topic: "places", text: "A magical hidden waterfall in the forest 🌊" },
+  { topic: "places", text: "A fun amusement park ferris wheel 🎡" },
+  { topic: "places", text: "A quiet coffee shop corner on a rainy day ☕" },
+  { topic: "places", text: "A blooming field of bright sunflowers 🌻" },
+
+  // --- FANTASY & SCI-FI ---
+  { topic: "fantasy", text: "A cute little baby dragon breathing smoke 🐲" },
+  { topic: "fantasy", text: "A floating island with a castle on top 🏰" },
+  { topic: "fantasy", text: "A magical wizard cat with a wand 🧙‍♂️🐱" },
+  { topic: "fantasy", text: "A cool futuristic robot serving tea 🤖" },
+  { topic: "fantasy", text: "A majestic mermaid sitting on a ocean rock 🧜‍♀️" },
+  { topic: "fantasy", text: "A shiny glowing crystal ball 🔮" },
+  { topic: "fantasy", text: "A legendary sword stuck inside a stone ⚔️" },
+  { topic: "fantasy", text: "A time machine shaped like a phone booth ⏳" },
+
+  // --- CHAOTIC & UNHINGED ---
+  { topic: "unhinged", text: "A pigeon robbing a bank with breadcrumbs 🐦💰" },
+  { topic: "unhinged", text: "A shark riding a skateboard with sunglasses 🦈🛹" },
+  { topic: "unhinged", text: "A piece of toast screaming in a toaster 🍞😱" },
+  { topic: "unhinged", text: "A frog doing heavy deadlifts at the gym 🐸🏋️" },
+  { topic: "unhinged", text: "An alien confused by a slice of pizza 👽🍕" },
+  { topic: "unhinged", text: "A potato with ripped human muscles 🥔💪" },
+  { topic: "unhinged", text: "A raccoon driving a stolen garbage truck 🦝🚛" },
+  { topic: "unhinged", text: "A spider wearing tap-dance shoes on all legs 🕷️👞" }
 ];

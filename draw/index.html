@@ -37,6 +37,7 @@
     }
     .swatch {
       transition: transform 0.15s ease;
+      flex-shrink: 0;
     }
     .swatch.active {
       transform: scale(1.22);
@@ -45,6 +46,14 @@
     .brush-btn.active {
       background-color: var(--accent) !important;
       color: #ffffff !important;
+    }
+    /* Hide scrollbar for clean swatch tray */
+    .no-scrollbar::-webkit-scrollbar {
+      display: none;
+    }
+    .no-scrollbar {
+      -ms-overflow-style: none;
+      scrollbar-width: none;
     }
   </style>
 </head>
@@ -69,21 +78,50 @@
       </button>
 
       <div class="relative">
-        <button 
-          type="button"
-          onclick="toggleThemeDropdown()" 
-          class="text-xs font-semibold px-2.5 py-1.5 rounded-xl border border-[var(--border)] secondary-btn transition flex items-center gap-1.5"
-        >
-          <span>🎨</span>
-          <span id="current-theme-name" class="capitalize">Clean</span>
-        </button>
-        <div id="theme-menu" class="hidden absolute right-0 mt-1.5 w-32 card-style border rounded-2xl shadow-lg p-1.5 z-50 space-y-1 text-xs font-medium">
-          <button onclick="setSharedTheme('clean')" class="w-full text-left px-3 py-1.5 rounded-xl hover:bg-[var(--border)] transition">Clean (Light)</button>
-          <button onclick="setSharedTheme('midnight')" class="w-full text-left px-3 py-1.5 rounded-xl hover:bg-[var(--border)] transition">Midnight</button>
-          <button onclick="setSharedTheme('matcha')" class="w-full text-left px-3 py-1.5 rounded-xl hover:bg-[var(--border)] transition">Matcha</button>
-          <button onclick="setSharedTheme('dusk')" class="w-full text-left px-3 py-1.5 rounded-xl hover:bg-[var(--border)] transition">Dusk</button>
-        </div>
-      </div>
+  <button 
+    type="button"
+    onclick="toggleThemeDropdown()" 
+    class="text-xs font-semibold px-2.5 py-1.5 rounded-xl border border-[var(--border)] secondary-btn transition flex items-center gap-1.5"
+  >
+    <span>🎨</span>
+    <span id="current-theme-name" class="capitalize">Clean</span>
+  </button>
+  
+  <div id="theme-menu" class="hidden absolute right-0 mt-1.5 w-40 card-style border rounded-2xl shadow-xl p-1.5 z-50 space-y-1 text-xs font-semibold max-h-72 overflow-y-auto">
+    <!-- Light & Minimal -->
+    <button type="button" onclick="setSharedTheme('clean')" class="w-full text-left px-3 py-1.5 rounded-xl hover:bg-[var(--border)] transition flex items-center justify-between">
+      <span>Clean</span> <span class="text-[11px] opacity-60">⚪</span>
+    </button>
+    <button type="button" onclick="setSharedTheme('cherry')" class="w-full text-left px-3 py-1.5 rounded-xl hover:bg-[var(--border)] transition flex items-center justify-between">
+      <span>Cherry</span> <span class="text-[11px]">🌸</span>
+    </button>
+    <button type="button" onclick="setSharedTheme('lavender')" class="w-full text-left px-3 py-1.5 rounded-xl hover:bg-[var(--border)] transition flex items-center justify-between">
+      <span>Lavender</span> <span class="text-[11px]">💜</span>
+    </button>
+    <button type="button" onclick="setSharedTheme('nordic')" class="w-full text-left px-3 py-1.5 rounded-xl hover:bg-[var(--border)] transition flex items-center justify-between">
+      <span>Nordic Sky</span> <span class="text-[11px]">🌊</span>
+    </button>
+    <button type="button" onclick="setSharedTheme('matcha')" class="w-full text-left px-3 py-1.5 rounded-xl hover:bg-[var(--border)] transition flex items-center justify-between">
+      <span>Matcha</span> <span class="text-[11px]">🍵</span>
+    </button>
+    <button type="button" onclick="setSharedTheme('latte')" class="w-full text-left px-3 py-1.5 rounded-xl hover:bg-[var(--border)] transition flex items-center justify-between">
+      <span>Latte</span> <span class="text-[11px]">☕</span>
+    </button>
+
+    <div class="border-t border-[var(--border)] my-1"></div>
+
+    <!-- Dark Modes -->
+    <button type="button" onclick="setSharedTheme('midnight')" class="w-full text-left px-3 py-1.5 rounded-xl hover:bg-[var(--border)] transition flex items-center justify-between">
+      <span>Midnight</span> <span class="text-[11px]">🌙</span>
+    </button>
+    <button type="button" onclick="setSharedTheme('dusk')" class="w-full text-left px-3 py-1.5 rounded-xl hover:bg-[var(--border)] transition flex items-center justify-between">
+      <span>Dusk</span> <span class="text-[11px]">🌇</span>
+    </button>
+    <button type="button" onclick="setSharedTheme('cyber')" class="w-full text-left px-3 py-1.5 rounded-xl hover:bg-[var(--border)] transition flex items-center justify-between">
+      <span>Cyber Neon</span> <span class="text-[11px]">⚡</span>
+    </button>
+  </div>
+</div>
     </div>
   </header>
 
@@ -161,7 +199,7 @@
           <span class="text-xs font-bold uppercase tracking-wider text-[var(--subtext)]">Rounds</span>
           <div class="flex items-center gap-3">
             <button type="button" onclick="changeRoundCount(-1)" class="w-8 h-8 rounded-xl card-style border font-bold text-sm hover:bg-[var(--border)]">-</button>
-            <span id="setup-round-count" class="font-bold text-sm w-5 text-center">4</span>
+            <span id="setup-round-count" class="font-bold text-sm w-5 text-center">8</span>
             <button type="button" onclick="changeRoundCount(1)" class="w-8 h-8 rounded-xl card-style border font-bold text-sm hover:bg-[var(--border)]">+</button>
           </div>
         </div>
@@ -172,7 +210,7 @@
             <span class="text-xs font-bold uppercase tracking-wider text-[var(--subtext)]">Pick Topics</span>
             <button type="button" onclick="selectAllTopics()" class="text-[11px] font-bold text-[var(--accent)] underline">All Topics 🎲</button>
           </div>
-          <div id="topics-list" class="grid grid-cols-2 gap-2 text-xs font-semibold">
+          <div id="topics-list" class="grid grid-cols-2 gap-2 text-xs font-semibold max-h-48 overflow-y-auto pr-1">
             <!-- Populated via JS -->
           </div>
         </div>
@@ -216,17 +254,17 @@
       <p class="text-[11px] text-[var(--subtext)]">Drawing starts automatically once both tap Ready.</p>
     </section>
 
-    <!-- 4. ACTIVE DRAWING SCREEN (Single secret canvas) -->
+    <!-- 4. ACTIVE DRAWING SCREEN -->
     <section id="screen-game" class="w-full hidden flex flex-col items-center space-y-3">
       
       <!-- Progress Bar & Timer -->
       <div class="w-full flex items-center justify-between px-2 text-xs font-bold text-[var(--subtext)]">
-        <span id="round-indicator-label">ROUND 1 OF 4</span>
+        <span id="round-indicator-label">ROUND 1 OF 8</span>
         <span id="timer-label" class="font-mono text-[var(--accent)] text-sm">60s</span>
       </div>
 
       <!-- Prompt Banner -->
-      <div class="w-full card-style border rounded-2xl py-2.5 px-4 text-center shadow-xs">
+      <div class="w-full card-style border rounded-2xl py-2 px-4 text-center shadow-xs">
         <span class="text-[10px] font-extrabold uppercase tracking-widest text-[var(--accent)] block">Both Draw This Secretly:</span>
         <h2 id="current-prompt-text" class="text-sm sm:text-base font-extrabold mt-0.5">Loading prompt...</h2>
       </div>
@@ -236,22 +274,36 @@
         <canvas id="my-drawing-canvas" class="draw-surface w-full aspect-square block"></canvas>
       </div>
 
-      <!-- Tools: Swatches & Sizes -->
-      <div class="w-full flex items-center justify-between px-2 pt-0.5">
-        <div class="flex items-center gap-2" id="palette-container">
-          <button type="button" onclick="setColor('#f43f5e')" class="swatch w-7 h-7 rounded-full border-2 border-white shadow-sm active" style="background-color: #f43f5e;"></button>
-          <button type="button" onclick="setColor('#38bdf8')" class="swatch w-7 h-7 rounded-full border-2 border-white shadow-sm" style="background-color: #38bdf8;"></button>
-          <button type="button" onclick="setColor('#4ade80')" class="swatch w-7 h-7 rounded-full border-2 border-white shadow-sm" style="background-color: #4ade80;"></button>
-          <button type="button" onclick="setColor('#fbbf24')" class="swatch w-7 h-7 rounded-full border-2 border-white shadow-sm" style="background-color: #fbbf24;"></button>
-          <button type="button" onclick="setColor('#18181b')" class="swatch w-7 h-7 rounded-full border-2 border-white shadow-sm" style="background-color: #18181b;"></button>
-          <button type="button" onclick="setEraser()" id="eraser-btn" class="text-base p-1 rounded-xl secondary-btn border border-[var(--border)]" title="Eraser">🧹</button>
+      <!-- Expanded Palette & Brush Sizes -->
+      <div class="w-full flex flex-col gap-2 px-1 pt-0.5">
+        
+        <!-- Swatches row (Scrollable horizontally) -->
+        <div class="flex items-center justify-between gap-1">
+          <div class="flex items-center gap-2 overflow-x-auto no-scrollbar py-1 px-1" id="palette-container">
+            <!-- 12 Classic & Pastel Colors -->
+            <button type="button" onclick="setColor('#f43f5e')" class="swatch w-7 h-7 rounded-full border-2 border-white shadow-xs active" style="background-color: #f43f5e;" title="Rose Pink"></button>
+            <button type="button" onclick="setColor('#ef4444')" class="swatch w-7 h-7 rounded-full border-2 border-white shadow-xs" style="background-color: #ef4444;" title="Ruby Red"></button>
+            <button type="button" onclick="setColor('#f97316')" class="swatch w-7 h-7 rounded-full border-2 border-white shadow-xs" style="background-color: #f97316;" title="Vibrant Orange"></button>
+            <button type="button" onclick="setColor('#fbbf24')" class="swatch w-7 h-7 rounded-full border-2 border-white shadow-xs" style="background-color: #fbbf24;" title="Sunny Yellow"></button>
+            <button type="button" onclick="setColor('#22c55e')" class="swatch w-7 h-7 rounded-full border-2 border-white shadow-xs" style="background-color: #22c55e;" title="Emerald Green"></button>
+            <button type="button" onclick="setColor('#14b8a6')" class="swatch w-7 h-7 rounded-full border-2 border-white shadow-xs" style="background-color: #14b8a6;" title="Teal Mint"></button>
+            <button type="button" onclick="setColor('#0ea5e9')" class="swatch w-7 h-7 rounded-full border-2 border-white shadow-xs" style="background-color: #0ea5e9;" title="Sky Blue"></button>
+            <button type="button" onclick="setColor('#6366f1')" class="swatch w-7 h-7 rounded-full border-2 border-white shadow-xs" style="background-color: #6366f1;" title="Indigo Blue"></button>
+            <button type="button" onclick="setColor('#a855f7')" class="swatch w-7 h-7 rounded-full border-2 border-white shadow-xs" style="background-color: #a855f7;" title="Lilac Purple"></button>
+            <button type="button" onclick="setColor('#fb7185')" class="swatch w-7 h-7 rounded-full border-2 border-white shadow-xs" style="background-color: #fb7185;" title="Pastel Peach"></button>
+            <button type="button" onclick="setColor('#78350f')" class="swatch w-7 h-7 rounded-full border-2 border-white shadow-xs" style="background-color: #78350f;" title="Warm Brown"></button>
+            <button type="button" onclick="setColor('#18181b')" class="swatch w-7 h-7 rounded-full border-2 border-white shadow-xs" style="background-color: #18181b;" title="Jet Black"></button>
+            <button type="button" onclick="setEraser()" id="eraser-btn" class="text-base p-1 px-1.5 rounded-xl secondary-btn border border-[var(--border)] shrink-0" title="Eraser">🧹</button>
+          </div>
+
+          <!-- Brush Sizing -->
+          <div class="flex items-center gap-1 shrink-0 pl-1 border-l border-[var(--border)]">
+            <button type="button" onclick="setSize(3)" id="size-sm" class="brush-btn px-2 py-1 text-[11px] font-bold rounded-xl border border-[var(--border)] secondary-btn">S</button>
+            <button type="button" onclick="setSize(6)" id="size-md" class="brush-btn px-2 py-1 text-[11px] font-bold rounded-xl border border-[var(--border)] secondary-btn active">M</button>
+            <button type="button" onclick="setSize(12)" id="size-lg" class="brush-btn px-2 py-1 text-[11px] font-bold rounded-xl border border-[var(--border)] secondary-btn">L</button>
+          </div>
         </div>
 
-        <div class="flex items-center gap-1">
-          <button type="button" onclick="setSize(3)" id="size-sm" class="brush-btn px-2.5 py-1 text-[11px] font-bold rounded-xl border border-[var(--border)] secondary-btn">S</button>
-          <button type="button" onclick="setSize(6)" id="size-md" class="brush-btn px-2.5 py-1 text-[11px] font-bold rounded-xl border border-[var(--border)] secondary-btn active">M</button>
-          <button type="button" onclick="setSize(12)" id="size-lg" class="brush-btn px-2.5 py-1 text-[11px] font-bold rounded-xl border border-[var(--border)] secondary-btn">L</button>
-        </div>
       </div>
 
       <!-- Action Row -->
@@ -308,7 +360,7 @@
 
       </div>
 
-      <!-- Advance or Finish -->
+      <!-- Advance Button -->
       <button 
         id="next-round-btn"
         type="button"
@@ -361,7 +413,11 @@
       { id: "food", label: "Food 🍕" },
       { id: "animals", label: "Animals 🐶" },
       { id: "cute", label: "Cute & Silly 🧸" },
-      { id: "items", label: "Items & Life 🛋️" }
+      { id: "items", label: "Items & Life 🛋️" },
+      { id: "romance", label: "Romance 💕" },
+      { id: "places", label: "Places & Nature 🌅" },
+      { id: "fantasy", label: "Fantasy & Sci-Fi 🔮" },
+      { id: "unhinged", label: "Unhinged 💀" }
     ];
 
     // Canvas Engine State
@@ -379,23 +435,31 @@
     let roomCode = null;
     let myRole = null;
     let myName = "Player";
-    let selectedTopics = ["food", "animals", "cute", "items"];
-    let setupRoundsCount = 4;
+    let selectedTopics = ["food", "animals", "cute", "items", "romance", "places", "fantasy", "unhinged"];
+    let setupRoundsCount = 8;
     let timerInterval = null;
     let lastRenderedRound = -1;
 
     function initMyCanvas() {
       canvas = document.getElementById("my-drawing-canvas");
+      if (!canvas) return;
       ctx = canvas.getContext("2d");
 
       const rect = canvas.getBoundingClientRect();
       const dpr = window.devicePixelRatio || 1;
       canvas.width = rect.width * dpr;
       canvas.height = rect.height * dpr;
+
+      ctx.setTransform(1, 0, 0, 1, 0, 0);
       ctx.scale(dpr, dpr);
 
       ctx.lineCap = "round";
       ctx.lineJoin = "round";
+
+      canvas.removeEventListener("pointerdown", onPointerDown);
+      canvas.removeEventListener("pointermove", onPointerMove);
+      window.removeEventListener("pointerup", onPointerUp);
+      window.removeEventListener("pointercancel", onPointerUp);
 
       canvas.addEventListener("pointerdown", onPointerDown);
       canvas.addEventListener("pointermove", onPointerMove);
@@ -453,6 +517,8 @@
       const dpr = window.devicePixelRatio || 1;
       targetCanvas.width = rect.width * dpr;
       targetCanvas.height = rect.height * dpr;
+      
+      tCtx.setTransform(1, 0, 0, 1, 0, 0);
       tCtx.scale(dpr, dpr);
 
       tCtx.fillStyle = "#ffffff";
@@ -475,11 +541,17 @@
       });
     }
 
+    // Complete buffer wipe across device resolutions
     function clearMyCanvas() {
       myStrokes = [];
+      currentStroke = [];
       if (ctx && canvas) {
-        const rect = canvas.getBoundingClientRect();
-        ctx.clearRect(0, 0, rect.width, rect.height);
+        const dpr = window.devicePixelRatio || 1;
+        ctx.save();
+        ctx.setTransform(1, 0, 0, 1, 0, 0);
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        ctx.restore();
+        ctx.scale(dpr, dpr);
       }
     }
 
@@ -488,7 +560,8 @@
       isEraser = false;
       currentColor = hex;
       document.querySelectorAll(".swatch").forEach(s => {
-        s.classList.toggle("active", s.style.backgroundColor === hex || s.getAttribute("style").includes(hex));
+        const bg = s.style.backgroundColor;
+        s.classList.toggle("active", bg === hex || s.getAttribute("style").toLowerCase().includes(hex.toLowerCase()));
       });
       document.getElementById("eraser-btn").classList.remove("bg-[var(--accent)]", "text-white");
     }
@@ -546,7 +619,7 @@
     }
 
     function changeRoundCount(delta) {
-      setupRoundsCount = Math.min(10, Math.max(2, setupRoundsCount + delta));
+      setupRoundsCount = Math.min(12, Math.max(2, setupRoundsCount + delta));
       document.getElementById("setup-round-count").innerText = setupRoundsCount;
     }
 
@@ -703,7 +776,7 @@
       const p1 = data.player1 || {};
       const p2 = data.player2 || {};
 
-      // Clear local canvas on new round step
+      // Completely clear canvas buffer on new round step
       if (lastRenderedRound !== roundIdx) {
         lastRenderedRound = roundIdx;
         clearMyCanvas();
@@ -748,7 +821,9 @@
         waitNotice.classList.add("hidden");
       }
 
-      if (!canvas) setTimeout(initMyCanvas, 50);
+      if (!canvas) {
+        setTimeout(initMyCanvas, 50);
+      }
       syncTimer(data.timerEnd);
     }
 
@@ -785,6 +860,9 @@
     }
 
     function proceedNextRound() {
+      // Clear canvas locally right as Next is clicked
+      clearMyCanvas();
+
       roomRef.once("value").then(snap => {
         const data = snap.val();
         const nextRound = data.currentRound + 1;

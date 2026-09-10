@@ -1,5 +1,5 @@
 // this-or-that/prompts.js
-// 45 curated pairs across Lifestyle, Food, Romance, and Travel
+// 140+ curated pairs across Lifestyle, Food, Romance, Travel, Entertainment, and more
 
 const THIS_OR_THAT_PROMPTS = [
   // --- Lifestyle & Habits ---
@@ -13,6 +13,16 @@ const THIS_OR_THAT_PROMPTS = [
   { optionA: "Tidy Minimalist Room 🧹", optionB: "Cozy Cluttered Room 🧸" },
   { optionA: "Cat Person 🐱", optionB: "Dog Person 🐶" },
   { optionA: "Podcast While Commuting 🎙️", optionB: "Blasting Music in Headphones 🎧" },
+  { optionA: "Shower in the Morning 🚿", optionB: "Shower at Night 🛁" },
+  { optionA: "Save Money Rigorously 💰", optionB: "Spend on Experiences 💸" },
+  { optionA: "Never Lose Your Phone 📱", optionB: "Never Lose Your Keys 🔑" },
+  { optionA: "Always 10 Minutes Early ⏳", optionB: "Always 5 Minutes Late 🏃" },
+  { optionA: "Deep Clean the Whole House 🧼", optionB: "Quick Tidy Every Day 🧹" },
+  { optionA: "Use Cash 💵", optionB: "Use Cards / Apple Pay 💳" },
+  { optionA: "Voice Notes 🎙️", optionB: "Typed Texts ⌨️" },
+  { optionA: "Set 10 Alarms ⏰", optionB: "Wake Up Naturally ☀️" },
+  { optionA: "Work Out at the Gym 🏋️", optionB: "Work Out at Home / Park 🏃" },
+  { optionA: "Always Too Warm 🥵", optionB: "Always Too Cold 🥶" },
 
   // --- Food & Drinks ---
   { optionA: "Sweet Desserts 🍰", optionB: "Savory & Salty Snacks 🍟" },
@@ -23,6 +33,16 @@ const THIS_OR_THAT_PROMPTS = [
   { optionA: "Breakfast for Dinner 🥞", optionB: "Leftovers for Breakfast 🍕" },
   { optionA: "Crunchy French Fries 🍟", optionB: "Crispy Fried Chicken 🍗" },
   { optionA: "Dark Rich Chocolate 🍫", optionB: "Fruity Gummy Candy 🍬" },
+  { optionA: "Pancakes 🥞", optionB: "Waffles 🧇" },
+  { optionA: "Sushi Rolls 🍣", optionB: "Ramen Bowls 🍜" },
+  { optionA: "Vanilla Bean 🍦", optionB: "Rich Chocolate 🍩" },
+  { optionA: "Sparkling Water 🫧", optionB: "Still Water 💧" },
+  { optionA: "All-You-Can-Eat Buffet 🍽️", optionB: "Curated À La Carte 📝" },
+  { optionA: "Baking Sweets 🧁", optionB: "Cooking Savory Meals 🥘" },
+  { optionA: "Soft Chewy Cookies 🍪", optionB: "Crispy Crunchy Cookies 🍪" },
+  { optionA: "Red Wine 🍷", optionB: "Craft Beer 🍻" },
+  { optionA: "Matcha Green Tea 🍵", optionB: "Black Coffee ☕" },
+  { optionA: "Extra Spicy 🔥", optionB: "Mild and Flavorful 🌿" },
 
   // --- Romance & Couple Life ---
   { optionA: "Forehead Kisses 💋", optionB: "Tight Long Hugs 🫂" },
@@ -33,6 +53,16 @@ const THIS_OR_THAT_PROMPTS = [
   { optionA: "Cheesy Romantic Nicknames 🍯", optionB: "Using Real Names Solemnly 🏷️" },
   { optionA: "Matching Hoodies 🧥", optionB: "Subtle Complementing Outfits 👟" },
   { optionA: "Apologizing Immediately 🕊️", optionB: "Needing 15 Mins to Cool Off 🧊" },
+  { optionA: "Big Extravagant Wedding 💍", optionB: "Small Intimate Elopement 💒" },
+  { optionA: "Love Language: Touch 🫂", optionB: "Love Language: Words 🗣️" },
+  { optionA: "Steal Their Clothes 👕", optionB: "Buy Matching Clothes 👯" },
+  { optionA: "Make the Bed Together 🛏️", optionB: "Leave It Messy & Cozy 🌪️" },
+  { optionA: "Share One Big Dessert 🍨", optionB: "Get Two Different Desserts 🧁" },
+  { optionA: "Cook for Them 🧑‍🍳", optionB: "Have Them Cook for You 🍽️" },
+  { optionA: "Playful Roasting / Teasing 😈", optionB: "Sweet Constant Compliments 🥰" },
+  { optionA: "Kiss in the Rain 🌧️", optionB: "Cuddle by the Fire 🔥" },
+  { optionA: "Hold Hands in the Car 🚘", optionB: "Rest Hand on Their Thigh 🦵" },
+  { optionA: "Surprise Mystery Dates 🤫", optionB: "Planned Dates Together 🗓️" },
 
   // --- Travel & Adventures ---
   { optionA: "Sunny Tropical Beach 🏖️", optionB: "Cozy Snowy Mountains 🏔️" },
@@ -40,5 +70,109 @@ const THIS_OR_THAT_PROMPTS = [
   { optionA: "Fast Scenic Road Trip 🚗", optionB: "Relaxing Train Journey 🚂" },
   { optionA: "Theme Park Rollercoasters 🎢", optionB: "Museums & Art Galleries 🎨" },
   { optionA: "Island Hopping by Boat ⛵", optionB: "Strolling Historic City Streets 🏛️" },
-  { optionA: "Packing 3 Days in Advance 🧳", optionB: "Packing 1 Hour Before Leaving 🏃" }
+  { optionA: "Packing 3 Days in Advance 🧳", optionB: "Packing 1 Hour Before Leaving 🏃" },
+  { optionA: "Window Seat 🪟", optionB: "Aisle Seat 🛫" },
+  { optionA: "Strict Itinerary 📅", optionB: "Go With the Flow 🌊" },
+  { optionA: "Hotel Pool 🏊", optionB: "Ocean Beach 🌊" },
+  { optionA: "Backpacking 🎒", optionB: "Luxury Luggage 🧳" },
+  { optionA: "Camping in a Tent ⛺", optionB: "Glamping in a Cabin 🛖" },
+  { optionA: "Road Trip Snacks 🍿", optionB: "Road Trip Playlist 🎵" },
+  { optionA: "Take Thousands of Photos 📸", optionB: "Live in the Moment 🧘" },
+  { optionA: "Explore by Walking 🚶", optionB: "Rent a Scooter/Bike 🛵" },
+  { optionA: "Learn the Local Language 🗣️", optionB: "Rely on Translation Apps 📱" },
+  { optionA: "Travel During Summer ☀️", optionB: "Travel During Winter ❄️" },
+
+  // --- Entertainment & Media ---
+  { optionA: "Sci-Fi / Fantasy 👽", optionB: "True Crime / Mystery 🕵️" },
+  { optionA: "Horror Movies 👻", optionB: "Rom-Coms 💖" },
+  { optionA: "Play Video Games 🎮", optionB: "Watch YouTube/Twitch 💻" },
+  { optionA: "Go to a Concert 🎤", optionB: "Go to a Sports Game 🏟️" },
+  { optionA: "Listen to Old Favorites 📼", optionB: "Discover New Music 🎧" },
+  { optionA: "Anime & Manga 🌸", optionB: "Western Cartoons & Comics 🦸" },
+  { optionA: "Marvel Universe 🦸", optionB: "Harry Potter / Magic 🧙" },
+  { optionA: "Binge Watch All at Once 🍿", optionB: "One Episode a Week 📅" },
+  { optionA: "Play Board Games 🎲", optionB: "Play Card Games 🃏" },
+  { optionA: "Read Fiction 🐉", optionB: "Read Non-Fiction / Self-Help 🧠" },
+  { optionA: "Action-Packed Blockbuster 💥", optionB: "Slow Indie Film 🎥" },
+  { optionA: "Reality TV Trash 📺", optionB: "High-Budget Dramas 🎭" },
+  { optionA: "Listen to Full Albums 💿", optionB: "Shuffle Playlists 🔀" },
+  { optionA: "Cinema Popcorn 🍿", optionB: "Sneak in Your Own Snacks 🍫" },
+  { optionA: "Sing Karaoke 🎤", optionB: "Watch Others Sing 🤐" },
+
+  // --- Aesthetics & Vibe ---
+  { optionA: "Vintage / Retro 🕰️", optionB: "Modern / Sleek 🏙️" },
+  { optionA: "Neon Lights 🟣", optionB: "Fairy Lights ✨" },
+  { optionA: "Over-sized Clothes 🧥", optionB: "Fitted Clothes 👗" },
+  { optionA: "Silver Jewelry 🥈", optionB: "Gold Jewelry 🥇" },
+  { optionA: "Bright Pastel Colors 🌸", optionB: "Dark Moody Colors 🖤" },
+  { optionA: "Cottagecore 🍄", optionB: "Cyberpunk 🤖" },
+  { optionA: "Tattoos & Piercings 🤘", optionB: "Clean & Natural 🌿" },
+  { optionA: "Leather Jackets 🏍️", optionB: "Soft Cardigans 🧶" },
+  { optionA: "Sneakers / Kicks 👟", optionB: "Boots / Heels 🥾" },
+  { optionA: "Messy Bedhead 🛌", optionB: "Perfectly Styled Hair 💇" },
+  { optionA: "Sunrise Aesthetic 🌅", optionB: "Sunset Aesthetic 🌇" },
+  { optionA: "City Skyline View 🏙️", optionB: "Dense Forest View 🌲" },
+  { optionA: "Thrifting for Clothes 🛍️", optionB: "Buying Brand New 🏷️" },
+  { optionA: "Polaroid Camera 📸", optionB: "High-end DSLR 📷" },
+  { optionA: "Dark Academia 📚", optionB: "Y2K Aesthetic 🪩" },
+
+  // --- Home & Decor ---
+  { optionA: "Huge Kitchen 👩‍🍳", optionB: "Huge Bathroom 🛁" },
+  { optionA: "Hardwood Floors 🪵", optionB: "Soft Carpet Floors 🧶" },
+  { optionA: "Loads of Real House Plants 🌱", optionB: "Zero-Maintenance Fake Plants 🪴" },
+  { optionA: "Smart Home Tech 📱", optionB: "Analog Classic Switches 💡" },
+  { optionA: "Big Windows / Natural Light ☀️", optionB: "Dark / Cozy Den 🦇" },
+  { optionA: "Bath Bomb Tub Soak 🛀", optionB: "High-Pressure Rain Shower 🚿" },
+  { optionA: "Scented Candles 🕯️", optionB: "Incense / Essential Oils 🌿" },
+  { optionA: "Open Floor Plan 🏠", optionB: "Separate Cozy Rooms 🚪" },
+  { optionA: "Walk-in Closet 👗", optionB: "Huge Home Theater 🎬" },
+  { optionA: "King-Size Mattress 🛏️", optionB: "Two Separate Beds (Hotel Style) 🛋️" },
+
+  // --- Seasons & Weather ---
+  { optionA: "Crunchy Autumn Leaves 🍂", optionB: "Spring Cherry Blossoms 🌸" },
+  { optionA: "Summer Heat Wave 🌡️", optionB: "Winter Blizzard ❄️" },
+  { optionA: "Thunderstorms ⛈️", optionB: "Clear Blue Skies ☀️" },
+  { optionA: "Wear Heavy Winter Coats 🧥", optionB: "Wear Light Summer Clothes 🩳" },
+  { optionA: "Halloween Vibes 🎃", optionB: "Christmas Vibes 🎄" },
+  { optionA: "Rainy Day at Home 🌧️", optionB: "Sunny Day at the Park 🏞️" },
+  { optionA: "First Day of School Crispness 🎒", optionB: "Last Day of School Freedom 🏖️" },
+  { optionA: "Snowball Fights ⛄", optionB: "Water Balloon Fights 🎈" },
+  { optionA: "Hot Chocolate by the Fire ☕", optionB: "Lemonade by the Pool 🍋" },
+  { optionA: "Fall Fashion 🧣", optionB: "Spring Fashion 👒" },
+
+  // --- Deep & Thoughtful ---
+  { optionA: "Know the Future 🔮", optionB: "Change the Past ⏳" },
+  { optionA: "Infinite Money 💸", optionB: "Infinite Time 🕰️" },
+  { optionA: "Mind Reading 🧠", optionB: "Invisibility 👻" },
+  { optionA: "Be a Famous Artist 🎨", optionB: "Be a Wealthy Business Owner 💼" },
+  { optionA: "Live in Space 🚀", optionB: "Live Under the Ocean 🌊" },
+  { optionA: "Always Tell the Truth 🤐", optionB: "Never Speak Again 😶" },
+  { optionA: "High-Stress High-Paying Job 📈", optionB: "Low-Stress Low-Paying Job 😌" },
+  { optionA: "Master All Instruments 🎸", optionB: "Master All Sports 🏅" },
+  { optionA: "Teleportation 🌌", optionB: "Time Travel 🕰️" },
+  { optionA: "Live 100 Years in the Past ⏳", optionB: "Live 100 Years in the Future 🚀" },
+
+  // --- Work & Social Life ---
+  { optionA: "Work From Home 💻", optionB: "Work in an Office 🏢" },
+  { optionA: "Be Your Own Boss 👑", optionB: "Have a Secure 9-to-5 💼" },
+  { optionA: "Messy Chaotic Desk 📎", optionB: "Perfectly Clean Workspace 🧼" },
+  { optionA: "Work in Total Silence 🤫", optionB: "Work with Background Cafe Noise ☕" },
+  { optionA: "Small Tight-Knit Friend Group 🤞", optionB: "Huge Network of Acquaintances 🌐" },
+  { optionA: "Host the Party 🏠", optionB: "Be the Guest 🎈" },
+  { optionA: "Active Group Chats 📱", optionB: "One-on-One Texts 👤" },
+  { optionA: "Share Life on Social Media 🤳", optionB: "Complete Digital Ghost 👻" },
+  { optionA: "Voice Call Your Friends 📞", optionB: "FaceTime Your Friends 📱" },
+  { optionA: "Read the Book Before the Movie 📖", optionB: "Watch the Movie First 🍿" },
+
+  // --- Silly & Chaotic ---
+  { optionA: "Fight 100 Duck-Sized Horses 🦆", optionB: "Fight 1 Horse-Sized Duck 🐎" },
+  { optionA: "Have a Pet Dinosaur 🦖", optionB: "Have a Pet Dragon 🐉" },
+  { optionA: "Eat a Raw Onion 🧅", optionB: "Drink a Shot of Hot Sauce 🌶️" },
+  { optionA: "Never Use the Internet Again 🚫", optionB: "Never Leave Your House Again 🏠" },
+  { optionA: "Alien Invasion 👽", optionB: "Zombie Apocalypse 🧟" },
+  { optionA: "Speak Only in Rhymes 🎶", optionB: "Speak Only in Whispers 🤫" },
+  { optionA: "Tripping in Public 🤦", optionB: "Waving at Someone Not Waving at You 👋" },
+  { optionA: "Burp Glitter ✨", optionB: "Fart Confetti 🎉" },
+  { optionA: "Always Feel Like Sneezing 🤧", optionB: "Always Have an Itch You Can't Reach 😫" },
+  { optionA: "Wear Wet Socks All Day 🧦", optionB: "Have a Popcorn Kernel Stuck in Teeth 🍿" }
 ];
