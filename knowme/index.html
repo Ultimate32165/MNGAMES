@@ -294,6 +294,7 @@
         </div>
 
         <button 
+          id="next-round-btn"
           type="button" 
           onclick="proceedToNextRound()"
           class="w-full py-3.5 accent-btn rounded-2xl font-bold text-sm active:scale-98 transition shadow"
@@ -304,7 +305,21 @@
 
     </section>
 
-    <!-- 5. PLAYER LEFT OVERLAY SCREEN -->
+    <!-- 5. FINAL GAME OVER SCREEN -->
+    <section id="screen-gameover" class="hidden card-style border rounded-3xl p-6 sm:p-8 space-y-5 text-center shadow-md">
+      <span class="text-4xl">💕</span>
+      <h2 class="font-serif-title text-3xl font-bold">Quiz Complete!</h2>
+      <p class="text-xs sm:text-sm text-[var(--subtext)]">Thanks for playing — hope you learned something new about each other.</p>
+      <button 
+        type="button"
+        onclick="reloadToHome()"
+        class="w-full py-3.5 accent-btn rounded-2xl font-bold text-sm active:scale-98 transition shadow"
+      >
+        Back to Hub 🏠
+      </button>
+    </section>
+
+    <!-- 6. PLAYER LEFT OVERLAY SCREEN -->
     <section id="screen-left" class="hidden card-style border rounded-3xl p-8 space-y-4 text-center shadow-lg">
       <span class="text-3xl">👋</span>
       <h2 id="left-message-title" class="text-xl font-bold">Player Left</h2>
@@ -320,7 +335,7 @@
 
   </main>
 
-  <!-- 6. REALTIME EMOJI BAR -->
+  <!-- 7. REALTIME EMOJI BAR -->
   <footer id="emoji-bar" class="w-full max-w-xs flex items-center justify-around py-2.5 px-3 card-style border rounded-full shadow-md z-40">
     <button onclick="sendEmoji('😂')" class="text-xl active:scale-125 transition">😂</button>
     <button onclick="sendEmoji('😍')" class="text-xl active:scale-125 transition">😍</button>
@@ -374,6 +389,7 @@ let setupQCount = 11;
     let timerInterval = null;
     let lastRenderedRound = -1;
     let autoAdvanceTimer = null;
+    let gameOverShown = false;
 
     function initSetupTopics() {
       const container = document.getElementById("topics-container");
@@ -526,6 +542,8 @@ let setupQCount = 11;
           renderLobby(data);
         } else if (data.status === "playing") {
           renderGame(data);
+        } else if (data.status === "gameover") {
+          renderGameOver();
         }
       });
 
@@ -615,6 +633,10 @@ let setupQCount = 11;
       }
 
       document.getElementById("round-indicator-label").innerText = `ROUND ${roundIdx + 1} OF ${data.totalRounds}`;
+
+      // Last round: button finishes the quiz instead of advancing
+      const isLastRound = (roundIdx + 1 >= data.totalRounds);
+      document.getElementById("next-round-btn").innerText = isLastRound ? "Finish Quiz 🎉" : "Next Round ➡️";
       
       const targetName = roundObj.target === "p1" ? (p1.name || "Player 1") : (p2.name || "Player 2");
       const isTargetMe = (myRole === "player1" && roundObj.target === "p1") || (myRole === "player2" && roundObj.target === "p2");
@@ -755,10 +777,12 @@ let setupQCount = 11;
       roomRef.once("value").then(snap => {
         const data = snap.val();
         if (!data) return;
+        if (data.status !== "playing") return;
         const nextRound = data.currentRound + 1;
 
+        // FIXED: after the last round, end the game for both players
         if (nextRound >= data.totalRounds) {
-          showToast("Quiz finished! Thanks for playing 💕");
+          roomRef.update({ status: "gameover" });
           return;
         }
 
@@ -772,6 +796,24 @@ let setupQCount = 11;
           "player2/submitted": false
         });
       });
+    }
+
+    function renderGameOver() {
+      if (timerInterval) clearInterval(timerInterval);
+      if (autoAdvanceTimer) {
+        clearTimeout(autoAdvanceTimer);
+        autoAdvanceTimer = null;
+      }
+
+      document.getElementById("screen-lobby").classList.add("hidden");
+      document.getElementById("screen-game").classList.add("hidden");
+      document.getElementById("screen-left").classList.add("hidden");
+      document.getElementById("screen-gameover").classList.remove("hidden");
+
+      if (!gameOverShown) {
+        gameOverShown = true;
+        triggerConfetti();
+      }
     }
 
     function leaveGame() {
@@ -795,6 +837,7 @@ let setupQCount = 11;
 
       document.getElementById("screen-lobby").classList.add("hidden");
       document.getElementById("screen-game").classList.add("hidden");
+      document.getElementById("screen-gameover").classList.add("hidden");
       document.getElementById("header-room-pill").classList.add("hidden");
       document.getElementById("header-leave-btn").classList.add("hidden");
 
