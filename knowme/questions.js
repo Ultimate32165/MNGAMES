@@ -7,843 +7,581 @@ const QUESTION_BANK = [
   {
     topic: "food",
     type: "text",
-    prompt: "What is {NAME}'s ultimate comfort food when having a bad day?"
+    prompt: "What is {NAME}'s ultimate late-night guilty indulgence when nobody is watching?"
   },
   {
     topic: "food",
     type: "mcq",
-    prompt: "What kind of late-night snack does {NAME} crave most often?",
-    options: ["Spicy Ramen / Noodles", "Ice cream or sweet dessert", "Chips / Savory snacks", "Whatever is in the fridge"]
+    prompt: "What is {NAME}'s exact condiment philosophy?",
+    options: [
+      "Drowns everything in extra spicy chili oil/sauce",
+      "Must have garlic mayo or cheesy ranch on the side",
+      "Pure purist—wants only salt and pepper",
+      "Keeps dipping sauces separate so textures stay crunchy"
+    ]
   },
   {
     topic: "food",
     type: "text",
-    prompt: "What is {NAME}'s go-to drink order when you visit a cafe?"
+    prompt: "What signature dish does {NAME} secretly think they cook better than restaurants?"
   },
   {
     topic: "food",
     type: "mcq",
-    prompt: "If {NAME} had to eat only one cuisine for the rest of their life, what would it be?",
-    options: ["Italian (Pasta, Pizza)", "Asian (Sushi, Ramen, Dumplings)", "Spicy Street Food / Desi / Tacos", "Classic Burgers & Fries"]
+    prompt: "If {NAME} is handed an appetizer platter with only one piece left, what happens?",
+    options: [
+      "Insists you take it after offering three times",
+      "Cuts it into two tiny, mathematically equal halves",
+      "Pretends to look away and snatches it instantly",
+      "Leaves it untouched until the waiter clears the table"
+    ]
   },
   {
     topic: "food",
     type: "text",
-    prompt: "What is one food or ingredient that {NAME} absolutely refuses to eat?"
+    prompt: "What texture in food gives {NAME} an immediate, visceral 'nope'?"
   },
   {
     topic: "food",
     type: "mcq",
-    prompt: "How does {NAME} handle spice levels in food?",
-    options: ["Can handle ghost peppers with a straight face", "Loves medium heat with lots of flavor", "Tolerates mild spice only", "Milk and tears at the slightest black pepper"]
+    prompt: "When {NAME} discovers an amazing new cafe or bakery, what is their instinct?",
+    options: [
+      "Order the exact same thing there every single week",
+      "Drag you along the very next day to taste test",
+      "Keep it a secret lowkey spot for quiet reading",
+      "Take 10 aesthetic photos before taking a single bite"
+    ]
   },
   {
     topic: "food",
     type: "text",
-    prompt: "If {NAME} cooked a romantic dinner for you, what would they make best?"
+    prompt: "What snack does {NAME} always buy whenever you stop at a convenience store?"
   },
   {
     topic: "food",
     type: "mcq",
-    prompt: "When ordering takeout together, what role does {NAME} usually play?",
-    options: ["Says 'anything is fine' then rejects 4 options", "Spends 40 minutes reviewing menus", "Orders the exact same favorite meal every time", "Takes charge and orders for both of you"]
-  },
-  {
-    topic: "food",
-    type: "text",
-    prompt: "What is {NAME}'s weirdest guilty-pleasure food combination?"
-  },
-  {
-    topic: "food",
-    type: "mcq",
-    prompt: "What is {NAME}'s philosophy on sharing food off their plate?",
-    options: ["Happy to share everything equally", "Offers you a bite first, then guards the rest", "Takes from your plate but guards their own", "Joey Tribbiani rule: does NOT share food"]
-  },
-  {
-    topic: "food",
-    type: "text",
-    prompt: "What dessert makes {NAME} lose all self-control and finish the entire portion?"
-  },
-  {
-    topic: "food",
-    type: "mcq",
-    prompt: "If {NAME} is handed a menu with 50 items, how do they decide?",
-    options: ["Asks the server for their top recommendation", "Picks whatever they saw someone else eating", "Panics and picks the most familiar comfort dish", "Studies it like a final exam for 15 minutes"]
-  },
-  {
-    topic: "food",
-    type: "text",
-    prompt: "What meal cooked by you does {NAME} genuinely rave about the most?"
-  },
-  {
-    topic: "food",
-    type: "mcq",
-    prompt: "What is {NAME}'s stance on breakfast?",
-    options: ["Full hot spread with eggs, toast, and pancakes", "Grab-and-go iced coffee and vibes only", "Skipping completely until a massive lunch", "Leftover dinner pizza cold from the fridge"]
+    prompt: "How does {NAME} handle grocery shopping on an empty stomach?",
+    options: [
+      "Sticks rigidly to the handwritten grocery list",
+      "Buys $40 worth of chips, bakery treats, and dips",
+      "Samples whatever free treats or bites are available",
+      "Rushes through the aisles in pure survival mode"
+    ]
   },
 
   // ==================== TRAVELLING ====================
   {
     topic: "travelling",
     type: "text",
-    prompt: "What is {NAME}'s dream travel getaway with you?"
+    prompt: "What is {NAME}'s absolute dream scenic view to wake up to on vacation?"
   },
   {
     topic: "travelling",
     type: "mcq",
-    prompt: "What is {NAME}'s ideal vacation style?",
-    options: ["Relaxing at a luxury beach resort", "Exploring cities and street food", "Hiking and mountain nature", "Cozy cabin with zero plans"]
+    prompt: "What kind of travel companion is {NAME} during the flight or train ride?",
+    options: [
+      "Knocked out cold before takeoff with an eye mask on",
+      "Glued to the window taking cloud videos and timelapse shots",
+      "Organized with downloaded playlists, books, and pre-packed snacks",
+      "Restless passenger who stretches, walks the aisle, and talks"
+    ]
   },
   {
     topic: "travelling",
     type: "text",
-    prompt: "What is the one item {NAME} could never travel without?"
+    prompt: "What travel crisis or plan derailment did {NAME} handle surprisingly smoothly?"
   },
   {
     topic: "travelling",
     type: "mcq",
-    prompt: "How does {NAME} behave at the airport before a flight?",
-    options: ["Demands being there 3.5 hours early", "Casually glides to the gate right before boarding", "Anxiously clutches boarding pass and passports the whole time", "Gets distracted shopping in duty-free"]
+    prompt: "When choosing accommodations, what does {NAME} inspect first?",
+    options: [
+      "The aesthetic view from the window or private balcony",
+      "Water pressure, clean tiles, and bathroom aesthetics",
+      "How comfortable and cloud-like the mattress and pillows look",
+      "Proximity to top-rated coffee spots and street food hubs"
+    ]
   },
   {
     topic: "travelling",
     type: "text",
-    prompt: "What was the funniest or most chaotic travel mishap you and {NAME} experienced?"
+    prompt: "What is {NAME}'s golden rule or superstition whenever packing a suitcase?"
   },
   {
     topic: "travelling",
     type: "mcq",
-    prompt: "During a long road trip, what is {NAME}'s primary role?",
-    options: ["The dedicated driver locked in on the road", "The hype DJ in charge of playlists", "The navigator who still gets turned around", "The passenger who falls asleep within 15 minutes"]
-  },
-  {
-    topic: "travelling",
-    type: "text",
-    prompt: "Which country or city does {NAME} talk about visiting the most?"
-  },
-  {
-    topic: "travelling",
-    type: "mcq",
-    prompt: "How does {NAME} pack for a short 3-day weekend trip?",
-    options: ["One light carry-on or backpack", "A massive suitcase packed with 9 backup outfits", "Leaves packing to the final 20 minutes before departure", "Meticulously uses packing cubes and checklists"]
-  },
-  {
-    topic: "travelling",
-    type: "text",
-    prompt: "What souvenir is {NAME} most likely to hunt down in a new city?"
-  },
-  {
-    topic: "travelling",
-    type: "mcq",
-    prompt: "When exploring a new foreign city, what is {NAME}'s priority on morning one?",
-    options: ["Wander aimlessly until finding a hidden local bakery", "Hit the top-rated landmark before crowds show up", "Sleep until noon and enjoy hotel room service", "Hunt down a scenic vantage point for photos"]
-  },
-  {
-    topic: "travelling",
-    type: "text",
-    prompt: "What is {NAME}'s biggest travel-related anxiety or pet peeve?"
-  },
-  {
-    topic: "travelling",
-    type: "mcq",
-    prompt: "If you get lost in an unfamiliar city, how does {NAME} handle it?",
-    options: ["Takes it as a romantic detour and enjoys wandering", "Stares intensely at Google Maps in dead silence", "Immediately stops a local to ask for directions", "Playfully blames you for leading the way"]
+    prompt: "On day three of a trip, how are {NAME}'s energy levels looking?",
+    options: [
+      "Up at 7 AM ready to hike and explore non-stop",
+      "Thriving exclusively on iced caffeine and good vibes",
+      "Needs a mandatory 3-hour midday nap in the hotel room",
+      "Completely checked out and demanding a lazy pool/beach day"
+    ]
   },
 
   // ==================== LOVE ====================
   {
     topic: "love",
     type: "text",
-    prompt: "What was {NAME}'s very first thought on the day you met?"
+    prompt: "What is an unspoken habit between you two that proves how deeply {NAME} cares?"
   },
   {
     topic: "love",
     type: "mcq",
-    prompt: "What is {NAME}'s primary love language?",
-    options: ["Words of affirmation", "Quality time together", "Physical touch & hugs", "Acts of service & surprises"]
+    prompt: "What makes {NAME}'s eyes light up with unmistakable affection?",
+    options: [
+      "Watching you get super passionate while explaining a favorite topic",
+      "Catching you laughing so hard you cover your face",
+      "When you surprise them by wearing their favorite scent or outfit",
+      "When you instinctively reach for their hand in a crowded place"
+    ]
   },
   {
     topic: "love",
     type: "text",
-    prompt: "What is {NAME}'s single favorite memory of the two of you together?"
+    prompt: "What little ritual or routine between the two of you feels sacred to {NAME}?"
   },
   {
     topic: "love",
     type: "mcq",
-    prompt: "When did {NAME} realize they were completely head-over-heels for you?",
-    options: ["Within the first couple of dates", "During a late-night deep talk", "When you did a small, thoughtful gesture", "It was a slow burn that suddenly hit all at once"]
+    prompt: "How does {NAME} react when they miss you intensely during a busy day?",
+    options: [
+      "Spams your phone with 12 unhinged reels or memes in a row",
+      "Sends a short, sweet 'thinking of you' voice note",
+      "Calls unexpectedly just to hear your voice for 45 seconds",
+      "Saves up every tiny thought to dump on you the moment you meet"
+    ]
   },
   {
     topic: "love",
     type: "text",
-    prompt: "What is one physical feature of yours that {NAME} stares at the most?"
+    prompt: "What is something {NAME} learned to love simply because you adore it?"
   },
   {
     topic: "love",
     type: "mcq",
-    prompt: "How does {NAME} show affection when words fail?",
-    options: ["A tight, silent bear hug", "Bringing you food or making a drink", "Gentle forehead or cheek kisses", "Hovering nearby just to share the same space"]
-  },
-  {
-    topic: "love",
-    type: "text",
-    prompt: "What is a promise or future dream that {NAME} holds closest to their heart?"
-  },
-  {
-    topic: "love",
-    type: "mcq",
-    prompt: "What makes {NAME} feel instantly cherished by you?",
-    options: ["Remembering a tiny detail they mentioned weeks ago", "A spontaneous forehead kiss in public", "Checking in on them during a hectic workday", "Planning a surprise date without asking them to decide"]
-  },
-  {
-    topic: "love",
-    type: "text",
-    prompt: "What song makes {NAME} immediately think of your relationship?"
-  },
-  {
-    topic: "love",
-    type: "mcq",
-    prompt: "What is {NAME}'s favorite stage of a romantic date?",
-    options: ["Getting ready and the butterflies beforehand", "The dinner and laughing across the table", "The quiet drive or stroll afterward", "Cuddling together at home once you're back"]
-  },
-  {
-    topic: "love",
-    type: "text",
-    prompt: "What is one thing about you that {NAME} brags about to everyone else?"
-  },
-  {
-    topic: "love",
-    type: "mcq",
-    prompt: "How does {NAME} react when you whisper something deeply romantic out of nowhere?",
-    options: ["Melts completely and pulls you in for a kiss", "Gets super shy and tries to hide their blushing face", "Grins smugly like 'I know you love me'", "Repeats it back with even softer words"]
+    prompt: "What is {NAME}'s comfort instinct when you are feeling low or insecure?",
+    options: [
+      "Pulls you into a long, quiet embrace without saying a word",
+      "Gives an impassioned motivational speech reminding you of your worth",
+      "Brings your favorite drink/snack and handles whatever is stressing you",
+      "Distracts you with goofy jokes and playful forehead kisses"
+    ]
   },
 
   // ==================== CUTE ====================
   {
     topic: "cute",
     type: "text",
-    prompt: "What small everyday habit of {NAME}'s do you find secretly adorable?"
+    prompt: "What is a signature facial expression {NAME} makes when being playfully shy?"
   },
   {
     topic: "cute",
     type: "mcq",
-    prompt: "If {NAME} were an animal, what would they be?",
-    options: ["A sleepy golden retriever", "A sassy, independent cat", "A gentle little bunny", "A curious baby otter"]
+    prompt: "What is {NAME}'s most adorable unconscious nervous habit?",
+    options: [
+      "Twirling their hair or rubbing the back of their neck",
+      "Biting their lower lip while concentrating deeply",
+      "Fidgeting with rings, watch straps, or sleeve hems",
+      "Pacing around the room while talking on the phone"
+    ]
   },
   {
     topic: "cute",
     type: "text",
-    prompt: "What is the face or expression {NAME} makes when they are genuinely proud of themselves?"
+    prompt: "What is a voice pitch or cute accent {NAME} only uses when speaking to you?"
   },
   {
     topic: "cute",
     type: "mcq",
-    prompt: "What does {NAME} look like when they wake up in the morning?",
-    options: ["A cozy, sleepy burrito wrapped in blankets", "Disheveled hair and wandering around like a zombie", "Instantly energetic and awake", "Grumbling and hitting the pillow for 10 more minutes"]
+    prompt: "How does {NAME} look when bundled up for freezing weather?",
+    options: [
+      "Like an oversized penguin barely able to move their arms",
+      "Completely hidden behind a scarf with only eyes peeking out",
+      "Refuses heavy layers and pretends they aren't shivering",
+      "Effortlessly stylish like a vintage winter catalogue model"
+    ]
   },
   {
     topic: "cute",
     type: "text",
-    prompt: "What made-up pet name or silly sound does {NAME} use when talking to you?"
+    prompt: "What cute gesture does {NAME} do when they want your attention right this second?"
   },
   {
     topic: "cute",
     type: "mcq",
-    prompt: "How does {NAME} react when they receive an unexpected, genuine compliment?",
-    options: ["Blushes instantly and looks away shyly", "Smiles proudly and agrees jokingly", "Gets flustered and tries to change the subject", "Demands you repeat it three more times"]
-  },
-  {
-    topic: "cute",
-    type: "text",
-    prompt: "Describe the way {NAME} laughs when something is truly, uncontrollably hilarious."
-  },
-  {
-    topic: "cute",
-    type: "mcq",
-    prompt: "What is {NAME}'s coziest outfit of choice at home?",
-    options: ["An oversized hoodie that probably belongs to you", "Matching pajama set", "Soft sweatpants and an old worn-out t-shirt", "Fluffy socks and a massive bathrobe"]
-  },
-  {
-    topic: "cute",
-    type: "text",
-    prompt: "What does {NAME} do when they think you aren't looking at them?"
-  },
-  {
-    topic: "cute",
-    type: "mcq",
-    prompt: "What happens when {NAME} is exhausted but stubbornly refuses to go to sleep?",
-    options: ["Starts rambling incoherent, silly thoughts", "Leans their entire body weight against you", "Denies being tired while eyes literally close", "Gets super clingy and cuddly"]
+    prompt: "What is {NAME}'s reaction when an adorable dog or kitten walks by in public?",
+    options: [
+      "Glares in adoration, making quiet squeaking noises",
+      "Immediately crouches down and asks the owner if they can pet it",
+      "Turns to you with puppy eyes begging: 'Can we adopt one please?'",
+      "Stares respectfully from afar while grinning ear-to-ear"
+    ]
   },
 
   // ==================== ANGER / PET PEEVES ====================
   {
     topic: "anger",
     type: "text",
-    prompt: "What is {NAME}'s biggest pet peeve that instantly annoys them?"
+    prompt: "What petty household inconvenience pushes {NAME} from 0 to 100 on the frustration scale?"
   },
   {
     topic: "anger",
     type: "mcq",
-    prompt: "How does {NAME} usually react when they get hangry?",
-    options: ["Goes quiet and pouts", "Groans and complains out loud", "Demands food immediately", "Denies being hangry until fed"]
+    prompt: "What is {NAME}'s telltale body language when someone is testing their patience?",
+    options: [
+      "Jaw clenches and one eyebrow rises in pure judgment",
+      "Crosses arms tightly and lets out a slow, theatrical sigh",
+      "Starts tapping their fingers or foot at 180 beats per minute",
+      "Smiles politely while mentally planning an escape route"
+    ]
   },
   {
     topic: "anger",
     type: "text",
-    prompt: "What is something you do that drives {NAME} mildly crazy?"
+    prompt: "What is one opinion or take that {NAME} will passionately argue about every single time?"
   },
   {
     topic: "anger",
     type: "mcq",
-    prompt: "When {NAME} is genuinely pissed off, how do they handle it?",
-    options: ["Needs total silence and physical space to cool down", "Wants to confront and vent right this second", "Cleans or organizes aggressively while sighing", "Gives the cold shoulder until approached gently"]
+    prompt: "When {NAME} is mad at technology that glitches or crashes, what is their response?",
+    options: [
+      "Aggressively taps the screen like physical force will speed it up",
+      "Stares blankly in utter betrayal and closes the laptop lid",
+      "Starts lecturing the device out loud in exasperation",
+      "Immediately forces a restart while muttering under their breath"
+    ]
   },
   {
     topic: "anger",
     type: "text",
-    prompt: "What is the fastest way to get {NAME} back into a good mood when they're angry?"
+    prompt: "What is the best way to approach {NAME} when they are clearly grumpy but claim 'I'm fine'?"
   },
   {
     topic: "anger",
     type: "mcq",
-    prompt: "What traffic or driving scenario triggers {NAME}'s road rage fastest?",
-    options: ["People not using turn signals", "Tailgaters driving right behind them", "Slow drivers lingering in the fast lane", "People staring at their phones at a green light"]
-  },
-  {
-    topic: "anger",
-    type: "text",
-    prompt: "What petty argument between the two of you still comes up as a joke?"
-  },
-  {
-    topic: "anger",
-    type: "mcq",
-    prompt: "How does {NAME} react when an argument is proven wrong by facts?",
-    options: ["Accepts it gracefully and laughs", "Doubles down with playful stubbornness", "Changes the subject like nothing happened", "Pouts and claims they meant something else"]
-  },
-  {
-    topic: "anger",
-    type: "text",
-    prompt: "What is the dead-giveaway physical cue that {NAME} is secretly irritated?"
-  },
-  {
-    topic: "anger",
-    type: "mcq",
-    prompt: "When {NAME} receives bad customer service, what do they do?",
-    options: ["Says absolutely nothing and vents in the car afterward", "Politely yet firmly addresses the manager", "Lets you handle the interaction completely", "Leaves a brutal, detailed 1-star review online"]
+    prompt: "What social pet peeve makes {NAME} roll their eyes hardest?",
+    options: [
+      "People playing videos on maximum volume without headphones in public",
+      "Groups blocking an entire hallway or grocery aisle without awareness",
+      "People who flake on confirmed plans 10 minutes beforehand",
+      "Mansplaining or talking over someone who was already speaking"
+    ]
   },
 
   // ==================== SILLY ====================
   {
     topic: "silly",
     type: "text",
-    prompt: "What is the funniest or most ridiculous fear {NAME} has?"
+    prompt: "What is the most ridiculous reason {NAME} has ever burst out crying or laughing uncontrollably?"
   },
   {
     topic: "silly",
     type: "mcq",
-    prompt: "Who takes longer to get ready before heading out?",
-    options: ["Definitely {NAME}", "Definitely the partner", "Both take forever", "Both get ready in 5 minutes"]
+    prompt: "If {NAME} were competing in an absurd Olympic event, what would they win gold in?",
+    options: [
+      "Speed-running through a 5-minute shower in 32 minutes",
+      "Finding obscure items that were sitting directly in plain sight",
+      "Tripping over invisible cracks on completely flat flooring",
+      "Constructing elaborate justifications for buying unneeded cute items"
+    ]
   },
   {
     topic: "silly",
     type: "text",
-    prompt: "What is the weirdest talent or bizarre party trick {NAME} possesses?"
+    prompt: "What is a goofy nickname {NAME} has given to an everyday household object or gadget?"
   },
   {
     topic: "silly",
     type: "mcq",
-    prompt: "If {NAME} suddenly had to survive a zombie apocalypse, how long would they last?",
-    options: ["Dead within the first 10 minutes looking for their phone", "Survives a couple of weeks through sheer luck", "Becomes the ruthless camp leader within a month", "Accidentally befriends a zombie"]
+    prompt: "What would {NAME}'s wrestling ring entrance persona be called?",
+    options: [
+      "The Blanket Menace (strikes only from under plush covers)",
+      "Captain Hangry (dangerous when carbs are delayed)",
+      "The Snooze Bandit (steals 5 minutes of sleep repeatedly)",
+      "The Snack Gremlin (attacks pantries in total darkness)"
+    ]
   },
   {
     topic: "silly",
     type: "text",
-    prompt: "What dance move or goofy gesture does {NAME} pull out to make you burst out laughing?"
+    prompt: "What completely irrational belief did {NAME} hold as a kid for way too long?"
   },
   {
     topic: "silly",
     type: "mcq",
-    prompt: "What is {NAME} most likely to trip over while walking?",
-    options: ["Their own two feet on completely flat ground", "A rug or door frame corner", "A random pet lying on the floor", "Nothing at all—air itself"]
-  },
-  {
-    topic: "silly",
-    type: "text",
-    prompt: "What is a ridiculous, unhinged conspiracy theory {NAME} half-believes?"
-  },
-  {
-    topic: "silly",
-    type: "mcq",
-    prompt: "What happens when {NAME} tries to assemble flat-pack IKEA furniture?",
-    options: ["Meticulously sorts every screw and finishes smoothly", "Skips instructions, builds it backwards, and has 5 screws left", "Gets frustrated after step 3 and leaves it on the floor", "Hands the allen wrench to you and provides moral support"]
-  },
-  {
-    topic: "silly",
-    type: "text",
-    prompt: "If {NAME} were arrested with zero context, what would friends assume they did?"
-  },
-  {
-    topic: "silly",
-    type: "mcq",
-    prompt: "What song makes {NAME} lose all dignity and start singing off-key at maximum volume?",
-    options: ["2000s Pop / Boyband anthems", "Dramatic Disney movie ballads", "Cheesy 80s rock classics", "Modern rap tracks they barely know the lyrics to"]
+    prompt: "If {NAME} suddenly had to communicate using only movie sound effects for a day, what's their staple?",
+    options: [
+      "Dramatic cartoon slide-whistle and anvil drops",
+      "Star Wars lightsaber humming and pew-pew sounds",
+      "Suspenseful horror movie violin screeches",
+      "Triumphant trumpet fanfare whenever they enter a room"
+    ]
   },
 
   // ==================== SPICY ====================
   {
     topic: "spicy",
     type: "text",
-    prompt: "What outfit or style worn by you turns {NAME} on the quickest?"
+    prompt: "What specific touch or stroke on {NAME}'s body instantly turns up the heat between you two?"
   },
   {
     topic: "spicy",
     type: "mcq",
-    prompt: "Where is {NAME}'s absolute most sensitive tickle / goosebump spot?",
-    options: ["The side of the neck and earlobes", "The lower back and hips", "The collarbone and chest", "The thighs and waist"]
+    prompt: "What whispered compliment or phrase completely disarms {NAME} behind closed doors?",
+    options: [
+      "A husky whisper praising how gorgeous/handsome they look right now",
+      "Telling them you've been thinking about this all day long",
+      "Calling them by a low, private pet name with a slow kiss",
+      "A teasing whisper daring them to take full control"
+    ]
   },
   {
     topic: "spicy",
     type: "text",
-    prompt: "What is a seductive gesture or flirty move that makes {NAME} weak in the knees?"
+    prompt: "What everyday non-sexual habit of yours does {NAME} secretly find irresistibly attractive?"
   },
   {
     topic: "spicy",
     type: "mcq",
-    prompt: "What vibe does {NAME} prefer when things turn intimate?",
-    options: ["Slow, passionate, romantic, and eye-contact heavy", "Spontaneous, teasing, and playful", "Feisty, bold, and taking charge", "Cozy, quiet, and wrapped in blankets"]
+    prompt: "What dynamic between you two sparks the hottest bedroom chemistry?",
+    options: [
+      "Intense eye contact and slow, breathless romance",
+      "Playful dominance with breathless teasing and resistance",
+      "Spontaneous, urgent chemistry that starts out of nowhere",
+      "Cozy, intimate affection that gradually escalates in warmth"
+    ]
   },
   {
     topic: "spicy",
     type: "text",
-    prompt: "What is {NAME}'s favorite type of kiss (slow and deep, teasing pecks, neck kisses, etc.)?"
+    prompt: "What is a bold, sensual surprise {NAME} would melt over coming home to?"
   },
   {
     topic: "spicy",
     type: "mcq",
-    prompt: "What kind of spicy flirty behavior catches {NAME} off guard the most?",
-    options: ["A whispered secret or suggestive comment in public", "A sudden pull by the waist into a passionate kiss", "A suggestive text or photo sent during a normal workday", "Tracing fingertips along their back or leg under the table"]
+    prompt: "What kiss rhythm is {NAME}'s absolute kryptonite?",
+    options: [
+      "Starting soft on the lips, then trailing slowly down the neck to collarbone",
+      "Deep, urgent kisses with both hands running through their hair",
+      "Teasing butterfly pecks that stop just before things get serious",
+      "A slow, lingering kiss that pulls their lower lip gently"
+    ]
   },
   {
     topic: "spicy",
     type: "text",
-    prompt: "What is one spicy fantasy or playful scenario {NAME} would love to try?"
+    prompt: "Where is {NAME}'s secret sweet spot that makes them shudder when kissed or lightly bitten?"
   },
   {
     topic: "spicy",
     type: "mcq",
-    prompt: "Who is usually the bolder initiator when sparks start flying?",
-    options: ["{NAME} makes the first bold move", "You are definitely the initiator", "It is an unspoken mutual shift in energy", "A playful back-and-forth tease before anyone commits"]
-  },
-  {
-    topic: "spicy",
-    type: "text",
-    prompt: "What scent, perfume, or cologne on you drives {NAME} crazy?"
-  },
-  {
-    topic: "spicy",
-    type: "mcq",
-    prompt: "What is {NAME}'s preferred lighting and atmosphere for intimacy?",
-    options: ["Pitch black darkness with zero distractions", "Warm amber lighting or scented candles flickering", "Natural morning sunlight streaming through the blinds", "The soft glow of a movie playing in the background"]
-  },
-  {
-    topic: "spicy",
-    type: "text",
-    prompt: "What is the flirtiest thing {NAME} has ever done or said to you?"
-  },
-  {
-    topic: "spicy",
-    type: "mcq",
-    prompt: "What is {NAME}'s reaction when you tease them without letting them touch?",
-    options: ["Pouts adorably and begs playfully", "Takes charge and pins you down", "Feigns indifference but gives in within seconds", "Starts plotting their sweet revenge"]
-  },
-  {
-    topic: "spicy",
-    type: "text",
-    prompt: "What exact physical touch or whisper instantly gives {NAME} full-body chills?"
-  },
-  {
-    topic: "spicy",
-    type: "mcq",
-    prompt: "Which kiss placement drives {NAME} wildest?",
-    options: ["Biting or kissing along the jawline and neck", "Slow, teasing lips that barely brush together", "Kissing down the collarbone and shoulders", "Passionate, breath-stealing deep kisses with hands in hair"]
-  },
-  {
-    topic: "spicy",
-    type: "text",
-    prompt: "If you two were locked in a bedroom for an entire rainy weekend, what spicy mischief happens first?"
-  },
-  {
-    topic: "spicy",
-    type: "mcq",
-    prompt: "How does {NAME} prefer power dynamics behind closed doors?",
-    options: ["Taking total control and calling the shots", "Completely surrendering control and being taken care of", "A competitive tug-of-war where you fight for dominance", "Soft, gentle, completely balanced give-and-take"]
-  },
-  {
-    topic: "spicy",
-    type: "text",
-    prompt: "What is {NAME}'s favorite spot to be kissed or touched when you're cuddling in bed?"
-  },
-  {
-    topic: "spicy",
-    type: "mcq",
-    prompt: "What's {NAME}'s secret weakness when you're alone in an elevator or secluded spot?",
-    options: ["Being pinned against the wall for a quick deep kiss", "Hands sliding under shirts or around waists", "A whispered tease about what's happening when you get home", "Stealing a quick, dangerous touch right before doors open"]
-  },
-  {
-    topic: "spicy",
-    type: "text",
-    prompt: "What spicy confession has {NAME} made that caught you completely by surprise?"
-  },
-  {
-    topic: "spicy",
-    type: "mcq",
-    prompt: "What clothing choice on you makes it impossible for {NAME} to keep their hands to themselves?",
-    options: ["Tight-fitting jeans or tailored pants", "Only wearing an oversized t-shirt/hoodie with bare legs", "A sharp formal suit or stunning backless dress", "Silk loungewear or minimal sleepwear"]
-  },
-  {
-    topic: "spicy",
-    type: "text",
-    prompt: "What is a tease or habit you have that makes {NAME} want to drag you straight into the bedroom?"
-  },
-  {
-    topic: "spicy",
-    type: "mcq",
-    prompt: "When waking up together on a lazy Sunday morning, what is {NAME}'s preference?",
-    options: ["Immediate sleepy, warm morning intimacy before talking", "Making coffee first, then returning to bed for hours", "Gentle back rubs that slowly turn passionate", "Staying tangled in sheets talking and kissing softly"]
+    prompt: "What outfit or aesthetic on you makes {NAME} stare with predatory focus?",
+    options: [
+      "Formal evening attire or a sharp fitted suit/dress",
+      "Lounging in their oversized clothing with nothing underneath",
+      "Clean-cut casual jeans with a fitted, flattering top",
+      "Fresh out of the shower wrapped simply in a towel"
+    ]
   },
 
   // ==================== UNHINGED ====================
   {
     topic: "unhinged",
     type: "text",
-    prompt: "If {NAME} had to hide a dead body, who is the first person they would call to help?"
+    prompt: "If {NAME} suddenly inherited a shady abandoned warehouse, what would they build inside?"
   },
   {
     topic: "unhinged",
     type: "mcq",
-    prompt: "If {NAME} suddenly won $50 million, what is their most unhinged first purchase?",
-    options: ["An absurdly oversized medieval castle with a moat", "A fleet of useless luxury cars or super-boats", "A private zoo with exotic animals", "Disappearing off the face of the Earth into a secret bunker"]
+    prompt: "If {NAME} were caught on an episode of a chaotic reality TV show, what would they get eliminated for?",
+    options: [
+      "Starting unnecessary drama over stolen refrigerator snacks",
+      "Forming an alliance with everyone, then accidentally betraying everyone",
+      "Getting disqualified for refusing to participate before their morning coffee",
+      "Breaking character and laughing in the confessional booth"
+    ]
   },
   {
     topic: "unhinged",
     type: "text",
-    prompt: "What is the most chaotic, unhinged impulse purchase {NAME} has ever made?"
+    prompt: "What completely unhinged survival strategy would {NAME} deploy during an apocalypse?"
   },
   {
     topic: "unhinged",
     type: "mcq",
-    prompt: "If {NAME} were a supervillain, what would their petty villain origin story be?",
-    options: ["Their favorite takeout spot messed up their order once", "Someone walked too slowly in front of them on the sidewalk", "Their phone charger stopped working at a specific angle", "Someone woke them up from a glorious nap"]
+    prompt: "If {NAME} could replace all pigeons in the city with any animal, what would it be?",
+    options: [
+      "Tiny flying red pandas with wings",
+      "Miniature screaming capybaras",
+      "Raccoons wearing small trench coats",
+      "Chunky ducks that quack in auto-tune"
+    ]
   },
   {
     topic: "unhinged",
     type: "text",
-    prompt: "What intrusive thought does {NAME} regularly say out loud?"
+    prompt: "What is the wildest intrusive purchase {NAME} would make if given unlimited money for 60 seconds?"
   },
   {
     topic: "unhinged",
     type: "mcq",
-    prompt: "If {NAME} could legally commit one harmless petty crime, what would it be?",
-    options: ["Stealing every cute stray dog or cat they see", "Slapping people who talk loudly on speakerphone", "Sneaking into high-end events without an invite", "Slashing the prices on their favorite online shopping cart"]
-  },
-  {
-    topic: "unhinged",
-    type: "text",
-    prompt: "What is {NAME}'s absolute most chaotic late-night internet rabbit hole?"
-  },
-  {
-    topic: "unhinged",
-    type: "mcq",
-    prompt: "What would {NAME} do if an alien landed in the backyard tonight?",
-    options: ["Try to feed it snacks and pet it", "Panic, scream, and push you forward first", "Start interrogating it about universal secrets", "Take a selfie with it to hard-launch on Instagram"]
-  },
-  {
-    topic: "unhinged",
-    type: "text",
-    prompt: "What is the weirdest hill {NAME} is completely prepared to die on?"
-  },
-  {
-    topic: "unhinged",
-    type: "mcq",
-    prompt: "How does {NAME} handle seeing a terrifying giant insect in the bathroom?",
-    options: ["Screams, bolts out of the room, and leaves the door shut forever", "Traps it bravely under a cup and waits for you to dispose of it", "Attacks it with a shoe like a berserker warrior", "Gently escorts it outside like a Disney princess"]
-  },
-  {
-    topic: "unhinged",
-    type: "text",
-    prompt: "If {NAME} were caught on live television during a breaking news story, what chaotic thing would they be doing?"
-  },
-  {
-    topic: "unhinged",
-    type: "mcq",
-    prompt: "What would {NAME} do if they found out ghosts were 100% real and haunting your living room?",
-    options: ["Try to charge the ghost rent or assign it chores", "Burn sage, scream, and sell the house by midnight", "Befriend it and ask it about historic gossip", "Use the ghost as an excuse to avoid social plans"]
+    prompt: "What would {NAME} do if a raccoon broke into your kitchen at 3 AM and offered a trade?",
+    options: [
+      "Trade a bag of chips for whatever shiny trinket it brought",
+      "Scream, jump onto the kitchen counter, and call for backup",
+      "Try to negotiate a long-term business alliance with it",
+      "Take a video for socials and name it your new roommate"
+    ]
   },
 
   // ==================== HABITS & DAILY LIFE ====================
   {
     topic: "habits",
     type: "text",
-    prompt: "What is {NAME}'s exact morning routine before they can function like a human?"
+    prompt: "What is {NAME}'s exact ritual when preparing to sit down for a long work or study session?"
   },
   {
     topic: "habits",
     type: "mcq",
-    prompt: "What is the state of {NAME}'s phone battery at any given moment?",
-    options: ["Always above 80%, super prepared", "Hovering dangerously between 3% and 12%", "Dead; currently looking for a charger", "Constantly plugged into a power bank"]
+    prompt: "What is the state of {NAME}'s browser tabs right this second?",
+    options: [
+      "Neatly organized with 4 tidy tabs open max",
+      "Over 40 tabs open, 3 of them playing sound somewhere",
+      "Bookmarked into 12 folders they will never open again",
+      "Tabs grouped by color with military-level precision"
+    ]
   },
   {
     topic: "habits",
     type: "text",
-    prompt: "What is a weird quirk {NAME} has when watching television or movies?"
+    prompt: "What unusual quirk does {NAME} exhibit when they are deep in thought?"
   },
   {
     topic: "habits",
     type: "mcq",
-    prompt: "How does {NAME} manage unread messages or notifications?",
-    options: ["0 unread, inbox zero perfectionist", "Over 2,000 unread emails and 40 unread texts", "Reads the preview banner but leaves it unread on purpose", "Replies within 4 seconds or 4 business weeks, no in-between"]
+    prompt: "How does {NAME} approach making the bed in the morning?",
+    options: [
+      "Hospital corners and decorative throw pillows styled perfectly",
+      "A quick pull of the duvet to make it look presentable from afar",
+      "Leave it completely tangled—'I'm just getting back into it tonight'",
+      "Only makes the bed if guests or parents are visiting"
+    ]
   },
   {
     topic: "habits",
     type: "text",
-    prompt: "What chore does {NAME} absolutely despise doing the most?"
+    prompt: "What specific sound or noise drives {NAME} crazy when trying to relax?"
   },
   {
     topic: "habits",
     type: "mcq",
-    prompt: "What is {NAME}'s sleep position of choice?",
-    options: ["Spread out like a starfish taking over the whole bed", "Curled into a tight fetal ball", "Hugging a pillow like a lifeline", "Stiff as a board on their back"]
-  },
-  {
-    topic: "habits",
-    type: "text",
-    prompt: "What is something {NAME} always misplaces or loses around the house?"
-  },
-  {
-    topic: "habits",
-    type: "mcq",
-    prompt: "When {NAME} says 'I'll be ready in 5 minutes', what does that actually mean?",
-    options: ["Literally 5 minutes, they are ready at the door", "About 15 to 20 minutes minimum", "They haven't even gotten into the shower yet", "It means check back in an hour"]
-  },
-  {
-    topic: "habits",
-    type: "text",
-    prompt: "What is {NAME}'s signature habit when scrolling through social media in bed?"
-  },
-  {
-    topic: "habits",
-    type: "mcq",
-    prompt: "What does {NAME}'s side of the bedroom look like most days?",
-    options: ["Spotless and orderly like an upscale hotel", "The iconic 'chair with clothes that aren't dirty or clean'", "Organized chaos where only they know where things are", "A cozy nest of blankets, cups, and charging wires"]
+    prompt: "What is {NAME}'s beverage management style on their desk?",
+    options: [
+      "One single water bottle refilled faithfully all day",
+      "The 'beverage trio': water for hydration, coffee for energy, tea for vibes",
+      "Half-empty mugs collecting in a small museum cluster",
+      "Spills ice water at least once every calendar month"
+    ]
   },
 
   // ==================== MEMORIES ====================
   {
     topic: "memories",
     type: "text",
-    prompt: "What was the very first movie or show you two watched together?"
+    prompt: "What was a moment when you looked at {NAME} and thought, 'Yep, I am in big trouble, I'm falling hard'?"
   },
   {
     topic: "memories",
     type: "mcq",
-    prompt: "Where was your very first kiss with {NAME}?",
-    options: ["In a car parked somewhere quiet", "Outside under the streetlights or stars", "At home on the couch", "In a crowded place where you sneaked away"]
+    prompt: "What was the setting of your very first deep, vulnerable late-night conversation?",
+    options: [
+      "Parked in a car with fogged-up windows late into the night",
+      "On a phone call while both of you were lying in your beds",
+      "Sitting on a quiet outdoor curb or rooftop watching the breeze",
+      "Over a table at an empty cafe long past closing time"
+    ]
   },
   {
     topic: "memories",
     type: "text",
-    prompt: "What was {NAME} wearing on your official first date?"
+    prompt: "What is a small, quiet moment between you two that felt like a movie scene?"
   },
   {
     topic: "memories",
     type: "mcq",
-    prompt: "What was the biggest hurdle or funny challenge during the early days of dating?",
-    options: ["Awkwardly trying to impress each other's friends/family", "Figuring out who pays or where to eat", "Over-analyzing every single text message", "Hiding embarrassing habits from each other"]
+    prompt: "What funny hurdle did you two overcome in your first few months together?",
+    options: [
+      "Figuring out each other's erratic sleep schedules and texting patterns",
+      "Surviving an awkward or hilarious meeting with friends/family",
+      "A cooking disaster where both of you pretended the meal tasted great",
+      "Trying to look composed and cool while having intense inner butterflies"
+    ]
   },
   {
     topic: "memories",
     type: "text",
-    prompt: "What is a gift you gave {NAME} that made them genuinely emotional?"
+    prompt: "What photo of {NAME} saved in your phone is your secret favorite?"
   },
   {
     topic: "memories",
     type: "mcq",
-    prompt: "What was the first big adventure or trip you two took together?",
-    options: ["A spontaneous day road trip to a nearby town", "A cozy weekend getaway retreat", "A major flight to a new city/country", "Camping or a beach day under the sun"]
-  },
-  {
-    topic: "memories",
-    type: "text",
-    prompt: "What is an inside joke between you two that nobody else would understand?"
-  },
-  {
-    topic: "memories",
-    type: "mcq",
-    prompt: "What was the moment you saw {NAME} laugh so hard they couldn't breathe?",
-    options: ["When one of you had an embarrassing public fumble", "During a chaotic board or video game session", "Watching a ridiculous meme or movie clip late at night", "When a serious situation turned completely ridiculous"]
-  },
-  {
-    topic: "memories",
-    type: "text",
-    prompt: "What place or street always triggers instant nostalgia of your early romance?"
+    prompt: "What memory always comes up whenever you both reminisce about how far you've come?",
+    options: [
+      "Supporting each other through an exhausting life transition or exam",
+      "A spontaneous date where everything went off-plan but ended up magical",
+      "The first time one of you accidentally said 'I love you'",
+      "A silly inside joke that originated from an embarrassing fumble"
+    ]
   },
 
   // ==================== HYPOTHETICAL ====================
   {
     topic: "hypothetical",
     type: "text",
-    prompt: "If {NAME} could swap lives with any fictional character for a week, who would it be?"
+    prompt: "If {NAME} were granted one wish by a genie with zero loopholes, what would they wish for?"
   },
   {
     topic: "hypothetical",
     type: "mcq",
-    prompt: "If you two were stuck on a deserted island together, what would {NAME} be in charge of?",
-    options: ["Building the shelter and making tools", "Foraging for coconuts, fruits, and food", "Sitting on the sand complaining about the heat and sand", "Building a giant SOS fire signal"]
+    prompt: "If {NAME} were suddenly given a magic remote control for reality, which button gets used most?",
+    options: [
+      "Pause: freeze the world to sleep an extra 2 hours every morning",
+      "Mute: instantly silence annoying sounds and loud chatter",
+      "Fast-Forward: skip tedious chores and awkward small talk",
+      "Rewind: re-live favorite romantic dates and delicious meals"
+    ]
   },
   {
     topic: "hypothetical",
     type: "text",
-    prompt: "If {NAME} had to open a small business tomorrow, what kind of shop would it be?"
+    prompt: "If {NAME} were forced to live in any fictional game or movie universe, where would they choose?"
   },
   {
     topic: "hypothetical",
     type: "mcq",
-    prompt: "If {NAME} could master one superpower instantly, which one would they pick?",
-    options: ["Teleportation (instant travel anywhere)", "Mind reading (knowing what everyone thinks)", "Time manipulation (pause or rewind moments)", "Invisibility (spying and sneaking around)"]
+    prompt: "If {NAME} suddenly woke up with the ability to fly, what is their day-one destination?",
+    options: [
+      "Hovering just above traffic to smirk down at gridlock",
+      "Flying directly above the clouds to catch the sunrise in peace",
+      "Soaring over your window to tap on the glass dramatically",
+      "Flying straight to a foreign city for a quick fresh snack"
+    ]
   },
   {
     topic: "hypothetical",
     type: "text",
-    prompt: "If {NAME} were guaranteed to succeed, what crazy dream career would they pursue?"
+    prompt: "If {NAME} could design an ideal secret hideout accessible only by the two of you, what would it feature?"
   },
   {
     topic: "hypothetical",
     type: "mcq",
-    prompt: "If {NAME} found an envelope with $10,000 cash on the sidewalk, what is step one?",
-    options: ["Try to find whose it is or turn it in", "Deposit it straight into savings with zero hesitation", "Book flights for a dream vacation immediately", "Go on a massive reckless shopping spree"]
-  },
-  {
-    topic: "hypothetical",
-    type: "text",
-    prompt: "If {NAME} could erase one embarrassing memory from your brain forever, what would it be?"
-  },
-  {
-    topic: "hypothetical",
-    type: "mcq",
-    prompt: "If {NAME} woke up tomorrow with the ability to hear your thoughts for 24 hours, what would they hear most?",
-    options: ["Endless thoughts about how attractive and amazing they are", "A chaotic radio station of random songs and memes", "Constant internal debates about what to eat next", "Worrying about daily tasks and to-do lists"]
-  },
-
-
-  // ==================== SPICY (ADDITIONS) ====================
-  {
-    topic: "spicy",
-    type: "text",
-    prompt: "What is {NAME}'s favorite spot on their body to be kissed softly and repeatedly?"
-  },
-  {
-    topic: "spicy",
-    type: "mcq",
-    prompt: "What turns {NAME} on faster than anything else?",
-    options: ["Deep eye contact with a slow, confident smirk", "A low, raspy whisper directly against their ear", "Fingers gripping their waist or tangled in their hair", "A sudden, breathless pull in for a passionate kiss"]
-  },
-  {
-    topic: "spicy",
-    type: "text",
-    prompt: "What is a bold, sensual outfit or lingerie look {NAME} secretly wants to see you wear?"
-  },
-  {
-    topic: "spicy",
-    type: "mcq",
-    prompt: "When things start heating up, what pace does {NAME} crave most?",
-    options: ["Slow, agonizing tease that builds up forever", "Intense, urgent, and unable to wait another second", "Playful wrestling and teasing before getting serious", "Deep, slow, and intensely emotional connection"]
-  },
-  {
-    topic: "spicy",
-    type: "text",
-    prompt: "Where is the boldest or most adventurous place {NAME} has ever fantasized about hooking up?"
-  },
-  {
-    topic: "spicy",
-    type: "mcq",
-    prompt: "What kind of sound from you drives {NAME} completely over the edge?",
-    options: ["Soft whimpers and gasps", "A low, breathy moan right against their skin", "Whispering their name in a raspy voice", "Telling them exactly how good they feel"]
-  },
-  {
-    topic: "spicy",
-    type: "text",
-    prompt: "What is {NAME}'s absolute biggest turn-off or mood-killer in the bedroom?"
-  },
-  {
-    topic: "spicy",
-    type: "mcq",
-    prompt: "What touch under the table in a crowded restaurant would make {NAME} lose their mind?",
-    options: ["A hand slowly sliding up the inner thigh", "Fingers tracing light patterns on their lower back", "Interlocking fingers and kissing their knuckles while holding eye contact", "Kicking off shoes and playing footsie under the tablecloth"]
-  },
-  {
-    topic: "spicy",
-    type: "text",
-    prompt: "What is {NAME}'s favorite position or dynamic when the lights go down?"
-  },
-  {
-    topic: "spicy",
-    type: "mcq",
-    prompt: "How does {NAME} prefer their hair to be handled when making out?",
-    options: ["Fingers gently running through it softly", "A firm, commanding grip pulling their head back slightly", "Messing it up playfully", "Hands cupping their cheeks and jawline instead"]
-  },
-  {
-    topic: "spicy",
-    type: "text",
-    prompt: "What dirty or flirty line whispered in the dark makes {NAME} completely melt?"
-  },
-  {
-    topic: "spicy",
-    type: "mcq",
-    prompt: "What is {NAME}'s favorite part of your body to touch, trace, or kiss?",
-    options: ["Lips, jawline, and neck", "Waist, hips, and stomach", "Chest, shoulders, and back", "Thighs and legs"]
-  },
-  {
-    topic: "spicy",
-    type: "text",
-    prompt: "What is one spicy boundary or scenario {NAME} was once shy about, but now secretly loves?"
-  },
-  {
-    topic: "spicy",
-    type: "mcq",
-    prompt: "What is {NAME}'s stance on leaving marks (hickeys, scratches, or bites)?",
-    options: ["Obsessed with leaving and receiving them everywhere", "Only in discreet, hidden spots nobody else can see", "Playful biting during the moment, but no visible marks", "Strictly gentle—zero marks allowed"]
-  },
-  {
-    topic: "spicy",
-    type: "text",
-    prompt: "If {NAME} had total control over you for one full hour in the bedroom, what are they doing first?"
-  },
-  {
-    topic: "spicy",
-    type: "mcq",
-    prompt: "What is {NAME}'s favorite aftercare vibe once everything is said and done?",
-    options: ["Sweaty, skin-to-skin cuddles completely wrapped together", "Taking a warm shower together to wash off", "Getting snacks and drinks immediately while laughing in bed", "Falling straight asleep tangled in the sheets"]
-  },
-  {
-    topic: "spicy",
-    type: "text",
-    prompt: "What tease or subtle move do you do in public that makes {NAME} want to rush home instantly?"
-  },
-  {
-    topic: "spicy",
-    type: "mcq",
-    prompt: "Which spontaneous scenario sounds most thrilling to {NAME}?",
-    options: ["Sneaking into a hotel bathroom or balcony during a party", "Pulling over on a deserted, dark country road in the car", "A rainy afternoon in bed with phones completely turned off", "A steamy shower session that turns into a full workout"]
-  },
-  {
-    topic: "spicy",
-    type: "text",
-    prompt: "What is the most explicit or scandalous text {NAME} has ever sent you?"
-  },
-  {
-    topic: "spicy",
-    type: "mcq",
-    prompt: "When {NAME} is in the mood, how do they drop hints?",
-    options: ["Direct and blunt: tells you straight to your face", "Heavy physical cues: lingering kisses, wandering hands, body presses", "Suggestive, witty banter loaded with double entendres", "Walking out of the bathroom wearing next to nothing"]
+    prompt: "If {NAME} could instantly acquire black-belt mastery in any craft, what would they choose?",
+    options: [
+      "Master chef cooking and gourmet baking skills",
+      "Virtuoso piano, guitar, or musical composition",
+      "World-class visual art, illustration, and design",
+      "Master martial arts and acrobatics"
+    ]
   }
 ];
