@@ -4,412 +4,212 @@
 const LOVE_MATCH_SCENARIOS = [
   {
     category: "Conflict & Harmony",
-    prompt: "When we have an argument or disagreement, what is your first instinct?",
+    prompt: "If we hit a point during an argument where things start feeling heated:",
     options: [
-      { text: "Talk it out right then and there until it's settled", matchTag: "direct" },
-      { text: "Take 15–30 minutes alone to cool off, then discuss calmly", matchTag: "space" },
-      { text: "Use humor or give a gentle hug to diffuse the tension first", matchTag: "soft" },
-      { text: "Sleep on it so we can talk with a fresh head tomorrow", matchTag: "pause" }
+      { text: "Call a 10-minute timeout so we can reset before emotions take over", matchTag: "timeout_reset" },
+      { text: "Reach out to hold your hand so we remember we are a team first", matchTag: "physical_anchor" },
+      { text: "Write out bullet points so we focus on facts instead of hurt feelings", matchTag: "logical_breakdown" },
+      { text: "Take a deep breath together and let whoever is hurting speak first", matchTag: "empathy_first" }
     ]
   },
   {
     category: "Romance & Connection",
-    prompt: "What makes you feel most genuinely loved and appreciated?",
+    prompt: "Which unexpected everyday gesture makes your heart skip a beat?",
     options: [
-      { text: "Unexpected sweet words, compliments, and love notes", matchTag: "words" },
-      { text: "Undivided quality time with zero phone distractions", matchTag: "time" },
-      { text: "Spontaneous hugs, holding hands, and physical closeness", matchTag: "touch" },
-      { text: "Thoughtful favors, breakfasts in bed, and small surprises", matchTag: "acts" }
+      { text: "Waking up to find my phone charged and my favorite warm drink ready", matchTag: "thoughtful_acts" },
+      { text: "A random text in the middle of a chaotic day saying 'I'm thinking of you'", matchTag: "surprise_text" },
+      { text: "Pulling me in close by the waist while standing in a busy crowd", matchTag: "spontaneous_touch" },
+      { text: "Noticing and complimenting a subtle change in my outfit or mood", matchTag: "attentive_eye" }
     ]
   },
   {
     category: "Daily Life",
-    prompt: "It's a completely free Sunday with no obligations. What's the ideal day?",
+    prompt: "Our perfect lazy Saturday afternoon together looks like:",
     options: [
-      { text: "Sleeping in late, making pancakes, and staying in bed all day", matchTag: "lazy" },
-      { text: "Heading out early for a scenic coffee drive and wandering around", matchTag: "explore" },
-      { text: "Working out together or doing a fun outdoor activity", matchTag: "active" },
-      { text: "Binging movies together with a giant spread of comfort food", matchTag: "movie" }
+      { text: "Napping together in a sunbeam with a soft breeze coming through the window", matchTag: "sunbeam_nap" },
+      { text: "Hopping between cozy bakeries and bookstores with zero destination in mind", matchTag: "cafe_wanderer" },
+      { text: "Cleaning the house top-to-bottom with a loud upbeat soundtrack, then collapsing", matchTag: "power_clean" },
+      { text: "Setting up blankets on the living room rug and playing video games or puzzles", matchTag: "floor_camp" }
     ]
   },
   {
     category: "Stress & Comfort",
-    prompt: "When you have had a dreadful, exhausting day, what do you need most?",
+    prompt: "When you walk through the door completely drained from a terrible day:",
     options: [
-      { text: "Venting non-stop while you listen and validate me", matchTag: "vent" },
-      { text: "Silent cuddles with no questions asked", matchTag: "quiet" },
-      { text: "Distraction: let's watch something hilarious and eat food", matchTag: "distract" },
-      { text: "Some quiet alone time first to decompress before talking", matchTag: "solo" }
+      { text: "Draw me a warm bath or hand me fuzzy socks and leave me quiet for an hour", matchTag: "solitude_recharge" },
+      { text: "Give me the longest, tightest hug without asking questions until I sigh", matchTag: "silent_shelter" },
+      { text: "Hand me my favorite comfort snack and let me rant about every single annoyance", matchTag: "rant_session" },
+      { text: "Put on our favorite comfort movie, tuck me in under a blanket, and be near me", matchTag: "distraction_nest" }
     ]
   },
   {
     category: "Future & Dreams",
-    prompt: "If we had unlimited money to build our future dream home, where would it be?",
+    prompt: "When visualizing our dream living space 5 to 10 years from now, what is essential?",
     options: [
-      { text: "A modern penthouse in the heart of a bustling, lively city", matchTag: "city" },
-      { text: "A warm, sunlit villa walking distance from a quiet beach", matchTag: "coast" },
-      { text: "A peaceful cottage surrounded by forest and mountain views", matchTag: "nature" },
-      { text: "A cozy suburban house with a big lush garden and dogs", matchTag: "suburb" }
+      { text: "A massive open balcony or garden with potted plants and room to watch sunsets", matchTag: "balcony_sanctuary" },
+      { text: "A gigantic kitchen island where we can cook, bake, and host friends seamlessly", matchTag: "culinary_hub" },
+      { text: "A dedicated creative studio/office filled with our tech, books, and art projects", matchTag: "creative_haven" },
+      { text: "A cozy tucked-away attic or library loft with floor-to-ceiling bookshelves", matchTag: "quiet_retreat" }
     ]
   },
   {
     category: "Social Life",
-    prompt: "When we are invited to a big party or gathering with friends:",
+    prompt: "We are walking into a crowded room filled with new acquaintances. What's our dynamic?",
     options: [
-      { text: "Let's stay by each other's side the whole night", matchTag: "together" },
-      { text: "We mingle separately and reconnect across the room", matchTag: "independent" },
-      { text: "Show up for an hour to be polite, then sneak out early together", matchTag: "irish_exit" },
-      { text: "Be the life of the party and stay until the lights turn on", matchTag: "extrovert" }
+      { text: "Hold hands and tackle the room together as an inseparable duo", matchTag: "dynamic_pair" },
+      { text: "Split up to chat freely, occasionally catching each other's eye across the room", matchTag: "autonomous_charm" },
+      { text: "Stick by the snack table together and observe everyone while sharing quiet jokes", matchTag: "snack_corner_critics" },
+      { text: "Give each other a secret 45-minute countdown signal before making our graceful exit", matchTag: "stealth_departure" }
     ]
   },
   {
     category: "Memories & Milestones",
-    prompt: "How should we celebrate special milestones or anniversaries?",
+    prompt: "Years from now, how do you want us to look back on our journey together?",
     options: [
-      { text: "A fancy candlelit dinner with dressing up and romance", matchTag: "glam" },
-      { text: "A quick weekend getaway trip to somewhere we've never been", matchTag: "trip" },
-      { text: "Recreating our first date or our favorite humble memory", matchTag: "nostalgia" },
-      { text: "A private cozy dinner cooked together at home in pajamas", matchTag: "intimate" }
+      { text: "Through a carefully organized album filled with polaroids, ticket stubs, and notes", matchTag: "physical_scrapbook" },
+      { text: "By telling wild, hilarious stories of the times things went completely off-script", matchTag: "chaotic_tales" },
+      { text: "By revisiting the exact humble street bench or cafe where our story first started", matchTag: "nostalgic_pilgrimage" },
+      { text: "Through personal traditions and rituals we invented that only make sense to us", matchTag: "custom_rituals" }
     ]
   },
   {
     category: "Surprises & Gifts",
-    prompt: "What kind of surprise gift warms your heart the most?",
+    prompt: "What kind of surprise makes you feel deeply understood on a personal level?",
     options: [
-      { text: "Something handmade, written, or full of sentimental memories", matchTag: "sentimental" },
-      { text: "That exact practical item I've been mentioning wanting for weeks", matchTag: "practical" },
-      { text: "An experiential surprise (concert tickets, spa day, secret date)", matchTag: "experience" },
-      { text: "A spontaneous box of my favorite snacks, boba, or desserts", matchTag: "treats" }
+      { text: "A custom playlist curated around songs that remind you of specific moments we shared", matchTag: "curated_audio" },
+      { text: "A book or tool directly related to a new hobby I've been silently wanting to explore", matchTag: "hobby_catalyst" },
+      { text: "Planning an entire secret outing where I don't have to make a single decision all day", matchTag: "decision_free_date" },
+      { text: "Bringing home that one specific dessert or dish I offhandedly mentioned craving days ago", matchTag: "craving_memory" }
     ]
   },
   {
     category: "Communication",
-    prompt: "When one of us feels upset about something small, what's best?",
+    prompt: "When we need to discuss something serious or slightly uncomfortable:",
     options: [
-      { text: "Say it right away before it brews, even if it feels silly", matchTag: "immediate" },
-      { text: "Wait for a calm moment later in the evening to bring it up", matchTag: "timed" },
-      { text: "Write it down in a gentle text if speaking it aloud feels hard", matchTag: "text" },
-      { text: "Let small things go unless they happen repeatedly", matchTag: "brush_off" }
+      { text: "Let's go on a quiet walk together side-by-side so eye contact isn't intimidating", matchTag: "side_by_side_walk" },
+      { text: "Sit down face-to-face over a warm cup of tea with zero screens in the room", matchTag: "focused_tea_chat" },
+      { text: "Give a heads-up first: 'Can we chat tonight about something on my mind?' so no one is ambushed", matchTag: "gentle_heads_up" },
+      { text: "Write out thoughts in a thoughtful message first, followed by an in-person conversation", matchTag: "written_intro" }
     ]
   },
   {
     category: "Adventures & Travel",
-    prompt: "When travelling together, what is our top priority?",
+    prompt: "We just landed in a brand-new country we've never visited before. What happens first?",
     options: [
-      { text: "Hunting down the most incredible local food and street snacks", matchTag: "foodie" },
-      { text: "Pure relaxation: sleeping in, pools, lounging, and zero rush", matchTag: "chill" },
-      { text: "Sightseeing: packing the day with landmarks and adventures", matchTag: "explorer" },
-      { text: "Just being together in a new place; the schedule doesn't matter", matchTag: "vibe" }
+      { text: "Drop bags at the stay and immediately find the busiest, most chaotic alleyway eatery", matchTag: "street_flavor_rush" },
+      { text: "Check into a pristine room, take a refreshing shower, and enjoy a long slow balcony rest", matchTag: "hotel_recharge" },
+      { text: "Pull up our curated pins and hit the key architectural landmarks before dusk", matchTag: "landmark_chaser" },
+      { text: "Wander down random side streets with no GPS to see what unusual spots we stumble into", matchTag: "unscripted_drift" }
     ]
   },
   {
     category: "Food & Cravings",
-    prompt: "It's 8:00 PM on a Friday and neither of us feels like cooking:",
+    prompt: "It's midnight, both of us are wide awake, and our stomachs start rumbling:",
     options: [
-      { text: "Order takeout from our absolute favorite comfort food spot", matchTag: "takeout" },
-      { text: "Raid the pantry and whip up a chaotic, delicious snack plate", matchTag: "improviser" },
-      { text: "Dress up quickly and go find an aesthetic new restaurant to try", matchTag: "dine_out" },
-      { text: "Cook an easy, cozy one-pan meal together while jamming to music", matchTag: "cook_team" }
+      { text: "Whip up elevated instant ramen with soft eggs, scallions, and extra chili oil", matchTag: "custom_ramen" },
+      { text: "Raid the fridge to build a chaotic grilled cheese or toastie using whatever is left", matchTag: "pantry_toastie" },
+      { text: "Order late-night crispy fried snacks or sweet bubble tea for delivery", matchTag: "midnight_takeout" },
+      { text: "Sneak into the kitchen for a quiet spoonful of hazelnut spread or cold ice cream", matchTag: "sweet_stealth" }
     ]
   },
   {
     category: "Money & Lifestyle",
-    prompt: "When an unexpected cash bonus or windfall lands in our account:",
+    prompt: "When we evaluate our finances, which philosophy feels most aligned with us?",
     options: [
-      { text: "Immediately book flights and hotels for our next bucket-list trip", matchTag: "splurge_travel" },
-      { text: "Put almost all of it into savings or an investment fund for the future", matchTag: "saver" },
-      { text: "Upgrade something we use daily (furniture, gadgets, or coffee machine)", matchTag: "upgrade_home" },
-      { text: "Split it: half to savings, and half for a guilt-free shopping spree", matchTag: "balanced" }
+      { text: "Live frugally on everyday things so we can splurge without guilt on travel and memories", matchTag: "experience_splurge" },
+      { text: "Invest heavily in our daily sanctuary—mattress, workspace, coffee, and home comforts", matchTag: "comfort_investment" },
+      { text: "Build a rock-solid emergency buffer and retirement foundation before splurging on extras", matchTag: "security_first" },
+      { text: "Maintain balanced budgets with dedicated 'fun money' wallets each person spends freely", matchTag: "fun_money_split" }
     ]
   },
   {
     category: "Personal Space & Growth",
-    prompt: "How do you prefer balancing our independent hobbies with couple time?",
+    prompt: "When both of us are having dedicated solo creative or study time:",
     options: [
-      { text: "Parallel play: doing our own hobbies in the exact same room", matchTag: "parallel" },
-      { text: "Having dedicated solo evenings so we genuinely miss each other", matchTag: "solo_time" },
-      { text: "Trying our best to get into each other's hobbies and do them together", matchTag: "shared_interests" },
-      { text: "Completely separate worlds for hobbies, uniting over meals and downtime", matchTag: "independent_spaces" }
+      { text: "Sit at opposite ends of the same desk, wearing headphones but tapping feet occasionally", matchTag: "parallel_anchor" },
+      { text: "Be in separate rooms with closed doors, catching up during deliberate coffee breaks", matchTag: "deep_focus_zones" },
+      { text: "Trade funny links or progress screenshots across the room via chat throughout the session", matchTag: "virtual_whisper" },
+      { text: "One works while the other brings a steady supply of snacks, water, and warm head pats", matchTag: "station_supporter" }
     ]
   },
   {
     category: "Affection & Chemistry",
-    prompt: "What is your favorite style of showing physical affection in public?",
+    prompt: "Which form of non-verbal chemistry feels most magnetic between us?",
     options: [
-      { text: "Casual and constant: subtle hand-holding, linked arms, brushing shoulders", matchTag: "subtle" },
-      { text: "Sweet and bold: random forehead kisses and wrap-around back hugs", matchTag: "expressive" },
-      { text: "Inside jokes, playful nudges, and cheeky playful taps", matchTag: "playful" },
-      { text: "Low-key and private: save almost all physical intimacy for when we're alone", matchTag: "reserved" }
+      { text: "A knowing smirk and locked eye contact across a room packed with people", matchTag: "secret_glance" },
+      { text: "Absentmindedly tracing patterns on each other's hands or arms while chatting", matchTag: "mindless_tracing" },
+      { text: "Resting your head on my shoulder while listening to music on a bus or train ride", matchTag: "shoulder_lean" },
+      { text: "Playful hip bumps and elbow nudges whenever we walk beside each other", matchTag: "playful_nudge" }
     ]
   },
   {
     category: "Home & Cozy Living",
-    prompt: "What makes our shared living space feel most like an actual home?",
+    prompt: "What is the single most essential ingredient for our living room vibe?",
     options: [
-      { text: "Warm lighting, soft scented candles, and mountains of plush blankets", matchTag: "cozy_vibes" },
-      { text: "Framed couple photos, travel mementos, and curated memories everywhere", matchTag: "sentimental_decor" },
-      { text: "An immaculate, clutter-free, hyper-organized layout where everything fits", matchTag: "minimal_clean" },
-      { text: "A lived-in, warm energy full of snacks, ongoing projects, and pets", matchTag: "lived_in" }
+      { text: "A massive, deep couch drowned in oversized textured throw pillows and faux fur throws", matchTag: "cloud_sofa" },
+      { text: "Warm 2700K ambient lamps and hidden fairy/LED light strips with no harsh ceiling lights", matchTag: "golden_glow" },
+      { text: "A high-end sound system softly playing lo-fi, acoustic jazz, or ambient rain in the background", matchTag: "soundscape" },
+      { text: "A sprawling coffee table packed with board games, sketchpads, and current reads", matchTag: "living_canvas" }
     ]
   },
   {
     category: "Spontaneity & Chaos",
-    prompt: "It's 11:30 PM on a Tuesday and one of us whispers 'Want to do something crazy?'",
+    prompt: "It's an ordinary weekday evening and suddenly there's a heavy downpour outside:",
     options: [
-      { text: "Yes! Late-night drive with the windows down blasting songs", matchTag: "night_drive" },
-      { text: "Run to the 24-hour drive-thru or convenience store for midnight snacks", matchTag: "snack_run" },
-      { text: "Start rearranging the entire room layout or doing a random DIY project", matchTag: "chaotic_energy" },
-      { text: "Smile, kiss you, and say 'Only if doing something crazy means going to bed early'", matchTag: "sleep_first" }
+      { text: "Drop what we are doing, grab jackets, and run outside to walk in the empty rain", matchTag: "rain_dash" },
+      { text: "Dim every light in the house, light candles, and listen to the thunder roll in", matchTag: "storm_gothic" },
+      { text: "Set up the kitchen stove to simmer spicy stew or hot chocolate while watching the window", matchTag: "storm_kitchen" },
+      { text: "Turn on moody video games or a spooky series with all blankets pulled up to our chins", matchTag: "spooky_nest" }
     ]
   },
   {
     category: "Support & Teamwork",
-    prompt: "When life feels overwhelming and responsibilities pile up:",
+    prompt: "When one of us is preparing for an intimidating deadline or major hurdle:",
     options: [
-      { text: "Sit down together and divide chores and tasks like a tactical unit", matchTag: "tactical" },
-      { text: "Step in silently to take chores off the other person's plate without asking", matchTag: "silent_helper" },
-      { text: "Order comforting food, hit pause on chores, and prioritize emotional relief", matchTag: "pause_and_breathe" },
-      { text: "Give non-stop pep talks and hype the other person up to conquer it", matchTag: "cheerleader" }
+      { text: "Take over all cooking, dishwashing, and errand duties completely so they can zone in", matchTag: "logistics_shield" },
+      { text: "Sit down to drill questions, review work, or help brainstorm solutions together", matchTag: "co_strategist" },
+      { text: "Be the emotional cheerleader reminding them of how capable and brilliant they are", matchTag: "unwavering_hype" },
+      { text: "Enforce scheduled breaks with water, stretches, and mandatory 5-minute cuddle breathers", matchTag: "wellness_enforcer" }
     ]
   },
   {
     category: "Entertainment & Play",
-    prompt: "What is our ideal evening spent playing games or having fun?",
+    prompt: "When it comes to gaming or friendly competition between us:",
     options: [
-      { text: "Competitive board or video games where both of us play to win", matchTag: "competitive" },
-      { text: "Cooperative multiplayer games where we solve puzzles or build together", matchTag: "coop" },
-      { text: "Funny couple quizzes, conversational card decks, or trivia challenges", matchTag: "trivia_quiz" },
-      { text: "A playful tournament with high-stakes bets (loser cooks or gives a massage)", matchTag: "betting_fun" }
+      { text: "Cooperative multiplayer games where we succeed or wipe out as a single unit", matchTag: "coop_crusade" },
+      { text: "Competitive 1-on-1 matches where trash talk is permitted and victory is glorious", matchTag: "rivalry_fun" },
+      { text: "Story-heavy narrative games where one holds the controller and both make dialogue choices", matchTag: "narrative_duo" },
+      { text: "Casual party and trivia games where winning doesn't matter as long as we're crying laughing", matchTag: "comedy_match" }
     ]
   },
   {
     category: "Morning & Routines",
-    prompt: "What does the perfect start to our morning look like?",
+    prompt: "When our morning alarm goes off on a normal busy morning:",
     options: [
-      { text: "Waking up slowly with 20 minutes of morning cuddles and soft chatting", matchTag: "cuddle_morning" },
-      { text: "One of us brewing fresh hot coffee/tea while the other makes breakfast", matchTag: "cafe_routine" },
-      { text: "Waking up early, popping open the curtains, and getting straight into the day", matchTag: "early_birds" },
-      { text: "Total silence, individual slow pacing, and no speaking until fully awake", matchTag: "silent_rise" }
+      { text: "One gets up promptly to start the kettle and hot water while the other stretches awake", matchTag: "relay_wake" },
+      { text: "Hit snooze twice and spend those 15 minutes glued together half-asleep under the covers", matchTag: "snooze_cuddle" },
+      { text: "Pop out of bed energetically, throw the curtains wide, and turn on morning tunes", matchTag: "sunny_momentum" },
+      { text: "Quiet, peaceful transition: gentle kisses, low lighting, and whispered morning greetings", matchTag: "gentle_whispers" }
     ]
   },
   {
     category: "Growth & Long-Term Vision",
-    prompt: "Ten years from today, what matters most about our journey together?",
+    prompt: "What will prove that our partnership has succeeded as the decades pass?",
     options: [
-      { text: "That we built a solid, secure foundation and achieved our biggest goals", matchTag: "ambition" },
-      { text: "That we still laugh as hard together as we did when we first met", matchTag: "laughter" },
-      { text: "That we explored the world, tried crazy things, and collected wild stories", matchTag: "adventure" },
-      { text: "That we created a peaceful, loving sanctuary where we feel totally safe", matchTag: "peaceful_haven" }
+      { text: "That we grew into better, wiser individuals without ever holding each other back", matchTag: "mutual_elevation" },
+      { text: "That our home remains an unbreakable safe haven regardless of what happens outside", matchTag: "unshakable_sanctuary" },
+      { text: "That we still find each other hilarious, fascinating, and attractive at 80 years old", matchTag: "ageless_spark" },
+      { text: "That we created a rich legacy of warmth, shared experiences, and kindness for those around us", matchTag: "shared_legacy" }
     ]
   },
   {
     category: "Bedtime & Slumber",
-    prompt: "When it's time to sleep at night, what is your sleeping style?",
+    prompt: "What is the final ritual right before we officially turn off the lights?",
     options: [
-      { text: "Cuddle up tightly until we both drift off into dreamland", matchTag: "tangled" },
-      { text: "Cuddle for a sweet 5 minutes, then roll over to our own sides", matchTag: "cuddle_then_split" },
-      { text: "Back-to-back touching slightly so we feel each other's presence", matchTag: "back_touch" },
-      { text: "Give me the cold side of the pillow, my own blanket, and zero touch", matchTag: "independent_sleeper" }
-    ]
-  },
-  {
-    category: "Pet Companionship",
-    prompt: "If we welcome a furry companion into our life, what kind of pet parents are we?",
-    options: [
-      { text: "Treat them like our literal child with gourmet food and mini outfits", matchTag: "pampered_baby" },
-      { text: "An energetic sidekick who goes on every hike, beach trip, and adventure", matchTag: "adventure_dog" },
-      { text: "A calm, independent cuddle buddy who just naps nearby while we work", matchTag: "chill_cat" },
-      { text: "Two playful rescues who keep each other company and create cute chaos", matchTag: "chaos_pack" }
-    ]
-  },
-  {
-    category: "Digital Life & Socials",
-    prompt: "How do you feel about showing off our relationship on social media?",
-    options: [
-      { text: "Hard launch everything: photo dumps, cute videos, and anniversary posts", matchTag: "loud_proud" },
-      { text: "Soft launches only: hands holding drinks, subtle aesthetic story tags", matchTag: "soft_launch" },
-      { text: "Total privacy: the best memories stay strictly between the two of us", matchTag: "private_sacred" },
-      { text: "Only posting funny, goofy, unhinged moments to tease each other", matchTag: "meme_couple" }
-    ]
-  },
-  {
-    category: "Music & Roadtrips",
-    prompt: "Who controls the car aux cord or playlist on a long drive?",
-    options: [
-      { text: "A collaborative playlist curated with songs we both sing along to", matchTag: "curated_duo" },
-      { text: "The driver gets full control of the music; passenger enjoys the ride", matchTag: "driver_rules" },
-      { text: "The passenger is official DJ and must cater to the room's energy", matchTag: "passenger_dj" },
-      { text: "Skip music: put on a captivating true crime or comedy podcast", matchTag: "podcast_road" }
-    ]
-  },
-  {
-    category: "Decision Making",
-    prompt: "When neither of us can decide where to eat or what to do:",
-    options: [
-      { text: "The 5-3-1 rule: one gives five options, other picks three, first picks one", matchTag: "structured_choice" },
-      { text: "Flip a coin or roll a die and let destiny make the call", matchTag: "destiny" },
-      { text: "One person takes executive control and says 'Get dressed, I'm driving'", matchTag: "take_charge" },
-      { text: "Default straight to our reliable comfort spot without overthinking", matchTag: "reliable_default" }
-    ]
-  },
-  {
-    category: "Sickness & Caretaking",
-    prompt: "When you catch a nasty cold or fever, how do you prefer to be taken care of?",
-    options: [
-      { text: "Full nurse mode: soup, tea, forehead checks, and checking on me hourly", matchTag: "baby_me" },
-      { text: "Quiet support: set down medicine and water, then let me sleep in silence", matchTag: "hands_off" },
-      { text: "Just lie in bed next to me and watch comfort shows together all day", matchTag: "co_sick" },
-      { text: "Distract me from feeling miserable with funny videos and lighthearted laughs", matchTag: "cheer_up" }
-    ]
-  },
-  {
-    category: "Rainy Days",
-    prompt: "A heavy thunderstorm hits outside and cancels all plans. What are we doing?",
-    options: [
-      { text: "Building an epic living room blanket fort and binge-watching a series", matchTag: "fort_marathon" },
-      { text: "Baking fresh cookies or brownies while warm tea brews", matchTag: "baking_cozy" },
-      { text: "Sitting by the window listening to the rain, reading or chatting", matchTag: "rain_watcher" },
-      { text: "Putting on jackets and stepping out to jump in puddles together", matchTag: "rain_dancer" }
-    ]
-  },
-  {
-    category: "Shopping & Errands",
-    prompt: "What is our dynamic when doing a big grocery or home run at Target/Costco?",
-    options: [
-      { text: "Strict grocery list in hand, in-and-out mission like special operatives", matchTag: "efficient_mission" },
-      { text: "Wandering down every single aisle sniffing candles and inspecting snacks", matchTag: "leisure_browsing" },
-      { text: "One pushes the cart while the other sits inside or rides along playfully", matchTag: "silly_errands" },
-      { text: "Accidentally buying $150 worth of snacks and zero items on the actual list", matchTag: "impulse_chaos" }
-    ]
-  },
-  {
-    category: "Family Dynamics",
-    prompt: "When visiting each other's families for a big holiday or dinner:",
-    options: [
-      { text: "Teamwork all day: helping out in the kitchen and bonding with everyone", matchTag: "family_pro" },
-      { text: "Subtle eye contacts and secret smirks from across the dinner table", matchTag: "secret_signals" },
-      { text: "Sticking close together like an unbreakable shield against awkward questions", matchTag: "united_front" },
-      { text: "Taking a quick walk together outside halfway through to breathe and reset", matchTag: "recharge_escape" }
-    ]
-  },
-  {
-    category: "Pet Names & Banter",
-    prompt: "What is your favorite everyday style of affection and nicknames?",
-    options: [
-      { text: "Sweet classic terms of endearment like 'babe', 'sweetheart', and 'love'", matchTag: "classic_sweet" },
-      { text: "Ridiculous made-up baby words that make no sense to any outsider", matchTag: "nonsense_cute" },
-      { text: "Playful teasing, mocking each other lovingly, and sarcastic nicknames", matchTag: "banter_tease" },
-      { text: "Using each other's real names with genuine warmth and soft tone", matchTag: "real_intimate" }
-    ]
-  },
-  {
-    category: "Flirting & Spark",
-    prompt: "What keeps the butterfly spark alive in our daily relationship?",
-    options: [
-      { text: "Dressing up fine and taking each other on deliberate, proper date nights", matchTag: "date_night" },
-      { text: "Spontaneous flirty texts in the middle of a normal workday", matchTag: "midday_flirt" },
-      { text: "Whispering compliments when the other person least expects it", matchTag: "stealth_compliment" },
-      { text: "Playful challenges, wrestling for blankets, and mischievous tickles", matchTag: "physical_spark" }
-    ]
-  },
-  {
-    category: "Career & Ambition",
-    prompt: "When one of us gets an exciting new career breakthrough or project:",
-    options: [
-      { text: "Pop the sparkling cider/champagne and celebrate with a huge night out", matchTag: "big_celebration" },
-      { text: "Have a heartfelt late-night conversation celebrating how proud we are", matchTag: "proud_words" },
-      { text: "Buy a meaningful symbolic gift to mark this big chapter of growth", matchTag: "milestone_gift" },
-      { text: "Offer practical support by handling dinner and chores so they can focus", matchTag: "support_shield" }
-    ]
-  },
-  {
-    category: "Secret Quirks",
-    prompt: "What is our weirdest, most wholesome private habit?",
-    options: [
-      { text: "Communicating through squeaks, weird noises, and made-up sound effects", matchTag: "sound_effects" },
-      { text: "Narrating what our pet or stuffed animals are supposedly thinking", matchTag: "pet_voices" },
-      { text: "Singing mundane daily chores to dramatic opera or Broadway tunes", matchTag: "chore_musical" },
-      { text: "Stealing each other's catchphrases until neither knows who said it first", matchTag: "shared_phrases" }
-    ]
-  },
-  {
-    category: "Fitness & Wellness",
-    prompt: "How do we approach keeping active and taking care of our health?",
-    options: [
-      { text: "Gym buddies cheering each other on and hitting personal records", matchTag: "gym_partners" },
-      { text: "Outdoor adventures like bike rides, long sunset walks, and swimming", matchTag: "nature_movement" },
-      { text: "Trying new healthy recipes together in the kitchen with upbeat music", matchTag: "wellness_food" },
-      { text: "Doing yoga, stretching, and mindful meditation sessions at home", matchTag: "calm_balance" }
-    ]
-  },
-  {
-    category: "Late Night Talks",
-    prompt: "It's 2:00 AM, the room is pitch black, and we can't sleep. What are we discussing?",
-    options: [
-      { text: "Unsolved mysteries, parallel universes, and deep existential questions", matchTag: "existential" },
-      { text: "Childhood memories and funny embarrassing stories we've never told", matchTag: "confessions" },
-      { text: "Our exact timeline and plans for our dream future together", matchTag: "dreaming_ahead" },
-      { text: "Debating ridiculous hypothetical scenarios and 'would you rather' prompts", matchTag: "silly_hypotheticals" }
-    ]
-  },
-  {
-    category: "Style & Aesthetics",
-    prompt: "When picking out outfits for an event, what is our styling approach?",
-    options: [
-      { text: "Color-coordinating our outfits so we look sharp and intentional together", matchTag: "matching_duo" },
-      { text: "Hyping each other up in front of the mirror while trying on 10 outfits", matchTag: "hype_stylist" },
-      { text: "Zero coordination: dress comfortably in our own vibe and let's go", matchTag: "effortless" },
-      { text: "Asking 'Does this look okay?' six times before finally trusting your answer", matchTag: "reassurance" }
-    ]
-  },
-  {
-    category: "Forgiveness & Repair",
-    prompt: "After an uncomfortable conversation or tense moment, what re-bonds us fastest?",
-    options: [
-      { text: "A genuine, vulnerable apology acknowledging what each of us felt", matchTag: "vulnerable_words" },
-      { text: "A long, tight embrace in silence until all the tension melts away", matchTag: "reassuring_hug" },
-      { text: "Making each other laugh with a dumb joke to break the heavy ice", matchTag: "humor_repair" },
-      { text: "Making a cup of tea or preparing food for the other as a peace offering", matchTag: "peace_treat" }
-    ]
-  },
-  {
-    category: "Bucket List",
-    prompt: "What is the ultimate bucket list item we absolutely have to do together?",
-    options: [
-      { text: "Stargazing in an open field watching a dazzling meteor shower", matchTag: "stargaze" },
-      { text: "Renting a cozy camper van and driving along a scenic coast with no map", matchTag: "van_roadtrip" },
-      { text: "Visiting a magical foreign night market and eating everything in sight", matchTag: "night_market" },
-      { text: "Attending our dream musician or artist's live concert in the front row", matchTag: "front_row" }
-    ]
-  },
-  {
-    category: "Cooking & Kitchen",
-    prompt: "When we decide to cook a brand-new gourmet recipe together:",
-    options: [
-      { text: "Follow the recipe step-by-step with scientific measurement precision", matchTag: "precise_chef" },
-      { text: "Season with our hearts, throw ingredients in freestyle, and taste as we go", matchTag: "freestyle_flavor" },
-      { text: "One acts as the head executive chef, the other is the loyal sous-chef/chopper", matchTag: "chef_and_prep" },
-      { text: "Dance around the kitchen, make a slight mess, and laugh off any burnt edges", matchTag: "kitchen_party" }
-    ]
-  },
-  {
-    category: "Trust & Vulnerability",
-    prompt: "What moment made you realize 'this person is truly my safe space'?",
-    options: [
-      { text: "When I cried ugly tears and was met only with kindness and warm arms", matchTag: "emotional_safety" },
-      { text: "When I could be my weirdest, most unhinged self without feeling judged", matchTag: "unfiltered_self" },
-      { text: "When we sat in total silence for hours and it felt completely comfortable", matchTag: "comfortable_silence" },
-      { text: "When you stood up for me and supported me through a difficult challenge", matchTag: "fierce_loyalty" }
-    ]
-  },
-  {
-    category: "Jealousy & Security",
-    prompt: "When someone outside our relationship tries to flirt with one of us:",
-    options: [
-      { text: "Shut it down politely and immediately make it clear I'm happily taken", matchTag: "instant_boundary" },
-      { text: "Feel secretly flattered, but immediately tell you all the tea so we can laugh", matchTag: "tell_the_tea" },
-      { text: "I'm so completely oblivious that I wouldn't even notice they were flirting", matchTag: "oblivious" },
-      { text: "Grab your hand or give you a kiss right in front of them to claim territory", matchTag: "sweet_territorial" }
+      { text: "Trading our top high point and low point of the day in a soft whisper", matchTag: "rose_and_thorn" },
+      { text: "Sharing three completely unhinged videos or memes we found throughout the day", matchTag: "pillow_laughs" },
+      { text: "A forehead kiss, a tight squeeze, and an automatic 'I love you, goodnight'", matchTag: "bedtime_blessing" },
+      { text: "Setting our phones on 'Do Not Disturb' across the room and holding hands across the mattress", matchTag: "unplugged_peace" }
     ]
   }
 ];
