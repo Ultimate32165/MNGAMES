@@ -450,8 +450,8 @@
       canvas.width = rect.width * dpr;
       canvas.height = rect.height * dpr;
 
-      ctx.setTransform(1, 0, 0, 1, 0, 0);
-      ctx.scale(dpr, dpr);
+      // Absolute transform (never multiplies)
+      ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
 
       ctx.lineCap = "round";
       ctx.lineJoin = "round";
@@ -518,8 +518,7 @@
       targetCanvas.width = rect.width * dpr;
       targetCanvas.height = rect.height * dpr;
       
-      tCtx.setTransform(1, 0, 0, 1, 0, 0);
-      tCtx.scale(dpr, dpr);
+      tCtx.setTransform(dpr, 0, 0, dpr, 0, 0);
 
       tCtx.fillStyle = "#ffffff";
       tCtx.fillRect(0, 0, rect.width, rect.height);
@@ -541,17 +540,19 @@
       });
     }
 
-    // Complete buffer wipe across device resolutions
+    // FIXED: uses setTransform (absolute) instead of scale (multiplicative),
+    // so the DPR scale can never compound across clears.
     function clearMyCanvas() {
+      isDrawing = false;
       myStrokes = [];
       currentStroke = [];
       if (ctx && canvas) {
         const dpr = window.devicePixelRatio || 1;
-        ctx.save();
         ctx.setTransform(1, 0, 0, 1, 0, 0);
         ctx.clearRect(0, 0, canvas.width, canvas.height);
-        ctx.restore();
-        ctx.scale(dpr, dpr);
+        ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+        ctx.lineCap = "round";
+        ctx.lineJoin = "round";
       }
     }
 
